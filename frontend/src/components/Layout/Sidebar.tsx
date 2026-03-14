@@ -26,23 +26,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       <aside className={`
         fixed top-0 left-0 h-full w-64 z-30 flex flex-col
-        bg-gray-950 dark:bg-gray-950
-        border-r border-gray-800
+        bg-gray-950 border-r border-gray-800
         transform transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0 lg:static lg:z-auto
       `}>
         {/* Logo */}
-        <div className="h-16 flex items-center px-5 border-b border-gray-800/50 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-900/30">
-              <span className="font-black text-white text-base">IE</span>
-            </div>
-            <div>
-              <p className="font-bold text-white text-base leading-none">IELTS Imperia</p>
-              <p className="text-xs text-gray-500 mt-0.5">Testing Platform</p>
-            </div>
-          </div>
+        <div className="h-16 flex items-center px-5 border-b border-gray-800/50">
+          <img
+            src="/logo.png"
+            alt="IELTS Imperia"
+            className="h-9 w-auto object-contain brightness-0 invert"
+          />
         </div>
 
         {/* Nav */}
