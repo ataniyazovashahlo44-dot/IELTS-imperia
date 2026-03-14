@@ -26,13 +26,13 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       <aside className={`
         fixed top-0 left-0 h-full w-64 z-30 flex flex-col
-        bg-gray-950 border-r border-gray-800
+        bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800
         transform transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0 lg:static lg:z-auto
       `}>
         {/* Logo */}
-        <div className="h-16 flex items-center px-5 border-b border-gray-800/50">
+        <div className="h-16 flex items-center px-5 border-b border-gray-100 dark:border-gray-800/50">
           <img
             src="/logo.png"
             alt="IELTS Imperia"
@@ -53,7 +53,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Nav */}
         <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto mt-3">
-          <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest px-3 mb-2">Menu</p>
+          <p className="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-3 mb-2">Menu</p>
           {links.map(link => (
             <NavLink
               key={link.to}
@@ -64,7 +64,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
                 ${isActive
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/30'
-                  : 'text-gray-400 hover:bg-gray-900 hover:text-white'}`
+                  : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white'}`
               }
             >
               <svg className="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           ))}
         </nav>
 
-        <div className="p-3 border-t border-gray-800/50 space-y-3">
+        <div className="p-3 border-t border-gray-100 dark:border-gray-800/50 space-y-3">
           <button
             onClick={logout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-950/30 hover:text-red-300 transition-all duration-200 group"
@@ -86,7 +86,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             Chiqish
           </button>
           <div className="px-3 py-1">
-            <p className="text-[10px] text-gray-700 font-bold uppercase tracking-widest">v1.0.0 · IELTS Imperia</p>
+            <p className="text-[10px] text-gray-400 dark:text-gray-700 font-bold uppercase tracking-widest">v1.0.0 · IELTS Imperia</p>
           </div>
         </div>
       </aside>
