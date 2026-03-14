@@ -11,32 +11,81 @@ import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
-// Security
-app.use(helmet());
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+app.use(helmet({ contentSecurityPolicy: false }));
 
-// Rate limiting
+const allowedOrigins = ENV.CLIENT_URL.split(',').map(u => u.trim());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.some(o => o === origin || o === '*')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200 });
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20 });
 app.use('/api/auth', authLimiter);
 app.use(limiter);
 
-// Body parsing
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Static file serving for audio/images
 app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/student', studentRoutes);
 
-// Health check
-app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date() }));
+// Health check (JSON)
+app.get('/health', (_req, res) => res.json({ status: 'ok', uptime: process.uptime(), timestamp: new Date() }));
 
-// Global error handler
+// Root — professional status page
+app.get('/', (_req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOC API</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 48px; max-width: 480px; width: 90%; text-align: center; }
+    .dot { width: 12px; height: 12px; background: #22c55e; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.7;transform:scale(1.2)} }
+    h1 { font-size: 28px; font-weight: 700; color: #f8fafc; margin: 20px 0 8px; }
+    .status { display: inline-flex; align-items: center; background: #14532d; color: #86efac; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
+    .desc { color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+    .endpoints { background: #0f172a; border-radius: 10px; padding: 16px; text-align: left; font-family: monospace; font-size: 13px; }
+    .endpoint { display: flex; align-items: center; gap: 10px; padding: 6px 0; color: #94a3b8; border-bottom: 1px solid #1e293b; }
+    .endpoint:last-child { border: none; }
+    .method { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: #1d4ed8; color: #bfdbfe; min-width: 42px; text-align: center; }
+    .method.post { background: #166534; color: #bbf7d0; }
+    .route { color: #e2e8f0; }
+    .uptime { margin-top: 24px; font-size: 12px; color: #475569; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="status"><span class="dot"></span>All systems operational</div>
+    <h1>MOC Platform API</h1>
+    <p class="desc">Backend server is running. Use the frontend application to access the platform.</p>
+    <div class="endpoints">
+      <div class="endpoint"><span class="method post">POST</span><span class="route">/api/auth/login</span></div>
+      <div class="endpoint"><span class="method post">POST</span><span class="route">/api/auth/register</span></div>
+      <div class="endpoint"><span class="method">GET</span><span class="route">/api/admin/dashboard</span></div>
+      <div class="endpoint"><span class="method">GET</span><span class="route">/api/student/results</span></div>
+      <div class="endpoint"><span class="method">GET</span><span class="route">/health</span></div>
+    </div>
+    <p class="uptime">Uptime: ${Math.floor(process.uptime() / 60)}m ${Math.floor(process.uptime() % 60)}s</p>
+  </div>
+</body>
+</html>`);
+});
+
 app.use(errorHandler);
 
 export default app;

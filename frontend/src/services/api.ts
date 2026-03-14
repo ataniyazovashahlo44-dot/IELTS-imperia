@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { getToken, removeToken } from '../utils/tokenStorage';
 
-const api = axios.create({
-  baseURL: '/api',
-  timeout: 15000,
-});
+// In production (Vercel), VITE_API_URL points to the Railway backend.
+// In development, VITE_API_URL is empty so Vite proxy handles /api -> localhost:5000.
+const baseURL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
+const api = axios.create({ baseURL, timeout: 15000 });
 
 api.interceptors.request.use(config => {
   const token = getToken();
@@ -23,8 +26,6 @@ api.interceptors.response.use(
   }
 );
 
-// ─── Auth ─────────────────────────────────────────────────────────────────────
-
 export const authApi = {
   register: (data: { fullName: string; phoneNumber: string; username: string; password: string }) =>
     api.post('/auth/register', data),
@@ -32,8 +33,6 @@ export const authApi = {
     api.post('/auth/login', { username, password }),
   getMe: () => api.get('/auth/me'),
 };
-
-// ─── Admin ────────────────────────────────────────────────────────────────────
 
 export const adminApi = {
   getDashboard: () => api.get('/admin/dashboard'),
@@ -44,8 +43,6 @@ export const adminApi = {
   getResults: () => api.get('/admin/results'),
   getLiveSessions: () => api.get('/admin/live'),
 };
-
-// ─── Student ──────────────────────────────────────────────────────────────────
 
 export const studentApi = {
   getDashboard: () => api.get('/student/dashboard'),

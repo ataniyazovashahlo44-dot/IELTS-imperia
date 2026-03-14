@@ -1,12 +1,14 @@
 import { io, Socket } from 'socket.io-client';
 import { getToken } from '../utils/tokenStorage';
 
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 let socket: Socket | null = null;
 
 export function connectSocket(): Socket {
   if (socket?.connected) return socket;
 
-  socket = io('http://localhost:5000', {
+  socket = io(SOCKET_URL, {
     auth: { token: getToken() },
     reconnection: true,
     reconnectionAttempts: 5,
