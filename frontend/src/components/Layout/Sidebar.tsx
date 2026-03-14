@@ -37,7 +37,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             src="/logo.png"
             alt="IELTS Imperia"
             className="h-9 w-auto object-contain brightness-0 invert"
+            onError={e => {
+              e.currentTarget.style.display = 'none';
+              const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+              if (fallback) fallback.style.display = 'flex';
+            }}
           />
+          <div style={{ display: 'none' }} className="items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+              <span className="text-white text-xs font-black">IE</span>
+            </div>
+            <span className="font-bold text-white text-sm">IELTS Imperia</span>
+          </div>
         </div>
 
         {/* Nav */}
