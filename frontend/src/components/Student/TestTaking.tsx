@@ -9,7 +9,7 @@ import ExerciseRenderer from './ExerciseRenderer';
 import { ClientExercise, SubmitAnswer } from '../../types';
 
 export default function TestTaking() {
-  const { testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection } = useTest();
+  const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection } = useTest();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
@@ -64,11 +64,11 @@ export default function TestTaking() {
   }, [testSessionId, submitting, currentSection, sections, getAllAnswers, goToNextSection, navigate]);
 
   useEffect(() => {
-    if (!currentSection || !testSessionId) {
+    if (phase === 'idle' && (!currentSection || !testSessionId)) {
       const timer = setTimeout(() => navigate('/student'), 100);
       return () => clearTimeout(timer);
     }
-  }, [currentSection, testSessionId, navigate]);
+  }, [currentSection, testSessionId, navigate, phase]);
 
   if (!currentSection || !testSessionId) {
     return null;
@@ -151,8 +151,8 @@ export default function TestTaking() {
       </div>
 
       {/* Main content — exercise renderer */}
-      <main className="flex-1 overflow-auto" style={fontSize === 'large' ? { zoom: 1.15 } as React.CSSProperties : {}}>
-        <div className="h-full">
+      <main className="flex-1 overflow-hidden" style={fontSize === 'large' ? { zoom: 1.15 } as React.CSSProperties : {}}>
+        <div className="h-full relative overflow-hidden">
           {currentExercise && (
             <ExerciseRenderer
               key={`${currentSection.sectionOrder}-${currentExerciseIdx}`}

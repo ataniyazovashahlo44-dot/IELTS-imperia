@@ -91,6 +91,7 @@ export async function joinTest(studentId: string, pin: string) {
   // Select random exercises for ALL sections upfront
   const selectedExercisesMap: Record<string, string[]> = {};
   const allAnswerMaps: Record<string, string> = {};
+  const globalUsedIds = new Set<string>();
 
   for (const sec of sections) {
     const variantGroups: string[] = JSON.parse(sec.variantGroups);
@@ -103,8 +104,17 @@ export async function joinTest(studentId: string, pin: string) {
       pool = loadExercisesFromGroups(sec.subject, variantGroups);
     }
 
-    const selected = selectRandomExercises(pool, sec.numberOfExercises);
+    // Filter out already used exercises to avoid duplicates across sections
+    const availablePool = pool.filter(ex => !globalUsedIds.has(ex.id));
+
+    // Fallback to full pool if not enough unique exercises (legacy/fallback)
+    const selectionPool = availablePool.length >= sec.numberOfExercises ? availablePool : pool;
+
+    const selected = selectRandomExercises(selectionPool, sec.numberOfExercises);
     selectedExercisesMap[String(sec.sectionOrder)] = selected.map(e => e.id);
+
+    // Mark as used
+    selected.forEach(e => globalUsedIds.add(e.id));
 
     // Build client exercises and collect answer maps
     const { answerMap } = buildClientExercises(selected);

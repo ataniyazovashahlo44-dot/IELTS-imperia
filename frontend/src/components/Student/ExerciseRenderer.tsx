@@ -14,7 +14,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
   const recordAnswer = (q: ClientQuestion, value: string) => {
     onAnswer({
       questionId: `${exercise.id}_${q.id}`,
-      questionType: exercise.subject,
+      questionType: exercise.subject.toUpperCase() as any,
       selectedAnswer: value,
       questionText: q.text,
     });
@@ -167,7 +167,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
                     {Object.entries(opts).map(([key, value]) => {
                       const sel = chosen === key;
                       return (
-                        <label key={key} className="group flex items-center gap-4 cursor-pointer transition-all">
+                        <label key={key} className="relative group flex items-center gap-4 cursor-pointer transition-all">
                           <input
                             type="radio"
                             name={`${exercise.id}_${q.id}`}
@@ -428,7 +428,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
 
         {/* Left panel — passage or image */}
         {hasLeftPanel && (
-          <div className="w-1/2 overflow-y-auto p-12 pr-16 bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 custom-scrollbar">
+          <div className="w-1/2 overflow-y-auto p-12 pr-16 border-r border-gray-100 dark:border-gray-800 custom-scrollbar">
             <div className="max-w-3xl ml-auto">
               <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-6">
                 {exercise.subject === 'GRAMMAR' ? 'GRAMMAR' : 'VOCABULARY'} · {exercise.type.replace('_', ' ').toUpperCase()}
@@ -460,7 +460,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
         )}
 
         {/* Right panel — questions */}
-        <div className={`${hasLeftPanel ? 'w-1/2' : 'w-full'} overflow-y-auto p-12 ${hasLeftPanel ? 'pl-16' : 'max-w-3xl mx-auto'} bg-white dark:bg-gray-900 custom-scrollbar`}>
+        <div className={`${hasLeftPanel ? 'w-1/2' : 'w-full'} overflow-y-auto p-12 ${hasLeftPanel ? 'pl-16' : 'max-w-3xl mx-auto'} custom-scrollbar`}>
           <div className={hasLeftPanel ? 'max-w-3xl' : 'max-w-2xl mx-auto'}>
             {/* Title + instruction when no left panel */}
             {!hasLeftPanel && (

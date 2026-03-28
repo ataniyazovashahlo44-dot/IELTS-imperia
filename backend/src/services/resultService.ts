@@ -9,10 +9,12 @@ function gradeAnswer(selected: string, correct: string): boolean {
   const sel = selected.trim().toLowerCase();
   const cor = correct.trim().toLowerCase();
 
-  // Normalize checkmarks: standardize to U+2713 (✓)
+  // Normalize checkmarks and spaces
   const normalize = (s: string) => s
     .replace(/[✔️✅☑️]/g, '✓')
-    .replace(/\s/g, '');
+    .replace(/\s+/g, ' ') // Only reduce multiple spaces to one
+    .trim()
+    .toLowerCase();
 
   const nSel = normalize(sel);
 
@@ -77,12 +79,6 @@ export async function submitTest(studentId: string, testSessionId: string, answe
   }
 
   const userAnswersMap = new Map(answers.map(a => [a.questionId, a]));
-
-  console.log(`[SubmitTest] Student: ${studentId}, Test: ${testSessionId}`);
-  console.log(`[SubmitTest] Incoming answers count: ${answers.length}`);
-  if (answers.length > 0) {
-    console.log(`[SubmitTest] First answer key example: ${answers[0].questionId}`);
-  }
 
   let vocabCorrect = 0, vocabTotal = 0;
   let grammarCorrect = 0, grammarTotal = 0;
