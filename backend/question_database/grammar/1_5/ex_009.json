@@ -1,0 +1,106 @@
+{
+  "id": "grammar_1_5_009",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Past Simple / Past Perfect Simple / Past Perfect Continuous",
+  "instruction": "Fill in the gaps with the past simple, past perfect simple or past perfect continuous of the verbs in brackets.",
+  "passage": "Last year my friends arranged (1 arrange) for us to try fire-walking, which is when you walk on hot coals. I 'd always been (2 always/be) fascinated by it and I 'd heard (3 hear) people say it was an unforgettable experience. I was very excited when I arrived (4 arrive) on the day, although beforehand I 'd been feeling (5 feel) a little frightened! My friends and I had come (6 come) in the hope that by the end of the day we would be able to say we 'd walked (7 walk) across hot, burning coals.\n\nOur teacher was very good, and by teatime we 'd learnt (8 learn) a great deal and had prepared (9 prepare) the fires. I 'd been expecting (10 expect) to be terrified when the time came to walk, but as I took off (11 take off) my shoes and socks I didn't feel (12 not/feel) afraid. I approached (13 approach) the coals as all my friends before me had done (14 do), and started walking! I could feel the heat, but as I stepped (15 step) back onto the grass on the other end I knew the coals hadn't burnt (16 not/burn) my feet at all. As I 'd been hoping (17 hope), all my friends managed (18 manage) the walk and none of us were burnt. The whole experience was amazing, and I just wished I 'd done (19 do) it sooner.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Last year my friends ___ (arrange) for us to try fire-walking,",
+      "answer": "arranged"
+    },
+    {
+      "id": 2,
+      "text": "I ___ (always/be) fascinated by it",
+      "answer": "'d always been"
+    },
+    {
+      "id": 3,
+      "text": "...and I ___ (hear) people say it was an unforgettable experience.",
+      "answer": "'d heard"
+    },
+    {
+      "id": 4,
+      "text": "I was very excited when I ___ (arrive) on the day,",
+      "answer": "arrived"
+    },
+    {
+      "id": 5,
+      "text": "...although beforehand I ___ (feel) a little frightened!",
+      "answer": "'d been feeling"
+    },
+    {
+      "id": 6,
+      "text": "My friends and I ___ (come) in the hope that by the end of the day we would be able to say we 'd walked across hot, burning coals.",
+      "answer": "had come"
+    },
+    {
+      "id": 7,
+      "text": "...we came in the hope that by the end of the day we would be able to say we ___ (walk) across hot, burning coals.",
+      "answer": "'d walked"
+    },
+    {
+      "id": 8,
+      "text": "Our teacher was very good, and by teatime we ___ (learn) a great deal",
+      "answer": "'d learnt"
+    },
+    {
+      "id": 9,
+      "text": "...and ___ (prepare) the fires.",
+      "answer": "had prepared"
+    },
+    {
+      "id": 10,
+      "text": "I ___ (expect) to be terrified when the time came to walk,",
+      "answers": ["'d been expecting", "'d expected"]
+    },
+    {
+      "id": 11,
+      "text": "...but as I ___ (take off) my shoes and socks",
+      "answer": "took off"
+    },
+    {
+      "id": 12,
+      "text": "I ___ (not/feel) afraid.",
+      "answer": "didn't feel"
+    },
+    {
+      "id": 13,
+      "text": "I ___ (approach) the coals as all my friends before me had done,",
+      "answer": "approached"
+    },
+    {
+      "id": 14,
+      "text": "I approached the coals as all my friends before me ___ (do), and started walking!",
+      "answer": "had done"
+    },
+    {
+      "id": 15,
+      "text": "...but as I ___ (step) back onto the grass on the other end",
+      "answer": "stepped"
+    },
+    {
+      "id": 16,
+      "text": "I knew the coals ___ (not/burn) my feet at all.",
+      "answer": "hadn't burnt"
+    },
+    {
+      "id": 17,
+      "text": "As I ___ (hope), all my friends managed the walk",
+      "answers": ["'d been hoping", "'d hoped"]
+    },
+    {
+      "id": 18,
+      "text": "...all my friends ___ (manage) the walk and none of us were burnt.",
+      "answer": "managed"
+    },
+    {
+      "id": 19,
+      "text": "I just wished I ___ (do) it sooner.",
+      "answer": "'d done"
+    }
+  ]
+}

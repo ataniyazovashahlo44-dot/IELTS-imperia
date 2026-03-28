@@ -1,0 +1,51 @@
+{
+  "id": "grammar_1_5_002",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise 3",
+  "instruction": "Fill in the gaps with the verbs in the box in the correct present tense.\n\nVerb box: agree | catch up | cause | have | go up | know | think | use",
+  "passage": "We use energy for three main things: electricity production, heating and transport. For the first two, we have options such as solar and wind power, or natural gas. But oil is still the world's number one source of energy, and for transport at least, there is currently no alternative. In China, domestic energy consumption is going up year by year and demand in similar regions is catching up fast. We know how to use energy more efficiently now than in the past but the worldwide rise in demand is causing concern amongst experts. Some experts think that oil supplies will start to fall within the next twenty years. Most experts agree that we need to find a new source of energy soon.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "We ___ energy for three main things: electricity production, heating and transport.",
+      "answer": "use"
+    },
+    {
+      "id": 2,
+      "text": "For the first two, we ___ options such as solar and wind power, or natural gas.",
+      "answer": "have"
+    },
+    {
+      "id": 3,
+      "text": "In China, domestic energy consumption ___ year by year",
+      "answer": "is going up"
+    },
+    {
+      "id": 4,
+      "text": "...and demand in similar regions ___ fast.",
+      "answer": "is catching up"
+    },
+    {
+      "id": 5,
+      "text": "We ___ how to use energy more efficiently now than in the past",
+      "answer": "know"
+    },
+    {
+      "id": 6,
+      "text": "...but the worldwide rise in demand ___ concern amongst experts.",
+      "answer": "is causing"
+    },
+    {
+      "id": 7,
+      "text": "Some experts ___ that oil supplies will start to fall within the next twenty years.",
+      "answer": "think"
+    },
+    {
+      "id": 8,
+      "text": "Most experts ___ that we need to find a new source of energy soon.",
+      "answer": "agree"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "id": "grammar_5_10_005",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "mcq",
+  "title": "Exercise — Subject-Verb Agreement",
+  "instruction": "Underline the correct form of the verbs. Click the correct option.",
+  "passage": null,
+  "questions": [
+    {
+      "id": 1,
+      "text": "Despite the recent improvement in the economy, unemployment ___ to rise.",
+      "options": {
+        "A": "has continued",
+        "B": "have continued"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "text": "Our company hasn't changed its products for over 30 years but now the time ___ for a rethink.",
+      "options": {
+        "A": "has come",
+        "B": "have come"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 3,
+      "text": "The ideas in the report ___ presented in a very clear way.",
+      "options": {
+        "A": "was",
+        "B": "were"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 4,
+      "text": "The data ___ that the numbers of people buying mobile phones has remained stable for the past two years.",
+      "options": {
+        "A": "show",
+        "B": "shows"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 5,
+      "text": "Transport to and from the airport ___ in the price.",
+      "options": {
+        "A": "is included",
+        "B": "are included"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 6,
+      "text": "There ___ no facilities like running water or electricity in the village.",
+      "options": {
+        "A": "was",
+        "B": "were"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 7,
+      "text": "All the information ___ interesting and well presented, but we need to consider the whole situation very carefully before we reach a decision.",
+      "options": {
+        "A": "is",
+        "B": "are"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 8,
+      "text": "There ___ some important news about the proposed new hospital in the local paper today.",
+      "options": {
+        "A": "was",
+        "B": "were"
+      },
+      "answer": "A"
+    }
+  ]
+}

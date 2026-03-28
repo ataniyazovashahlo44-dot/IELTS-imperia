@@ -1,0 +1,71 @@
+{
+  "id": "grammar_1_5_013",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Present Continuous / Will-Future (Dialogue)",
+  "instruction": "Fill in the gaps with the present continuous or *will*-future form of the verbs in brackets.",
+  "passage": "Kirsty: Hi Elaine. It's Kirsty, here.\nElaine: Hello, how are you?\nKirsty: Fine. Listen, I know this is very short notice but are you doing (1 do) anything tonight?\nElaine: Nothing why?\nKirsty: Well I 'm taking (2 take) my class to the theatre, but one of them can't go. Would you like to come?\nElaine: I'd love to. What's the play about?\nKirsty: Oh, I 'll tell (3 tell) you all about that a little later. I 'll pick (4 pick) you up at 6.30 – is that okay?\nElaine: Yes OK. Or how about meeting a bit earlier? We could have a coffee beforehand.\nKirsty: Well, I 'm seeing (5 see) the school principal at four, but I suppose I could come after that. My meeting will probably finish (6 probably/finish) at about 5.30. Is that okay?\nElaine: Yes, of course. What time does the play actually start?\nKirsty: At 7.30, although we 'll need (7 need) to be there before as I 'm meeting (8 meet) my students at the theatre at seven. Afterwards they 'll probably want (9 probably/want) to talk about the play for a little while. But I hope that won't go on (10 not/go on) for too long. There will be (11 be) plenty of time for us to discuss it at tomorrow's lesson.\nElaine: That's fine. I 'll see (12 see) you at 5.30!",
+  "questions": [
+    {
+      "id": 1,
+      "text": "...but ___ (do) anything tonight?",
+      "answer": "are you doing"
+    },
+    {
+      "id": 2,
+      "text": "Well I ___ (take) my class to the theatre, but one of them can't go.",
+      "answer": "'m taking"
+    },
+    {
+      "id": 3,
+      "text": "Oh, I ___ (tell) you all about that a little later.",
+      "answer": "'ll tell"
+    },
+    {
+      "id": 4,
+      "text": "I ___ (pick) you up at 6.30 – is that okay?",
+      "answer": "'ll pick"
+    },
+    {
+      "id": 5,
+      "text": "Well, I ___ (see) the school principal at four,",
+      "answer": "'m seeing"
+    },
+    {
+      "id": 6,
+      "text": "My meeting ___ (probably/finish) at about 5.30.",
+      "answer": "will probably finish"
+    },
+    {
+      "id": 7,
+      "text": "...although we ___ (need) to be there before",
+      "answer": "'ll need"
+    },
+    {
+      "id": 8,
+      "text": "...as I ___ (meet) my students at the theatre at seven.",
+      "answer": "'m meeting"
+    },
+    {
+      "id": 9,
+      "text": "Afterwards they ___ (probably/want) to talk about the play for a little while.",
+      "answer": "'ll probably want"
+    },
+    {
+      "id": 10,
+      "text": "But I hope that ___ (not/go on) for too long.",
+      "answer": "won't go on"
+    },
+    {
+      "id": 11,
+      "text": "There ___ (be) plenty of time for us to discuss it at tomorrow's lesson.",
+      "answer": "will be"
+    },
+    {
+      "id": 12,
+      "text": "I ___ (see) you at 5.30!",
+      "answer": "'ll see"
+    }
+  ]
+}

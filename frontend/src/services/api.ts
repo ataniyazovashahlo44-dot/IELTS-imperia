@@ -3,9 +3,13 @@ import { getToken, removeToken } from '../utils/tokenStorage';
 
 // In production (Vercel), VITE_API_URL points to the Railway backend.
 // In development, VITE_API_URL is empty so Vite proxy handles /api -> localhost:5000.
+const backendOrigin = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const baseURL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : '/api';
+
+export const uploadsURL = (relativePath: string) =>
+  `${backendOrigin}/uploads/${relativePath}`;
 
 const api = axios.create({ baseURL, timeout: 15000 });
 
@@ -36,9 +40,11 @@ export const authApi = {
 
 export const adminApi = {
   getDashboard: () => api.get('/admin/dashboard'),
-  createTest: (data: { title: string; sections: object[] }) => api.post('/admin/tests', data),
+  createTest: (data: { title: string; maxAttempts: number; sections: object[] }) => api.post('/admin/tests', data),
   getTests: () => api.get('/admin/tests'),
+  getTestDetail: (id: string) => api.get(`/admin/tests/${id}`),
   toggleTest: (id: string) => api.patch(`/admin/tests/${id}/toggle`),
+  deleteTest: (id: string) => api.delete(`/admin/tests/${id}`),
   getStudents: () => api.get('/admin/students'),
   getResults: () => api.get('/admin/results'),
   getLiveSessions: () => api.get('/admin/live'),

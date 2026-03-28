@@ -96,7 +96,6 @@ export async function handleTabSwitch(req: AuthRequest, res: Response): Promise<
 
     const count = await recordTabSwitch(req.user!.userId, testSessionId);
 
-    // Emit to admin room for live monitoring
     const io = getIO();
     io.to(`admin_room`).emit('tab_switch_detected', {
       studentId: req.user!.userId,

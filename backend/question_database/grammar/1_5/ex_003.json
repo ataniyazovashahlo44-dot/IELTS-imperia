@@ -1,0 +1,81 @@
+{
+  "id": "grammar_1_5_003",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Past Simple Gap Fill",
+  "instruction": "Fill in the gaps in this model answer with verbs from the box in the past simple.\n\nEssay question: Thanks to modern technology, there have been enormous changes in the workplace over the past 100 years. What are the most significant changes that have occurred and what changes do you foresee in the next 100 years?\n\nVerb box: allow | be | be | be | invent | increase | lay | mean | own | receive | replace | ride | take | walk",
+  "passage": "The pace of change in the world of technology is amazing. It wasn't long ago that the postal service was our only way to communicate over any distance. It took days and sometimes weeks to receive letters from within the same country. As a result, the news in the letters was already out of date when people received them. In the workplace, this meant that business was mostly conducted locally, over relatively short distances.\n\nWhen Alexander Graham Bell invented the telephone in 1876 it laid the foundation for the communication systems we have today. The telephone allowed two people to communicate instantly across a great distance. Eventually computers replaced typewriters and dramatically increased the speed of our daily work life. Nowadays the Internet is an essential part of every business.\n\nHowever, it is not just communications that have changed. Only 50 years ago most people did not own a car. People walked to work or rode bicycles. Changes in travel as well as the increased speed of communications have led to the global business world that we have today.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "It ___ (not) long ago that the postal service was our only way to communicate over any distance.",
+      "answer": "wasn't"
+    },
+    {
+      "id": 2,
+      "text": "The postal service ___ our only way to communicate over any distance.",
+      "answer": "was"
+    },
+    {
+      "id": 3,
+      "text": "It ___ days and sometimes weeks to receive letters from within the same country.",
+      "answer": "took"
+    },
+    {
+      "id": 4,
+      "text": "The news in the letters ___ already out of date when people received them.",
+      "answer": "was"
+    },
+    {
+      "id": 5,
+      "text": "The news in the letters was already out of date when people ___ them.",
+      "answer": "received"
+    },
+    {
+      "id": 6,
+      "text": "In the workplace, this ___ that business was mostly conducted locally, over relatively short distances.",
+      "answer": "meant"
+    },
+    {
+      "id": 7,
+      "text": "When Alexander Graham Bell ___ the telephone in 1876",
+      "answer": "invented"
+    },
+    {
+      "id": 8,
+      "text": "...it ___ the foundation for the communication systems we have today.",
+      "answer": "laid"
+    },
+    {
+      "id": 9,
+      "text": "The telephone ___ two people to communicate instantly across a great distance.",
+      "answer": "allowed"
+    },
+    {
+      "id": 10,
+      "text": "Eventually computers ___ typewriters",
+      "answer": "replaced"
+    },
+    {
+      "id": 11,
+      "text": "...and dramatically ___ the speed of our daily work life.",
+      "answer": "increased"
+    },
+    {
+      "id": 12,
+      "text": "Only 50 years ago most people ___ (not) a car.",
+      "answer": "did not own"
+    },
+    {
+      "id": 13,
+      "text": "People ___ to work",
+      "answer": "walked"
+    },
+    {
+      "id": 14,
+      "text": "...or ___ bicycles.",
+      "answer": "rode"
+    }
+  ]
+}

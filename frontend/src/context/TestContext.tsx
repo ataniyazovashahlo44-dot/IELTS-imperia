@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import {
-  JoinTestResponse, SectionConfig, CurrentSection, SubmitAnswer, AnyClientQuestion
+  JoinTestResponse, SectionConfig, CurrentSection, SubmitAnswer
 } from '../types';
 
 type TestPhase = 'idle' | 'join' | 'in-section' | 'section-transition' | 'completed';

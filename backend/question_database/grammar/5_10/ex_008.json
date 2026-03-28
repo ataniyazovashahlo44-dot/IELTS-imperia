@@ -1,0 +1,173 @@
+{
+  "id": "grammar_5_10_008",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "mcq",
+  "title": "Exercise — Report on Holiday Survey",
+  "instruction": "Underline the most suitable words. Click the correct option.\n\nExample: 1 → This (already shown)",
+  "passage": "Report on holiday survey\n\nThis survey aimed to find out about people's ideal holidays. We used interviews and questionnaires to collect our data. Both of these methods of data collection were quick and simple to carry out and neither of them were too demanding of the public. Our findings show that many people like to take their holidays in the summer. This view was reinforced by the destinations suggested by the people involved in the survey. Beach holidays were the most popular, particularly in Spain and France. Most people in the survey said they looked forward to their holiday. Each person we interviewed agreed that it was important to have at least one holiday every year. The price of the holiday was important to most people, with general agreement that value for money was a primary consideration.",
+  "questions": [
+    {
+      "id": 2,
+      "text": "This survey aimed to find out about ___ ideal holidays.",
+      "options": {
+        "A": "people's",
+        "B": "the people's"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 3,
+      "text": "We used ___ and questionnaires to collect our data.",
+      "options": {
+        "A": "the interviews",
+        "B": "interviews"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 4,
+      "text": "We used interviews and ___ to collect our data.",
+      "options": {
+        "A": "the questionnaires",
+        "B": "questionnaires"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 5,
+      "text": "We used interviews and questionnaires to collect ___ data.",
+      "options": {
+        "A": "our",
+        "B": "their"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 6,
+      "text": "___ of these methods of data collection were quick and simple to carry out",
+      "options": {
+        "A": "Both",
+        "B": "All"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 7,
+      "text": "Both of ___ methods of data collection were quick and simple to carry out",
+      "options": {
+        "A": "those",
+        "B": "these"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 8,
+      "text": "...and ___ of them were too demanding of the public.",
+      "options": {
+        "A": "either",
+        "B": "neither"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 9,
+      "text": "___ show that many people like to take their holidays in the summer.",
+      "options": {
+        "A": "Our findings",
+        "B": "Findings"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 10,
+      "text": "___ view was reinforced by the destinations suggested by the people involved in the survey.",
+      "options": {
+        "A": "This",
+        "B": "The"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 11,
+      "text": "This view was reinforced by the destinations suggested by ___ involved in the survey.",
+      "options": {
+        "A": "the people",
+        "B": "people"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 12,
+      "text": "This view was reinforced by the destinations suggested by the people involved in ___.",
+      "options": {
+        "A": "a survey",
+        "B": "the survey"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 13,
+      "text": "___ were the most popular, particularly in Spain and France.",
+      "options": {
+        "A": "The beach holidays",
+        "B": "Beach holidays"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 14,
+      "text": "Beach holidays were the most popular, particularly in ___ and France.",
+      "options": {
+        "A": "the Spain",
+        "B": "Spain"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 15,
+      "text": "Beach holidays were the most popular, particularly in Spain and ___.",
+      "options": {
+        "A": "the France",
+        "B": "France"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 16,
+      "text": "___ people in the survey said they looked forward to their holiday.",
+      "options": {
+        "A": "Most",
+        "B": "Both"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 17,
+      "text": "___ person we interviewed agreed that it was important to have at least one holiday every year.",
+      "options": {
+        "A": "Each",
+        "B": "All"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 18,
+      "text": "...it was important to have at least one holiday ___ year.",
+      "options": {
+        "A": "every",
+        "B": "all"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 19,
+      "text": "___ was important to most people, with general agreement that value for money was a primary consideration.",
+      "options": {
+        "A": "The price of the holiday",
+        "B": "The holiday's price"
+      },
+      "answer": "A"
+    }
+  ]
+}

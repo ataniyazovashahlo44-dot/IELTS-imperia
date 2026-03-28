@@ -1,0 +1,76 @@
+{
+  "id": "grammar_1_5_005",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Would / Used To",
+  "instruction": "A teacher and student are talking about local customs. Fill in the gaps with the verbs in brackets in the correct form. Use *would* or *used to* where possible.",
+  "passage": "Teacher: What sort of things did you use to do (you/do) as a child?\nYoko: Oh, when I was a child growing up in Japan there were many customs that we would/used to follow (follow). For example, I remember we moved (move) house when I was seven and we visited (visit) our new neighbours with gifts. At that time the tradition was that people would/used to give (give) gifts of Japanese noodles, but it is different now and people tend to give things like soap or towels or nothing at all.\nTeacher: Did you use to have (have) one tradition that you particularly remember?\nYoko: Yes, one tradition that I really used to like (really/like) was in the spring when the cherry blossoms were out. As a family we used to/would go (go) into the countryside and we used to/would spend (spend) the day eating, drinking and singing. One year my father took (take) a lovely photo of me and my sisters and I still keep that picture on my wall today.\nTeacher: And did you use to have to (you/have to) do anything you didn't like?\nYoko: Yes. I remember how we used to have to (have to) clean the house thoroughly. This ceremony is called Osoji and my sisters and I didn't use to look forward to (not/look forward to) it very much!",
+  "questions": [
+    {
+      "id": 1,
+      "text": "What sort of things ___ (you/do) as a child?",
+      "answer": "did you use to do"
+    },
+    {
+      "id": 2,
+      "text": "...there were many customs that we ___ (follow).",
+      "answers": ["would follow", "used to follow"]
+    },
+    {
+      "id": 3,
+      "text": "For example, I remember we ___ (move) house when I was seven",
+      "answer": "moved"
+    },
+    {
+      "id": 4,
+      "text": "...and we ___ (visit) our new neighbours with gifts.",
+      "answer": "visited"
+    },
+    {
+      "id": 5,
+      "text": "At that time the tradition was that people ___ (give) gifts of Japanese noodles,",
+      "answers": ["would give", "used to give"]
+    },
+    {
+      "id": 6,
+      "text": "___ (have) one tradition that you particularly remember?",
+      "answer": "Did you use to have"
+    },
+    {
+      "id": 7,
+      "text": "Yes, one tradition that I ___ (really/like) was in the spring when the cherry blossoms were out.",
+      "answers": ["really used to like", "used to really like"]
+    },
+    {
+      "id": 8,
+      "text": "As a family we ___ (go) into the countryside",
+      "answers": ["used to go", "would go"]
+    },
+    {
+      "id": 9,
+      "text": "...and we ___ (spend) the day eating, drinking and singing.",
+      "answers": ["used to spend", "would spend"]
+    },
+    {
+      "id": 10,
+      "text": "One year my father ___ (take) a lovely photo of me and my sisters",
+      "answer": "took"
+    },
+    {
+      "id": 11,
+      "text": "And ___ (you/have to) do anything you didn't like?",
+      "answer": "did you use to have to"
+    },
+    {
+      "id": 12,
+      "text": "Yes. I remember how we ___ (have to) clean the house thoroughly.",
+      "answer": "used to have to"
+    },
+    {
+      "id": 13,
+      "text": "This ceremony is called Osoji and my sisters and I ___ (not/look forward to) it very much!",
+      "answer": "didn't use to look forward to"
+    }
+  ]
+}

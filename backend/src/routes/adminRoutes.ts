@@ -8,6 +8,8 @@ import {
   handleGetStudents,
   handleGetDashboard,
   handleGetLiveSessions,
+  handleDeleteTest,
+  handleGetTestDetail,
 } from '../controllers/adminController';
 import { handleGetAllResults } from '../controllers/resultsController';
 
@@ -17,7 +19,9 @@ router.use(authenticate, requireRole('ADMIN'));
 router.get('/dashboard', handleGetDashboard);
 router.post('/tests', handleCreateTest);
 router.get('/tests', handleGetTests);
+router.get('/tests/:id', handleGetTestDetail);
 router.patch('/tests/:id/toggle', handleToggleTest);
+router.delete('/tests/:id', handleDeleteTest);
 router.get('/students', handleGetStudents);
 router.get('/results', handleGetAllResults);
 router.get('/live', handleGetLiveSessions);

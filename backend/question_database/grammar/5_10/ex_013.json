@@ -1,0 +1,77 @@
+{
+  "id": "grammar_5_10_013",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "error_correction",
+  "title": "Exercise 1 — Adjective Order",
+  "instruction": "Read the students' responses. Some of the adjectives they used are underlined. If they are used correctly, put a tick (✓). If they are wrong, write the correct answer.\n\nExample: 1 → quiet little ✓ (already shown)",
+  "passage": "My favourite place is a quiet little wood near my home town in Indonesia. I like it because it is a peaceful green place. It is full of tall old trees and there are lots of interesting wild animals.\n\nI'm going to tell you about my bedroom. I love it because it is full of my things. The walls are painted with blue and yellow stripes, and there is a dark wooden floor. There is a lovely old photo of my family by my bed, and all my precious books are on the shelves.\n\nMy favourite place is the town I grew up in. It has a beautiful ancient ruined castle and lots of historical old buildings. The streets are narrow and winding, and there are lots of good shops. It is busy and noisy, but I like that. I feel good there because I have so many happy childhood memories.",
+  "questions": [
+    {
+      "id": 2,
+      "text": "I like it because it is a green peaceful place.",
+      "errorWord": "green peaceful",
+      "answer": "peaceful green"
+    },
+    {
+      "id": 3,
+      "text": "It is full of old tall trees",
+      "errorWord": "old tall",
+      "answer": "tall old"
+    },
+    {
+      "id": 4,
+      "text": "...and there are lots of wild interesting animals.",
+      "errorWord": "wild interesting",
+      "answer": "interesting wild"
+    },
+    {
+      "id": 5,
+      "text": "The walls are painted with blue yellow stripes,",
+      "errorWord": "blue yellow",
+      "answer": "blue and yellow"
+    },
+    {
+      "id": 6,
+      "text": "...and there is a wooden dark floor.",
+      "errorWord": "wooden dark",
+      "answer": "dark wooden"
+    },
+    {
+      "id": 7,
+      "text": "There is a lovely old photo of my family by my bed,",
+      "errorWord": "lovely old",
+      "answer": "✓"
+    },
+    {
+      "id": 8,
+      "text": "It has an ancient beautiful ruined castle",
+      "errorWord": "ancient beautiful ruined",
+      "answer": "beautiful ancient ruined"
+    },
+    {
+      "id": 9,
+      "text": "...and lots of historical old buildings.",
+      "errorWord": "historical old",
+      "answer": "✓"
+    },
+    {
+      "id": 10,
+      "text": "The streets are narrow winding,",
+      "errorWord": "narrow winding",
+      "answer": "narrow and winding"
+    },
+    {
+      "id": 11,
+      "text": "It is busy noisy, but I like that.",
+      "errorWord": "busy noisy",
+      "answer": "busy and noisy"
+    },
+    {
+      "id": 12,
+      "text": "I have so many childhood happy memories.",
+      "errorWord": "childhood happy",
+      "answer": "happy childhood"
+    }
+  ]
+}

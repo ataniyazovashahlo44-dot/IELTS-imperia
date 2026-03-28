@@ -1,0 +1,71 @@
+{
+  "id": "grammar_5_10_005",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "error_correction",
+  "title": "Exercise 4 — Quantity Expressions (Holiday Text)",
+  "instruction": "Read the extract from a talk about a holiday destination. Decide if the underlined quantity expressions are correct or not. Tick (✓) if they are right and correct them if they are wrong.\n\nExample: 1 → a little ✓ (already shown)",
+  "passage": "The island is beautiful. Don't be dismayed when you get off the plane and find yourself in a large, rather ugly city with a little sense of the old way of life you have read about. Just a short car ride away is the island you have been promised with its small villages and slow pace of life. And there really is something for everyone. For those that like sun-bathing, it has some of the most beautiful beaches in the world. If you like walking, the paths take you through some breathtaking scenery. Few other places can match the stunning landscape of this island. For water sports enthusiasts, there are some unusual activities such as diving for pearls or turtle spotting, along with a few of the more common sports such as waterskiing or windsurfing. If history is your thing, don't worry. There's plenty of history round every corner. Ruins from the ancient civilisations that lived here over 3000 years ago are everywhere, and although a lot of people come here just to see the palace, you can find some lesser remains scattered around the surrounding hills.\n\nVisit it any time of the year and you will not be disappointed. Not many places in the world can offer so much. No holiday will ever match this one – our island has got it all!",
+  "questions": [
+    {
+      "id": 2,
+      "text": "And there really is anything for everyone.",
+      "errorWord": "anything",
+      "answer": "something"
+    },
+    {
+      "id": 3,
+      "text": "For those that like sun-bathing, it has some of the most beautiful beaches in the world.",
+      "errorWord": "some",
+      "answer": "✓"
+    },
+    {
+      "id": 4,
+      "text": "Little other places can match the stunning landscape of this island.",
+      "errorWord": "Little",
+      "answer": "Few"
+    },
+    {
+      "id": 5,
+      "text": "For water sports enthusiasts, there are any unusual activities such as diving for pearls or turtle spotting,",
+      "errorWord": "any",
+      "answers": ["some", "many"]
+    },
+    {
+      "id": 6,
+      "text": "...along with few of the more common sports such as waterskiing or windsurfing.",
+      "errorWord": "few",
+      "answer": "a few"
+    },
+    {
+      "id": 7,
+      "text": "There's much history round every corner.",
+      "errorWord": "much",
+      "answers": ["plenty of", "a lot of", "lots of"]
+    },
+    {
+      "id": 8,
+      "text": "...although a lot of people come here just to see the palace,",
+      "errorWord": "a lot",
+      "answer": "✓"
+    },
+    {
+      "id": 9,
+      "text": "Visit it some time of the year and you will not be disappointed.",
+      "errorWord": "some",
+      "answer": "any"
+    },
+    {
+      "id": 10,
+      "text": "Not many places in the world can offer so much.",
+      "errorWord": "many",
+      "answer": "✓"
+    },
+    {
+      "id": 11,
+      "text": "Not any holiday will ever match this one – our island has got it all!",
+      "errorWord": "Not any",
+      "answer": "No"
+    }
+  ]
+}

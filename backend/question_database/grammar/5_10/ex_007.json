@@ -1,0 +1,76 @@
+{
+  "id": "grammar_5_10_007",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "gap_fill",
+  "title": "Exercise — Articles: Borneo Born and Bred",
+  "instruction": "Fill in the gaps with *a/an* or *the* or put a cross (X) if no article is needed.\n\nExample: 1 → the (already shown)",
+  "passage": "BORNEO BORN AND BRED\n\nLocal legends say that Borneo's few thousand wild elephants are descendants from those brought to the island from India or Malaysia as a gift to the sultan in the eighteenth century. Biologists from Columbia University's Centre for Environmental Research and Conservation compared DNA samples from Borneo elephants with Asian elephants in Sumatra, India and elsewhere. The findings confirmed their suspicions: Borneo's elephants are genetically different. In fact the DNA differences are so great between them and their closest relatives (elephants in Peninsular Malaysia) that the populations may have separated up to 300,000 years ago, say the scientists. The animals became isolated when the island became totally cut off from the mainland due to a rise in sea level. Borneo's elephants are, therefore, an important, separate population.",
+  "questions": [
+    {
+      "id": 2,
+      "text": "Local legends say that ___ Borneo's few thousand wild elephants are descendants",
+      "answer": "X"
+    },
+    {
+      "id": 3,
+      "text": "...descendants from those brought to ___ island from India or Malaysia",
+      "answer": "the"
+    },
+    {
+      "id": 4,
+      "text": "...as ___ gift to the sultan in the eighteenth century.",
+      "answer": "a"
+    },
+    {
+      "id": 5,
+      "text": "...as a gift to ___ sultan in the eighteenth century.",
+      "answer": "the"
+    },
+    {
+      "id": 6,
+      "text": "...in ___ eighteenth century.",
+      "answer": "the"
+    },
+    {
+      "id": 7,
+      "text": "Biologists from ___ Columbia University's Centre for Environmental Research and Conservation",
+      "answer": "X"
+    },
+    {
+      "id": 8,
+      "text": "___ findings confirmed their suspicions: Borneo's elephants are genetically different.",
+      "answers": ["The", "Their"]
+    },
+    {
+      "id": 9,
+      "text": "In fact ___ DNA differences are so great between them and their closest relatives",
+      "answer": "the"
+    },
+    {
+      "id": 10,
+      "text": "...that ___ populations may have separated up to 300,000 years ago,",
+      "answer": "the"
+    },
+    {
+      "id": 11,
+      "text": "...say ___ scientists.",
+      "answer": "the"
+    },
+    {
+      "id": 12,
+      "text": "The animals became isolated when ___ island became totally cut off from the mainland",
+      "answer": "the"
+    },
+    {
+      "id": 13,
+      "text": "...due to ___ rise in sea level.",
+      "answer": "a"
+    },
+    {
+      "id": 14,
+      "text": "Borneo's elephants are, therefore, ___ important, separate population.",
+      "answer": "an"
+    }
+  ]
+}

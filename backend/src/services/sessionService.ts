@@ -1,86 +1,118 @@
 import prisma from '../config/database';
-import { SectionType } from '../types';
-import { getRandomVocabQuestions, getRandomGrammarQuestions } from '../utils/questionLoader';
+import { SectionSubject } from '../types';
 import {
-  buildClientVocabQuestions,
-  buildClientGrammarQuestions,
-  validatePinAndGetSections,
-} from './testService';
+  loadExercisesFromGroups,
+  loadAllExercises,
+  selectRandomExercises,
+  buildClientExercises,
+} from '../utils/questionLoader';
+import { validatePinAndGetSections } from './testService';
 
-// In-memory store for per-student question answers during a test
-// Key: studentId, Value: answerMap { questionId -> correctDisplayKey }
+// In-memory store for per-student answer maps during a test
+// Key: `${studentId}_${testSessionId}`, Value: { questionKey -> correctAnswer }
 const activeAnswerMaps = new Map<string, Record<string, string>>();
 
-export function storeAnswerMap(studentId: string, map: Record<string, string>): void {
-  const existing = activeAnswerMaps.get(studentId) || {};
-  activeAnswerMaps.set(studentId, { ...existing, ...map });
+function mapKey(studentId: string, testSessionId: string) {
+  return `${studentId}_${testSessionId}`;
 }
 
-export function getAnswerMap(studentId: string): Record<string, string> {
-  return activeAnswerMaps.get(studentId) || {};
+export function storeAnswerMap(studentId: string, testSessionId: string, map: Record<string, string>): void {
+  const key = mapKey(studentId, testSessionId);
+  const existing = activeAnswerMaps.get(key) || {};
+  activeAnswerMaps.set(key, { ...existing, ...map });
 }
 
-export function clearAnswerMap(studentId: string): void {
-  activeAnswerMaps.delete(studentId);
+export function getAnswerMap(studentId: string, testSessionId: string): Record<string, string> {
+  return activeAnswerMaps.get(mapKey(studentId, testSessionId)) || {};
+}
+
+export function clearAnswerMap(studentId: string, testSessionId: string): void {
+  activeAnswerMaps.delete(mapKey(studentId, testSessionId));
 }
 
 // ─── Join Test ────────────────────────────────────────────────────────────────
 
 export async function joinTest(studentId: string, pin: string) {
-  // Check if already in test
+  // Check if already in an active test
   const existing = await prisma.activeSession.findFirst({
     where: { studentId, isActive: true },
   });
   if (existing) throw new Error('You are already in an active test');
 
-  // Check already completed this test
-  const alreadyDone = await prisma.result.findFirst({
-    where: { studentId, testSession: { pinCode: pin } },
-  });
-  if (alreadyDone) throw new Error('You have already completed this test');
-
   const session = await validatePinAndGetSections(pin);
-  const sections = session.sections; // ordered by sectionOrder
+  const sections = session.sections;
 
   if (sections.length === 0) throw new Error('Test has no sections configured');
+
+  // Check attempt count
+  const previousAttempts = await prisma.result.count({
+    where: { studentId, testSessionId: session.id },
+  });
+  if (previousAttempts >= session.maxAttempts) {
+    throw new Error(`Maximum attempts (${session.maxAttempts}) reached for this test`);
+  }
+
+  // Select random exercises for ALL sections upfront
+  const selectedExercisesMap: Record<string, string[]> = {};
+  const allAnswerMaps: Record<string, string> = {};
+
+  for (const sec of sections) {
+    const variantGroups: string[] = JSON.parse(sec.variantGroups);
+
+    // Load pool: if "full" flag or all groups selected, load all
+    let pool;
+    if (variantGroups.length === 5) {
+      pool = loadAllExercises(sec.subject);
+    } else {
+      pool = loadExercisesFromGroups(sec.subject, variantGroups);
+    }
+
+    const selected = selectRandomExercises(pool, sec.numberOfExercises);
+    selectedExercisesMap[String(sec.sectionOrder)] = selected.map(e => e.id);
+
+    // Build client exercises and collect answer maps
+    const { answerMap } = buildClientExercises(selected);
+    Object.assign(allAnswerMaps, answerMap);
+  }
+
+  // Store all answer maps for this student+test
+  storeAnswerMap(studentId, session.id, allAnswerMaps);
 
   const firstSection = sections[0];
   const sectionDeadline = new Date(Date.now() + firstSection.timeAllocated * 60 * 1000);
 
-  // Create active session
+  // Create active session with all selected exercise IDs
   await prisma.activeSession.create({
     data: {
       studentId,
       testSessionId: session.id,
       pinCode: pin,
-      currentSection: firstSection.sectionType,
+      currentSubject: firstSection.subject as SectionSubject,
       sectionOrder: firstSection.sectionOrder,
       sectionDeadline,
+      selectedExercises: JSON.stringify(selectedExercisesMap),
     },
   });
 
-  // Fetch questions for first section
-  const { questions, answerMap } = await fetchQuestionsForSection(
-    firstSection.sectionType,
-    firstSection.numberOfQuestions
-  );
-
-  storeAnswerMap(studentId, answerMap);
+  // Build client payload for first section
+  const firstExerciseIds = selectedExercisesMap[String(firstSection.sectionOrder)];
+  const firstClientExercises = getClientExercisesForSection(firstSection, firstExerciseIds);
 
   return {
     testSessionId: session.id,
     title: session.title,
     sections: sections.map(s => ({
-      sectionType: s.sectionType,
-      numberOfQuestions: s.numberOfQuestions,
+      subject: s.subject,
+      variantGroups: JSON.parse(s.variantGroups),
+      numberOfExercises: s.numberOfExercises,
       timeAllocated: s.timeAllocated,
       sectionOrder: s.sectionOrder,
     })),
     currentSection: {
-      sectionType: firstSection.sectionType,
+      subject: firstSection.subject,
       sectionOrder: firstSection.sectionOrder,
       deadline: sectionDeadline,
-      questions,
+      exercises: firstClientExercises,
     },
   };
 }
@@ -114,45 +146,50 @@ export async function advanceSection(studentId: string, testSessionId: string) {
   await prisma.activeSession.update({
     where: { id: activeSession.id },
     data: {
-      currentSection: nextSection.sectionType,
+      currentSubject: nextSection.subject as SectionSubject,
       sectionOrder: nextSection.sectionOrder,
       sectionDeadline,
     },
   });
 
-  const { questions, answerMap } = await fetchQuestionsForSection(
-    nextSection.sectionType as SectionType,
-    nextSection.numberOfQuestions
-  );
-
-  storeAnswerMap(studentId, answerMap);
+  // Get pre-selected exercise IDs for this section
+  const selectedExercisesMap: Record<string, string[]> = JSON.parse(activeSession.selectedExercises);
+  const exerciseIds = selectedExercisesMap[String(nextSection.sectionOrder)] || [];
+  const clientExercises = getClientExercisesForSection(nextSection, exerciseIds);
 
   return {
-    sectionType: nextSection.sectionType,
+    subject: nextSection.subject,
     sectionOrder: nextSection.sectionOrder,
     deadline: sectionDeadline,
-    questions,
+    exercises: clientExercises,
   };
 }
 
-// ─── Internal: fetch & build questions for a section ─────────────────────────
+// ─── Internal: build client exercises for a section from stored IDs ─────────
 
-async function fetchQuestionsForSection(
-  type: SectionType,
-  count: number
-): Promise<{ questions: unknown; answerMap: Record<string, string> }> {
-  if (type === 'VOCABULARY') {
-    const raw = getRandomVocabQuestions(count);
-    const { clientQuestions, answerMap } = buildClientVocabQuestions(raw);
-    // Strip _originalKey before sending to client
-    const safe = clientQuestions.map(({ _originalKey: _k, ...rest }) => rest);
-    return { questions: safe, answerMap };
+function getClientExercisesForSection(
+  section: { subject: string; variantGroups: string },
+  exerciseIds: string[]
+): unknown[] {
+  const variantGroups: string[] = JSON.parse(section.variantGroups);
+
+  let pool;
+  if (variantGroups.length === 5) {
+    pool = loadAllExercises(section.subject);
   } else {
-    const raw = getRandomGrammarQuestions(count);
-    const { clientPassages, answerMap } = buildClientGrammarQuestions(raw);
-    return { questions: clientPassages, answerMap };
+    pool = loadExercisesFromGroups(section.subject, variantGroups);
   }
+
+  // Filter to only the selected exercise IDs (preserving order)
+  const selectedExercises = exerciseIds
+    .map(id => pool.find(e => e.id === id))
+    .filter(Boolean) as import('../types').Exercise[];
+
+  const { clientExercises } = buildClientExercises(selectedExercises);
+  return clientExercises;
 }
+
+// ─── Tab switch recording ───────────────────────────────────────────────────
 
 export async function recordTabSwitch(studentId: string, testSessionId: string): Promise<number> {
   const updated = await prisma.activeSession.updateMany({

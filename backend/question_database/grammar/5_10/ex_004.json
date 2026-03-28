@@ -1,0 +1,66 @@
+{
+  "id": "grammar_5_10_004",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "gap_fill",
+  "title": "Exercise — Amount, Number, Few, Little, Many, Much",
+  "instruction": "Fill in the gaps with *amount*, *number*, *few*, *little*, *many* or *much*.",
+  "passage": "How much sleep do we need?\n\nThe amount of sleep each person needs depends on many factors, including age. Infants generally require about 16 hours a day. For most adults, seven to eight hours a night appears to be the ideal amount of sleep, although a few people may need as little as five hours' sleep or as much as ten hours' sleep each day. Getting too little sleep creates a sleep debt, and eventually, your body will demand that the debt be repaid.\n\nA large number of people over 65 have frequent sleeping problems, such as insomnia, and deep sleep stages in many elderly people often become very short or stop completely. Microsleeps, or very brief episodes of sleep in an otherwise awake person, are another mark of sleep deprivation. In many cases, people are not aware that they are experiencing microsleeps. The widespread practice of burning the candle at both ends in western industrialized societies has created so much sleep deprivation that what is really abnormal sleepiness is now almost the norm.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "The ___ of sleep each person needs depends on many factors, including age.",
+      "answer": "amount"
+    },
+    {
+      "id": 2,
+      "text": "The amount of sleep each person needs depends on ___ factors, including age.",
+      "answer": "many"
+    },
+    {
+      "id": 3,
+      "text": "...the ideal ___ of sleep,",
+      "answer": "amount"
+    },
+    {
+      "id": 4,
+      "text": "...although a ___ people may need as little as five hours' sleep",
+      "answer": "few"
+    },
+    {
+      "id": 5,
+      "text": "...people may need as ___ as five hours' sleep",
+      "answers": ["little", "few"]
+    },
+    {
+      "id": 6,
+      "text": "...or as ___ as ten hours' sleep each day.",
+      "answers": ["much", "many"]
+    },
+    {
+      "id": 7,
+      "text": "Getting too ___ sleep creates a sleep debt,",
+      "answer": "little"
+    },
+    {
+      "id": 8,
+      "text": "A large ___ of people over 65 have frequent sleeping problems,",
+      "answer": "number"
+    },
+    {
+      "id": 9,
+      "text": "...deep sleep stages in ___ elderly people often become very short or stop completely.",
+      "answer": "many"
+    },
+    {
+      "id": 10,
+      "text": "In ___ cases, people are not aware that they are experiencing microsleeps.",
+      "answer": "many"
+    },
+    {
+      "id": 11,
+      "text": "...has created so ___ sleep deprivation that what is really abnormal sleepiness is now almost the norm.",
+      "answer": "much"
+    }
+  ]
+}

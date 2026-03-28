@@ -1,0 +1,116 @@
+{
+  "id": "grammar_1_5_004",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Past Simple / Past Continuous",
+  "instruction": "Fill in the gaps with the past simple or past continuous form of the verbs in brackets. In which gaps could you use *used to*?",
+  "passage": "I had a wonderful biology teacher, Mrs Hughes. She made us excited about the subject because she was so interested herself. I remember one lesson in particular; we were studying different types of plants, and Mrs Hughes was describing the different parts of the flower. She picked up a purple flower, I can't remember exactly what it was, and then suddenly we noticed that she was crying! She apologised and said that sometimes nature was so beautiful it just made her cry! We didn't know what to do at first, but it certainly made us think. Something similar happened while she was showing us how to work the microscope. She was examining a slide of some plant tissue and she was smiling all over her face. She suddenly got all excited and said, 'Isn't it wonderful?' Some students laughed at her when she wasn't looking but I didn't. Somehow her enthusiasm inspired me, and I started to like biology.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "I ___ (have) a wonderful biology teacher, Mrs Hughes.",
+      "answer": "had"
+    },
+    {
+      "id": 2,
+      "text": "She ___ (make) us excited about the subject because she was so interested herself.",
+      "answer": "made"
+    },
+    {
+      "id": 3,
+      "text": "I remember one lesson in particular; we ___ (study) different types of plants,",
+      "answer": "were studying"
+    },
+    {
+      "id": 4,
+      "text": "...and Mrs Hughes ___ (describe) the different parts of the flower.",
+      "answer": "was describing"
+    },
+    {
+      "id": 5,
+      "text": "She ___ (pick up) a purple flower, I can't remember exactly what it was,",
+      "answer": "picked up"
+    },
+    {
+      "id": 6,
+      "text": "...and then suddenly we ___ (notice) that she was crying!",
+      "answer": "noticed"
+    },
+    {
+      "id": 7,
+      "text": "...we noticed that she ___ (cry)!",
+      "answer": "was crying"
+    },
+    {
+      "id": 8,
+      "text": "She ___ (apologise)",
+      "answer": "apologised"
+    },
+    {
+      "id": 9,
+      "text": "...and ___ (say) that sometimes nature was so beautiful it just made her cry!",
+      "answer": "said"
+    },
+    {
+      "id": 10,
+      "text": "We ___ (not/know) what to do at first,",
+      "answer": "didn't know"
+    },
+    {
+      "id": 11,
+      "text": "...but it certainly ___ (make) us think.",
+      "answer": "made"
+    },
+    {
+      "id": 12,
+      "text": "Something similar ___ (happen) while she was showing us how to work the microscope.",
+      "answer": "happened"
+    },
+    {
+      "id": 13,
+      "text": "Something similar happened while she ___ (show) us how to work the microscope.",
+      "answer": "was showing"
+    },
+    {
+      "id": 14,
+      "text": "She ___ (examine) a slide of some plant tissue",
+      "answer": "was examining"
+    },
+    {
+      "id": 15,
+      "text": "...and she ___ (smile) all over her face.",
+      "answer": "was smiling"
+    },
+    {
+      "id": 16,
+      "text": "She suddenly ___ (get) all excited",
+      "answer": "got"
+    },
+    {
+      "id": 17,
+      "text": "...and ___ (say), 'Isn't it wonderful?'",
+      "answer": "said"
+    },
+    {
+      "id": 18,
+      "text": "Some students ___ (laugh) at her when she wasn't looking",
+      "answer": "laughed"
+    },
+    {
+      "id": 19,
+      "text": "Some students laughed at her when she ___ (not/look)",
+      "answer": "wasn't looking"
+    },
+    {
+      "id": 20,
+      "text": "Somehow her enthusiasm ___ (inspire) me,",
+      "answer": "inspired"
+    },
+    {
+      "id": 21,
+      "text": "...and I ___ (start) to like biology.",
+      "answer": "started"
+    }
+  ]
+}

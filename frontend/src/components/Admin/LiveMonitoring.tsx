@@ -102,7 +102,7 @@ export default function LiveMonitoring() {
                   <div>
                     <p className="font-semibold text-sm text-gray-900 dark:text-white">{s.student.fullName}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">@{s.student.username} · {s.testSession.title}</p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Section: {s.currentSection}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Section: {s.currentSubject}</p>
                   </div>
                   <div className="text-right">
                     {s.tabSwitchCount > 0 ? (

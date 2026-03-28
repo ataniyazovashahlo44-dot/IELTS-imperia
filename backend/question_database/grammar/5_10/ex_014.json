@@ -1,0 +1,36 @@
+{
+  "id": "grammar_5_10_014",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "gap_fill",
+  "title": "Exercise — Adjective and Adverb Word Forms",
+  "instruction": "Write the missing adjectives and adverbs.\n\nExample: dramatic – dramatically (already shown)",
+  "passage": null,
+  "questions": [
+    {
+      "id": 1,
+      "text": "impressive – ___",
+      "answer": "impressively"
+    },
+    {
+      "id": 2,
+      "text": "slight – ___",
+      "answer": "slightly"
+    },
+    {
+      "id": 3,
+      "text": "steady – ___",
+      "answer": "steadily"
+    },
+    {
+      "id": 4,
+      "text": "sharp – ___",
+      "answer": "sharply"
+    },
+    {
+      "id": 5,
+      "text": "___ – steeply",
+      "answer": "steep"
+    }
+  ]
+}

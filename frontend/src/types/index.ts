@@ -1,6 +1,23 @@
 export type UserRole = 'ADMIN' | 'STUDENT';
-export type SectionType = 'VOCABULARY' | 'GRAMMAR';
-export type GrammarSubType = 'gap_fill_input' | 'multiple_choice' | 'heading_match';
+export type SectionSubject = 'VOCABULARY' | 'GRAMMAR';
+export type ExerciseType =
+  | 'gap_fill'
+  | 'mcq'
+  | 'tfng'
+  | 'matching'
+  | 'error_correction'
+  | 'sentence_transformation';
+
+export const VARIANT_GROUPS = ['1_5', '5_10', '10_15', '15_20', '20_25'] as const;
+export type VariantGroup = typeof VARIANT_GROUPS[number];
+
+export const VARIANT_GROUP_LABELS: Record<VariantGroup, string> = {
+  '1_5': 'Unit 1–5',
+  '5_10': 'Unit 5–10',
+  '10_15': 'Unit 10–15',
+  '15_20': 'Unit 15–20',
+  '20_25': 'Unit 20–25',
+};
 
 export interface User {
   id: string;
@@ -17,46 +34,39 @@ export interface AuthState {
   isLoading: boolean;
 }
 
-export interface ShuffledOption {
-  key: string;
-  value: string;
+// ─── Exercise / Question types (client-facing, no answers) ──────────────────
+
+export interface ClientQuestion {
+  id: number;
+  text: string;
+  options?: Record<string, string>; // MCQ
+  errorWord?: string;               // error_correction
+  stem?: string;                    // sentence_transformation
+  prompt?: string;                  // sentence_transformation
 }
 
-export interface ClientVocabQuestion {
+export interface ClientExercise {
   id: string;
-  questionNumber: number;
-  type: 'VOCABULARY';
-  question: string;
-  audio_path: string | null;
-  image_path: string | null;
-  options: ShuffledOption[];
+  subject: SectionSubject;
+  type: ExerciseType;
+  title: string;
+  instruction: string;
+  passage: string | null;
+  image?: string;              // relative path under uploads/, e.g. "question_images/foo.png"
+  questions: ClientQuestion[];
+
+  // Matching-specific
+  leftLabel?: string;
+  rightLabel?: string;
+  options?: Record<string, string>;
 }
 
-export interface ClientGrammarSubQuestion {
-  id: string;
-  questionNumber: number;
-  blank: number;
-  question: string;
-  type: string;
-  options: ShuffledOption[];
-}
-
-export interface ClientGrammarQuestion {
-  id: string;
-  type: 'GRAMMAR';
-  subType: GrammarSubType;
-  passage: string;
-  audio_path: string | null;
-  image_path: string | null;
-  availableHeadings?: string[];
-  questions: ClientGrammarSubQuestion[];
-}
-
-export type AnyClientQuestion = ClientVocabQuestion | ClientGrammarQuestion;
+// ─── Section / Test types ───────────────────────────────────────────────────
 
 export interface SectionConfig {
-  sectionType: SectionType;
-  numberOfQuestions: number;
+  subject: SectionSubject;
+  variantGroups: string[];
+  numberOfExercises: number;
   timeAllocated: number;
   sectionOrder: number;
 }
@@ -70,6 +80,7 @@ export interface TestSession {
   id: string;
   pinCode: string;
   title: string;
+  maxAttempts: number;
   isActive: boolean;
   createdAt: string;
   sections: TestSection[];
@@ -77,10 +88,10 @@ export interface TestSession {
 }
 
 export interface CurrentSection {
-  sectionType: SectionType;
+  subject: SectionSubject;
   sectionOrder: number;
   deadline: string;
-  questions: AnyClientQuestion[];
+  exercises: ClientExercise[];
 }
 
 export interface JoinTestResponse {
@@ -90,10 +101,12 @@ export interface JoinTestResponse {
   currentSection: CurrentSection;
 }
 
+// ─── Results ────────────────────────────────────────────────────────────────
+
 export interface StudentAnswer {
   id: string;
   questionId: string;
-  questionType: SectionType;
+  questionType: SectionSubject;
   questionText: string;
   selectedAnswer: string;
   correctAnswer: string;
@@ -104,6 +117,7 @@ export interface Result {
   id: string;
   studentId: string;
   testSessionId: string;
+  attemptNumber: number;
   totalScore: number;
   vocabScore: number | null;
   grammarScore: number | null;
@@ -122,7 +136,7 @@ export interface LiveSession {
   studentId: string;
   testSessionId: string;
   pinCode: string;
-  currentSection: SectionType;
+  currentSubject: SectionSubject;
   sectionOrder: number;
   sectionDeadline: string;
   tabSwitchCount: number;
@@ -133,8 +147,8 @@ export interface LiveSession {
 }
 
 export interface SubmitAnswer {
-  questionId: string;
-  questionType: SectionType;
+  questionId: string;       // "exerciseId_questionNum"
+  questionType: SectionSubject;
   selectedAnswer: string;
   questionText: string;
 }

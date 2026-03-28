@@ -1,75 +1,182 @@
 import fs from 'fs';
 import path from 'path';
-import { VocabularyQuestion, GrammarQuestion } from '../types';
+import { Exercise, SectionSubject, VARIANT_GROUPS } from '../types';
 
-const VOCAB_DIR = path.resolve(__dirname, '../../question_database/vocabulary_questions');
-const GRAMMAR_DIR = path.resolve(__dirname, '../../question_database/grammar_questions');
+const DB_DIR = path.resolve(__dirname, '../../question_database');
 
-function loadJSONFiles<T>(dir: string): T[] {
+/**
+ * Load all exercises from a single variant group folder.
+ */
+export function loadExercisesFromGroup(subject: string, group: string): Exercise[] {
+  const subjectDir = subject.toLowerCase(); // "grammar" | "vocabulary"
+  const dir = path.join(DB_DIR, subjectDir, group);
+
   if (!fs.existsSync(dir)) return [];
+
   const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
-  const results: T[] = [];
+  const exercises: Exercise[] = [];
 
   for (const file of files) {
     try {
       const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
-      const parsed = JSON.parse(raw) as T;
-      results.push(parsed);
+      const parsed = JSON.parse(raw) as Exercise;
+      exercises.push(parsed);
     } catch (err) {
-      console.error(`Failed to parse question file: ${file}`, err);
+      console.error(`Failed to parse exercise file: ${subjectDir}/${group}/${file}`, err);
     }
   }
-  return results;
-}
 
-function getRandomSample<T>(arr: T[], count: number): T[] {
-  if (count >= arr.length) return [...arr];
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}
-
-export function getRandomVocabQuestions(count: number): VocabularyQuestion[] {
-  const all = loadJSONFiles<VocabularyQuestion>(VOCAB_DIR);
-  return getRandomSample(all, count);
+  return exercises;
 }
 
 /**
- * Grammar: Each JSON file is one passage with multiple sub-questions.
- * We select random PASSAGES until we have at least `count` sub-questions,
- * then trim the last passage's questions if necessary.
+ * Load exercises from multiple variant groups (merged pool).
  */
-export function getRandomGrammarQuestions(count: number): GrammarQuestion[] {
-  const all = loadJSONFiles<GrammarQuestion>(GRAMMAR_DIR);
-  const shuffled = [...all].sort(() => Math.random() - 0.5);
+export function loadExercisesFromGroups(subject: string, groups: string[]): Exercise[] {
+  const all: Exercise[] = [];
+  for (const group of groups) {
+    all.push(...loadExercisesFromGroup(subject, group));
+  }
+  return all;
+}
 
-  const selected: GrammarQuestion[] = [];
-  let total = 0;
+/**
+ * Load exercises from ALL variant groups (Full MOC).
+ */
+export function loadAllExercises(subject: string): Exercise[] {
+  return loadExercisesFromGroups(subject, [...VARIANT_GROUPS]);
+}
 
-  for (const passage of shuffled) {
-    if (total >= count) break;
-    const remaining = count - total;
-    if (passage.questions.length <= remaining) {
-      selected.push(passage);
-      total += passage.questions.length;
-    } else {
-      // Trim questions from this passage
-      selected.push({
-        ...passage,
-        questions: passage.questions.slice(0, remaining),
-      });
-      total += remaining;
+/**
+ * Fisher-Yates shuffle.
+ */
+function shuffle<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/**
+ * Randomly select N unique exercises from a pool.
+ */
+export function selectRandomExercises(pool: Exercise[], count: number): Exercise[] {
+  if (count >= pool.length) return shuffle(pool);
+  return shuffle(pool).slice(0, count);
+}
+
+/**
+ * Count available exercises for a given subject + variant groups.
+ */
+export function countAvailableExercises(subject: string, groups: string[]): number {
+  return loadExercisesFromGroups(subject, groups).length;
+}
+
+/**
+ * Build client-safe exercise payload (strip answers).
+ * Returns: { clientExercises, answerMap }
+ */
+export function buildClientExercises(exercises: Exercise[]): {
+  clientExercises: Array<{
+    id: string;
+    subject: SectionSubject;
+    type: string;
+    title: string;
+    instruction: string;
+    passage: string | null;
+    questions: Array<Record<string, unknown>>;
+    leftLabel?: string;
+    rightLabel?: string;
+    options?: Record<string, string>;
+  }>;
+  answerMap: Record<string, string>; // "exerciseId_questionId" -> correct answer
+} {
+  const clientExercises: Array<{
+    id: string;
+    subject: SectionSubject;
+    type: string;
+    title: string;
+    instruction: string;
+    passage: string | null;
+    questions: Array<Record<string, unknown>>;
+    leftLabel?: string;
+    rightLabel?: string;
+    options?: Record<string, string>;
+  }> = [];
+  const answerMap: Record<string, string> = {};
+
+  for (const ex of exercises) {
+    const clientQuestions: Array<Record<string, unknown>> = [];
+
+    for (const q of ex.questions) {
+      const answerKey = `${ex.id}_${q.id}`;
+
+      // Store correct answer (handle multiple accepted answers for sentence_transformation)
+      const anyQ = q as Record<string, unknown>;
+      if (Array.isArray(anyQ.answers) && anyQ.answers.length > 0) {
+        // Store first answer as primary, all as pipe-separated for multi-match
+        answerMap[answerKey] = (anyQ.answers as string[]).join('|||');
+      } else {
+        answerMap[answerKey] = q.answer;
+      }
+
+      // Build client question (no answer fields)
+      const clientQ: Record<string, unknown> = {
+        id: q.id,
+        text: q.text,
+      };
+
+      if (ex.type === 'mcq') {
+        clientQ.options = (q as Record<string, unknown>).options;
+      }
+
+      if (ex.type === 'error_correction') {
+        clientQ.errorWord = (q as Record<string, unknown>).errorWord;
+      }
+
+      if (ex.type === 'sentence_transformation') {
+        clientQ.stem = (q as Record<string, unknown>).stem;
+        clientQ.prompt = (q as Record<string, unknown>).prompt;
+      }
+
+      clientQuestions.push(clientQ);
     }
+
+    const clientEx: {
+      id: string;
+      subject: SectionSubject;
+      type: string;
+      title: string;
+      instruction: string;
+      passage: string | null;
+      image?: string;
+      questions: Array<Record<string, unknown>>;
+      leftLabel?: string;
+      rightLabel?: string;
+      options?: Record<string, string>;
+    } = {
+      id: ex.id,
+      subject: ex.subject,
+      type: ex.type,
+      title: ex.title,
+      instruction: ex.instruction,
+      passage: ex.passage,
+      questions: clientQuestions,
+    };
+
+    if (ex.image) clientEx.image = ex.image;
+
+    // Matching-specific fields
+    if (ex.type === 'matching') {
+      clientEx.leftLabel = ex.leftLabel;
+      clientEx.rightLabel = ex.rightLabel;
+      clientEx.options = ex.options;
+    }
+
+    clientExercises.push(clientEx);
   }
 
-  return selected;
-}
-
-export function countAvailableVocab(): number {
-  const all = loadJSONFiles<VocabularyQuestion>(VOCAB_DIR);
-  return all.length;
-}
-
-export function countAvailableGrammar(): number {
-  const all = loadJSONFiles<GrammarQuestion>(GRAMMAR_DIR);
-  return all.reduce((sum, g) => sum + g.questions.length, 0);
+  return { clientExercises, answerMap };
 }

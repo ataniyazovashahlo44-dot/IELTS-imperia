@@ -34,6 +34,7 @@ model TestSession {
   id          String   @id @default(cuid())
   pinCode     String   @unique
   title       String
+  maxAttempts Int      @default(1)
   createdBy   String
   createdByUser User   @relation(fields: [createdBy], references: [id], onDelete: Cascade)
   isActive    Boolean  @default(true)
@@ -49,21 +50,21 @@ model TestSession {
 }
 
 model TestSection {
-  id                String      @id @default(cuid())
+  id                String        @id @default(cuid())
   testSessionId     String
-  testSession       TestSession @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
-  sectionType       SectionType
-  numberOfQuestions Int
-  timeAllocated     Int
+  testSession       TestSession   @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
+  subject           SectionSubject
+  variantGroups     String        // JSON array: '["1_5","10_15"]'
+  numberOfExercises Int
+  timeAllocated     Int           // minutes for entire section
   sectionOrder      Int
-  exerciseIds       String?     // JSON array of specific exercise IDs
-  createdAt         DateTime    @default(now())
+  createdAt         DateTime      @default(now())
 
   @@unique([testSessionId, sectionOrder])
   @@index([testSessionId])
 }
 
-enum SectionType {
+enum SectionSubject {
   VOCABULARY
   GRAMMAR
 }
@@ -75,6 +76,7 @@ model Result {
   testSessionId String
   testSession   TestSession @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
 
+  attemptNumber  Int      @default(1)
   totalScore     Float
   vocabScore     Float?
   grammarScore   Float?
@@ -88,37 +90,41 @@ model Result {
 
   answers StudentAnswer[]
 
-  @@unique([studentId, testSessionId])
   @@index([studentId])
   @@index([testSessionId])
+  @@index([studentId, testSessionId])
 }
 
 model StudentAnswer {
-  id             String      @id @default(cuid())
+  id             String         @id @default(cuid())
   resultId       String
-  result         Result      @relation(fields: [resultId], references: [id], onDelete: Cascade)
+  result         Result         @relation(fields: [resultId], references: [id], onDelete: Cascade)
   questionId     String
-  questionType   SectionType
+  questionType   SectionSubject
+  exerciseId     String?
   questionText   String
   selectedAnswer String
   correctAnswer  String
   isCorrect      Boolean
-  createdAt      DateTime    @default(now())
+  createdAt      DateTime       @default(now())
 
   @@index([resultId])
 }
 
 model ActiveSession {
-  id              String      @id @default(cuid())
+  id              String         @id @default(cuid())
   studentId       String
-  student         User        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student         User           @relation(fields: [studentId], references: [id], onDelete: Cascade)
   testSessionId   String
-  testSession     TestSession @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
+  testSession     TestSession    @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
   pinCode         String
 
-  currentSection  SectionType
-  sectionOrder    Int         @default(1)
+  currentSubject  SectionSubject
+  sectionOrder    Int            @default(1)
   sectionDeadline DateTime
+
+  // JSON: selected exercise IDs per section order: {"1": ["grammar_1_5_001", ...], "2": [...]}
+  selectedExercises String       @default("{}")
 
   tabSwitchCount  Int      @default(0)
   lastActive      DateTime @default(now())

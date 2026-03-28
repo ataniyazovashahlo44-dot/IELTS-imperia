@@ -1,0 +1,47 @@
+{
+  "id": "grammar_5_10_001",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "gap_fill",
+  "title": "Exercise — Future Continuous (Class Survey Chart)",
+  "instruction": "The following chart shows the results of a class survey about planned activities for Saturday afternoon. Complete the sentences using the future continuous tense.\n\nNote: Questions 7–10 are open-ended personal questions (answers will vary).",
+  "image": "question_images/grammar_5_10_001.png",
+  "passage": null,
+  "questions": [
+    {
+      "id": 1,
+      "text": "Twelve students ___ on Saturday afternoon.",
+      "answer": "will be watching TV"
+    },
+    {
+      "id": 2,
+      "text": "The students ___ books on Saturday.",
+      "answer": "won't be reading"
+    },
+    {
+      "id": 3,
+      "text": "The largest group of students ___ this Saturday afternoon.",
+      "answer": "will be playing computer games"
+    },
+    {
+      "id": 4,
+      "text": "A similar number of students ___ this weekend.",
+      "answer": "will be doing sport"
+    },
+    {
+      "id": 5,
+      "text": "A similar number of students will be doing sport and ___ this weekend.",
+      "answer": "studying"
+    },
+    {
+      "id": 6,
+      "text": "A very small number of students ___ this weekend.",
+      "answer": "will be resting"
+    },
+    {
+      "id": 7,
+      "text": "Approximately 15 students ___ this weekend.",
+      "answer": "will be seeing friends"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "grammar_1_5_010",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Past Simple / Past Perfect Simple / Past Perfect Continuous",
+  "instruction": "Fill in the gaps with a verb from the box in the past simple, past perfect simple or past perfect continuous tense. Use each verb once.\n\nVerb box: be | buy | decide | develop | discuss | feel | like | make | phone | run | start | stay | take | visit | wait | work",
+  "passage": "1 She 'd been working as a waitress for five years when he met her.\n2 The lecture had started by the time they got there.\n3 In the supermarket he bought all the ingredients he needed and then went home to make her birthday cake.\n4 Holly did very well in her exam, which was a shock because she 'd never taken an exam before.\n5 They went on a big tour of Britain. First they stayed in London for a few days. Then they visited Cambridge, York, and Edinburgh, and then Bath. They 'd been to Bath before, but they 'd liked it so much that they 'd decided to go back again.\n6 Scientists announced the launch of the new drug last week. They 'd been developing it for five years.\n7 By the time I got to the meeting they 'd already discussed the important issues and they 'd made the big decisions without me. I 'd phoned from my mobile to tell them the train was late and I felt annoyed that they hadn't waited for me.\n8 I looked terrible when I saw Joe last night because I 'd been running for over an hour and I was exhausted.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "She ___ as a waitress for five years when he met her.",
+      "answer": "'d been working"
+    },
+    {
+      "id": 2,
+      "text": "The lecture ___ by the time they got there.",
+      "answer": "had started"
+    },
+    {
+      "id": 3,
+      "text": "In the supermarket he ___ all the ingredients he needed and then went home to make her birthday cake.",
+      "answer": "bought"
+    },
+    {
+      "id": 4,
+      "text": "Holly did very well in her exam, which was a shock because she ___ (never) an exam before.",
+      "answer": "'d never taken"
+    },
+    {
+      "id": 5,
+      "text": "First they ___ in London for a few days.",
+      "answer": "stayed"
+    },
+    {
+      "id": 6,
+      "text": "Then they ___ Cambridge, York, and Edinburgh, and then Bath.",
+      "answer": "visited"
+    },
+    {
+      "id": 7,
+      "text": "They ___ to Bath before,",
+      "answer": "'d been"
+    },
+    {
+      "id": 8,
+      "text": "...but they ___ it so much that they decided to go back again.",
+      "answers": ["'d liked", "liked"]
+    },
+    {
+      "id": 9,
+      "text": "...but they liked it so much that they ___ to go back again.",
+      "answer": "'d decided"
+    },
+    {
+      "id": 10,
+      "text": "Scientists announced the launch of the new drug last week. They ___ it for five years.",
+      "answer": "'d been developing"
+    },
+    {
+      "id": 11,
+      "text": "By the time I got to the meeting they ___ (already) the important issues",
+      "answer": "'d already discussed"
+    },
+    {
+      "id": 12,
+      "text": "...and they ___ the big decisions without me.",
+      "answer": "'d made"
+    },
+    {
+      "id": 13,
+      "text": "I ___ from my mobile to tell them the train was late",
+      "answer": "'d phoned"
+    },
+    {
+      "id": 14,
+      "text": "...and I ___ annoyed that they hadn't waited for me.",
+      "answer": "felt"
+    },
+    {
+      "id": 15,
+      "text": "...I felt annoyed that they ___ (not) for me.",
+      "answer": "hadn't waited"
+    },
+    {
+      "id": 16,
+      "text": "I looked terrible when I saw Joe last night because I ___ for over an hour and I was exhausted.",
+      "answer": "'d been running"
+    }
+  ]
+}

@@ -1,8 +1,18 @@
 import { Request } from 'express';
 
 export type UserRole = 'ADMIN' | 'STUDENT';
-export type SectionType = 'VOCABULARY' | 'GRAMMAR';
-export type GrammarSubType = 'gap_fill_input' | 'multiple_choice' | 'heading_match';
+export type SectionSubject = 'VOCABULARY' | 'GRAMMAR';
+
+export type ExerciseType =
+  | 'gap_fill'
+  | 'mcq'
+  | 'tfng'
+  | 'matching'
+  | 'error_correction'
+  | 'sentence_transformation';
+
+export const VARIANT_GROUPS = ['1_5', '5_10', '10_15', '15_20', '20_25'] as const;
+export type VariantGroup = typeof VARIANT_GROUPS[number];
 
 export interface JwtPayload {
   userId: string;
@@ -14,103 +24,94 @@ export interface AuthRequest extends Request {
   user?: JwtPayload;
 }
 
-// ─── JSON Question Types ──────────────────────────────────────────────────────
+// ─── Exercise JSON Types ────────────────────────────────────────────────────
 
-export interface VocabOption {
-  A: string;
-  B: string;
-  C: string;
-  D: string;
+export interface BaseQuestion {
+  id: number;
+  text: string;
+  answer: string;
+  [key: string]: unknown; // allow extra fields (options, errorWord, stem, prompt, answers)
 }
 
-export interface VocabularyQuestion {
+export interface McqQuestion extends BaseQuestion {
+  options: Record<string, string>; // { "A": "...", "B": "...", "C": "...", "D": "..." }
+}
+
+export interface ErrorCorrectionQuestion extends BaseQuestion {
+  errorWord: string;
+}
+
+export interface SentenceTransformationQuestion extends BaseQuestion {
+  stem: string;
+  prompt: string;
+  answers?: string[]; // multiple accepted answers
+}
+
+export interface MatchingExerciseFields {
+  leftLabel?: string;
+  rightLabel?: string;
+  options: Record<string, string>; // { "A": "meaning1", "B": "meaning2", ... }
+}
+
+export interface Exercise {
+  id: string;                  // e.g. "grammar_1_5_001"
+  subject: SectionSubject;     // "GRAMMAR" | "VOCABULARY"  (uppercase to match enum)
+  variantGroup: VariantGroup;
+  type: ExerciseType;
+  title: string;
+  instruction: string;
+  passage: string | null;
+  image?: string;              // relative path under uploads/, e.g. "question_images/foo.png"
+  questions: BaseQuestion[];   // typed more specifically per type at runtime
+
+  // Matching-specific (optional)
+  leftLabel?: string;
+  rightLabel?: string;
+  options?: Record<string, string>;
+}
+
+// ─── Client-facing Exercise (no answers) ────────────────────────────────────
+
+export interface ClientQuestion {
+  id: number;
+  text: string;
+  options?: Record<string, string>; // MCQ options
+  errorWord?: string;               // error_correction
+  stem?: string;                    // sentence_transformation
+  prompt?: string;                  // sentence_transformation
+}
+
+export interface ClientExercise {
   id: string;
-  questionNumber: number;
-  type: 'VOCABULARY';
-  question: string;
-  audio_path: string | null;
-  image_path: string | null;
-  options: VocabOption;
-  correctAnswer: 'A' | 'B' | 'C' | 'D';
-  explanation: string;
+  subject: SectionSubject;
+  type: ExerciseType;
+  title: string;
+  instruction: string;
+  passage: string | null;
+  image?: string;              // relative path under uploads/, e.g. "question_images/foo.png"
+  questions: ClientQuestion[];
+
+  // Matching-specific
+  leftLabel?: string;
+  rightLabel?: string;
+  options?: Record<string, string>;
 }
 
-export interface GrammarSubQuestion {
-  id: string;
-  questionNumber: number;
-  blank: number;
-  question: string;
-  type: string;
-  options?: VocabOption;
-  correctAnswer: string;
-  explanation?: string;
-}
-
-export interface GrammarQuestion {
-  id: string;
-  type: 'GRAMMAR';
-  subType: GrammarSubType;
-  passage: string;
-  audio_path: string | null;
-  image_path: string | null;
-  availableHeadings?: string[];
-  questions: GrammarSubQuestion[];
-}
-
-export type AnyQuestion = VocabularyQuestion | GrammarQuestion;
-
-// ─── Client-facing Question (shuffled, no correctAnswer) ─────────────────────
-
-export interface ShuffledOption {
-  key: string; // A, B, C, D (display label)
-  value: string; // actual text
-}
-
-export interface ClientVocabQuestion {
-  id: string;
-  questionNumber: number;
-  type: 'VOCABULARY';
-  question: string;
-  audio_path: string | null;
-  image_path: string | null;
-  options: ShuffledOption[];
-  _originalKey: string; // hidden from client in production; used server-side
-}
-
-export interface ClientGrammarSubQuestion {
-  id: string;
-  questionNumber: number;
-  blank: number;
-  question: string;
-  type: string;
-  options: ShuffledOption[];
-}
-
-export interface ClientGrammarQuestion {
-  id: string;
-  type: 'GRAMMAR';
-  subType: GrammarSubType;
-  passage: string;
-  audio_path: string | null;
-  image_path: string | null;
-  availableHeadings?: string[];
-  questions: ClientGrammarSubQuestion[];
-}
-
-// ─── Test Section Config ──────────────────────────────────────────────────────
+// ─── Section Config (for test creation) ─────────────────────────────────────
 
 export interface SectionConfig {
-  sectionType: SectionType;
-  numberOfQuestions: number;
-  timeAllocated: number; // minutes
+  subject: SectionSubject;
+  variantGroups: string[];     // ["1_5", "10_15"]
+  numberOfExercises: number;
+  timeAllocated: number;       // minutes
   sectionOrder: number;
 }
 
-// ─── Result Submission ────────────────────────────────────────────────────────
+// ─── Result Submission ──────────────────────────────────────────────────────
 
 export interface SubmitAnswer {
-  questionId: string;
-  questionType: SectionType;
-  selectedAnswer: string; // the display key (A/B/C/D) → resolved server-side
+  questionId: string;       // format: "exerciseId_questionNum" e.g. "grammar_1_5_001_3"
+  questionType: SectionSubject;
+  selectedAnswer: string;
   questionText: string;
 }

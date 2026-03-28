@@ -1,21 +1,23 @@
 import { Response } from 'express';
 import { z } from 'zod';
-import { AuthRequest, SectionConfig } from '../types';
+import { AuthRequest, SectionConfig, VARIANT_GROUPS } from '../types';
 import { createTest, getAdminTests, toggleTestStatus } from '../services/testService';
 import { getStudentsForAdmin } from '../services/resultService';
-import { countAvailableVocab, countAvailableGrammar } from '../utils/questionLoader';
+import { countAvailableExercises } from '../utils/questionLoader';
 import prisma from '../config/database';
 
 const sectionSchema = z.object({
-  sectionType: z.enum(['VOCABULARY', 'GRAMMAR']),
-  numberOfQuestions: z.number().int().min(1).max(100),
+  subject: z.enum(['VOCABULARY', 'GRAMMAR']),
+  variantGroups: z.array(z.enum(VARIANT_GROUPS)).min(1, 'At least one variant group required'),
+  numberOfExercises: z.number().int().min(1).max(50),
   timeAllocated: z.number().int().min(1).max(180),
   sectionOrder: z.number().int().min(1).max(10),
 });
 
 const createTestSchema = z.object({
   title: z.string().min(2).max(200),
-  sections: z.array(sectionSchema).min(1).max(5),
+  maxAttempts: z.number().int().min(1).max(100).default(1),
+  sections: z.array(sectionSchema).min(1).max(10),
 });
 
 export async function handleCreateTest(req: AuthRequest, res: Response): Promise<void> {
@@ -26,30 +28,21 @@ export async function handleCreateTest(req: AuthRequest, res: Response): Promise
       return;
     }
 
-    const { title, sections } = parsed.data;
+    const { title, maxAttempts, sections } = parsed.data;
 
-    // Validate question availability
-    const availableVocab = countAvailableVocab();
-    const availableGrammar = countAvailableGrammar();
-
+    // Validate exercise availability per section
     for (const s of sections) {
-      if (s.sectionType === 'VOCABULARY' && s.numberOfQuestions > availableVocab) {
+      const available = countAvailableExercises(s.subject, s.variantGroups);
+      if (s.numberOfExercises > available) {
         res.status(400).json({
           success: false,
-          message: `Only ${availableVocab} vocabulary questions available, requested ${s.numberOfQuestions}`,
-        });
-        return;
-      }
-      if (s.sectionType === 'GRAMMAR' && s.numberOfQuestions > availableGrammar) {
-        res.status(400).json({
-          success: false,
-          message: `Only ${availableGrammar} grammar sub-questions available, requested ${s.numberOfQuestions}`,
+          message: `Only ${available} ${s.subject.toLowerCase()} exercises available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
         });
         return;
       }
     }
 
-    const test = await createTest(req.user!.userId, title, sections as SectionConfig[]);
+    const test = await createTest(req.user!.userId, title, maxAttempts, sections as SectionConfig[]);
     res.status(201).json({ success: true, data: test });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to create test';
@@ -132,5 +125,53 @@ export async function handleGetLiveSessions(req: AuthRequest, res: Response): Pr
     res.json({ success: true, data: sessions });
   } catch {
     res.status(500).json({ success: false, message: 'Failed to fetch live sessions' });
+  }
+}
+
+export async function handleDeleteTest(req: AuthRequest, res: Response): Promise<void> {
+  try {
+    const { id } = req.params;
+    const adminId = req.user!.userId;
+
+    const test = await prisma.testSession.findFirst({ where: { id, createdBy: adminId } });
+    if (!test) {
+      res.status(404).json({ success: false, message: 'Test topilmadi' });
+      return;
+    }
+
+    await prisma.testSession.delete({ where: { id } });
+    res.json({ success: true, message: "Test o'chirildi" });
+  } catch {
+    res.status(500).json({ success: false, message: "Test o'chirishda xatolik" });
+  }
+}
+
+export async function handleGetTestDetail(req: AuthRequest, res: Response): Promise<void> {
+  try {
+    const { id } = req.params;
+    const adminId = req.user!.userId;
+
+    const test = await prisma.testSession.findFirst({
+      where: { id, createdBy: adminId },
+      include: {
+        sections: { orderBy: { sectionOrder: 'asc' } },
+        results: {
+          include: {
+            student: { select: { fullName: true, username: true, phoneNumber: true } },
+          },
+          orderBy: { submittedAt: 'desc' },
+        },
+        _count: { select: { results: true, activeSessions: true } },
+      },
+    });
+
+    if (!test) {
+      res.status(404).json({ success: false, message: 'Test topilmadi' });
+      return;
+    }
+
+    res.json({ success: true, data: test });
+  } catch {
+    res.status(500).json({ success: false, message: "Test ma'lumotlarini yuklab bo'lmadi" });
   }
 }

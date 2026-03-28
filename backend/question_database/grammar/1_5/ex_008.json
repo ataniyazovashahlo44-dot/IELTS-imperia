@@ -1,0 +1,41 @@
+{
+  "id": "grammar_1_5_008",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Past Perfect Simple",
+  "instruction": "Fill in the gaps with the past perfect simple of the verbs in brackets in the positive or negative.",
+  "passage": "According to Dr Ken Winkle, Australia's Red-back spider is colonising the world. Dr Winkle, a venom expert from the University of Melbourne, said that authorities had found (find) Red-back spiders in Japan and Belgium. They suspected that spiders or their eggs had entered (enter) these countries along with Australian trading goods. Furthermore, it was extremely likely that the spiders had made (make) their way into other nations around the world but that people had not discovered (discover) them yet. Dr Winkle said the spiders had also turned up (also/turn up) in the port city of Osaka (which receives a variety of Australian trade goods) in the late 1990s and had multiplied (multiply) quickly. He said Australian spider experts were collaborating with Japanese officials to find a way to stop the venomous invader.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "...said that authorities ___ (find) Red-back spiders in Japan and Belgium.",
+      "answer": "had found"
+    },
+    {
+      "id": 2,
+      "text": "They suspected that spiders or their eggs ___ (enter) these countries along with Australian trading goods.",
+      "answer": "had entered"
+    },
+    {
+      "id": 3,
+      "text": "...it was extremely likely that the spiders ___ (make) their way into other nations around the world",
+      "answer": "had made"
+    },
+    {
+      "id": 4,
+      "text": "...but that people ___ (discover) them yet.",
+      "answer": "had not discovered"
+    },
+    {
+      "id": 5,
+      "text": "Dr Winkle said the spiders ___ (also/turn up) in the port city of Osaka in the late 1990s",
+      "answer": "had also turned up"
+    },
+    {
+      "id": 6,
+      "text": "...and ___ (multiply) quickly.",
+      "answer": "had multiplied"
+    }
+  ]
+}

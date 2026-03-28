@@ -1,0 +1,128 @@
+{
+  "id": "grammar_5_10_012",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "mcq",
+  "title": "Exercise — Pronouns and Reference Words (Recycling Essay)",
+  "instruction": "Underline the correct words. Click the correct option.\n\nExample: 1 → we (already shown)",
+  "passage": "There are many reasons why we should recycle household waste. The main reason is to avoid using up valuable resources making new things when it is not necessary. However, I do not think the government should make it compulsory for people to recycle their waste.\n\nIf the government makes a law that all households must recycle their rubbish, it could lead to more problems. For example, how can you check that people are recycling everything? It is not practical to do this. In addition, there is the argument that individuals should be allowed to decide for themselves whether to throw something away or to recycle it.\n\nI believe the most sensible approach is for the government to put more money into recycling schemes. The most successful are the ones where the government gives each household special boxes to put different kinds of waste in, and they provide a regular collection service. There are separate boxes for plastic, metal, glass etc. This makes it easier for people to recycle and they are therefore less likely to throw things in the rubbish bin.",
+  "questions": [
+    {
+      "id": 2,
+      "text": "...to avoid using up valuable resources making new things when ___ not necessary.",
+      "options": {
+        "A": "it is",
+        "B": "we are"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 3,
+      "text": "I do not think the government should make ___ compulsory for people to recycle their waste.",
+      "options": {
+        "A": "it",
+        "B": "the law"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 4,
+      "text": "If the government makes a law that all households must recycle ___ rubbish,",
+      "options": {
+        "A": "their",
+        "B": "its"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 5,
+      "text": "If the government makes a law that all households must recycle their rubbish, ___ could lead to more problems.",
+      "options": {
+        "A": "the law",
+        "B": "it"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 6,
+      "text": "For example, how can ___ check that people are recycling everything?",
+      "options": {
+        "A": "you",
+        "B": "people"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 7,
+      "text": "Which sentence is correct?",
+      "options": {
+        "A": "It is not practical to do this.",
+        "B": "To do this is not practical."
+      },
+      "answer": "A"
+    },
+    {
+      "id": 8,
+      "text": "...individuals should be allowed to decide for ___ whether to throw something away or to recycle it.",
+      "options": {
+        "A": "each other",
+        "B": "themselves"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 9,
+      "text": "...whether to throw something away or to recycle ___.",
+      "options": {
+        "A": "it",
+        "B": "something"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 10,
+      "text": "The most successful are ___ where the government gives each household special boxes",
+      "options": {
+        "A": "the ones",
+        "B": "them"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 11,
+      "text": "...and ___ provide a regular collection service.",
+      "options": {
+        "A": "the government",
+        "B": "they"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 12,
+      "text": "___ are separate boxes for plastic, metal, glass etc.",
+      "options": {
+        "A": "They",
+        "B": "There"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 13,
+      "text": "This makes ___",
+      "options": {
+        "A": "to recycle easier for people",
+        "B": "it easier for people to recycle"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 14,
+      "text": "...and ___ are therefore less likely to throw things in the rubbish bin.",
+      "options": {
+        "A": "they",
+        "B": "there"
+      },
+      "answer": "A"
+    }
+  ]
+}

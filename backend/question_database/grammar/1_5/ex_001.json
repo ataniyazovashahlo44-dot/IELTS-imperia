@@ -1,0 +1,76 @@
+{
+  "id": "grammar_1_5_001",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise 1A",
+  "instruction": "Fill in the gaps with the correct form of the verbs in brackets.",
+  "passage": null,
+  "questions": [
+    {
+      "id": 1,
+      "text": "I'm busy right now. I ___ (fill in) an application form for a new job.",
+      "answer": "'m filling in"
+    },
+    {
+      "id": 2,
+      "text": "My tutor ___ (see) me for a tutorial every Monday at two o'clock.",
+      "answer": "sees"
+    },
+    {
+      "id": 3,
+      "text": "John ___ (not/study) very hard at the moment.",
+      "answer": "isn't studying"
+    },
+    {
+      "id": 4,
+      "text": "I ___ (not/think) he'll pass his exams.",
+      "answer": "don't think"
+    },
+    {
+      "id": 5,
+      "text": "'What ___ (he/do)?'",
+      "answer": "'s he doing"
+    },
+    {
+      "id": 6,
+      "text": "'He ___ (try) to fix the television aerial.'",
+      "answer": "'s trying"
+    },
+    {
+      "id": 7,
+      "text": "Animals ___ (breathe in) oxygen and carbon dioxide.",
+      "answer": "breathe in"
+    },
+    {
+      "id": 8,
+      "text": "Animals breathe in oxygen and ___ (give out) carbon dioxide.",
+      "answer": "give out"
+    },
+    {
+      "id": 9,
+      "text": "Be quiet! I ___ (want) to hear the news.",
+      "answer": "want"
+    },
+    {
+      "id": 10,
+      "text": "In my country we ___ (drive) on the right-hand side of the road.",
+      "answer": "drive"
+    },
+    {
+      "id": 11,
+      "text": "My friend Joe's parents ___ (travel) round the world this summer, and probably won't be back for a couple of months.",
+      "answer": "are travelling"
+    },
+    {
+      "id": 12,
+      "text": "The college ___ (run) the same course every year.",
+      "answer": "runs"
+    },
+    {
+      "id": 13,
+      "text": "Numbers of wild butterflies ___ (fall) as a result of changes in farming methods.",
+      "answer": "are falling"
+    }
+  ]
+}

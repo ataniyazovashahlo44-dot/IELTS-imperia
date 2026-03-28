@@ -3,7 +3,14 @@ import { SubmitAnswer } from '../types';
 import { getAnswerMap, clearAnswerMap } from './sessionService';
 
 function gradeAnswer(selected: string, correct: string): boolean {
-  return selected.trim().toLowerCase() === correct.trim().toLowerCase();
+  const sel = selected.trim().toLowerCase();
+
+  // Handle multiple accepted answers (pipe-separated)
+  if (correct.includes('|||')) {
+    return correct.split('|||').some(c => sel === c.trim().toLowerCase());
+  }
+
+  return sel === correct.trim().toLowerCase();
 }
 
 export async function submitTest(studentId: string, testSessionId: string, answers: SubmitAnswer[]) {
@@ -11,14 +18,15 @@ export async function submitTest(studentId: string, testSessionId: string, answe
     where: { studentId, testSessionId, isActive: true },
   });
 
-  // Even if session is expired, we save answers (auto-submit on timeout)
-  const answerMap = getAnswerMap(studentId);
+  const answerMap = getAnswerMap(studentId, testSessionId);
 
   let vocabCorrect = 0, vocabTotal = 0;
   let grammarCorrect = 0, grammarTotal = 0;
 
   const studentAnswers = answers.map(ans => {
     const correctAnswer = answerMap[ans.questionId] || '';
+    // For multi-answer, use first answer as display
+    const displayCorrect = correctAnswer.includes('|||') ? correctAnswer.split('|||')[0] : correctAnswer;
     const isCorrect = gradeAnswer(ans.selectedAnswer, correctAnswer);
 
     if (ans.questionType === 'VOCABULARY') {
@@ -34,7 +42,7 @@ export async function submitTest(studentId: string, testSessionId: string, answe
       questionType: ans.questionType,
       questionText: ans.questionText,
       selectedAnswer: ans.selectedAnswer,
-      correctAnswer,
+      correctAnswer: displayCorrect,
       isCorrect,
     };
   });
@@ -46,10 +54,16 @@ export async function submitTest(studentId: string, testSessionId: string, answe
   const totalQuestions = vocabTotal + grammarTotal;
   const totalScore = totalQuestions > 0 ? (totalCorrect / totalQuestions) * 100 : 0;
 
+  // Calculate attempt number
+  const previousAttempts = await prisma.result.count({
+    where: { studentId, testSessionId },
+  });
+
   const result = await prisma.result.create({
     data: {
       studentId,
       testSessionId,
+      attemptNumber: previousAttempts + 1,
       totalScore,
       vocabScore,
       grammarScore,
@@ -73,7 +87,7 @@ export async function submitTest(studentId: string, testSessionId: string, answe
     });
   }
 
-  clearAnswerMap(studentId);
+  clearAnswerMap(studentId, testSessionId);
   return result;
 }
 

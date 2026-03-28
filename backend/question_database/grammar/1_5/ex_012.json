@@ -1,0 +1,110 @@
+{
+  "id": "grammar_1_5_012",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "mcq",
+  "title": "Exercise — Future Forms (Letter)",
+  "instruction": "Underline the most suitable form of the verbs. Click the correct option.",
+  "passage": "Dear Paul and Claire,\nWe're having a wonderful time here in France. The weather is beautiful and we've got lots of plans for how to spend the next couple of weeks. Tomorrow we're going out on a glass-bottomed boat to look at the wonderful sea life, and then on Wednesday we think we'll take a tour of the old town. Ollie's aunt lives quite close, so we're going to visit her too if we have time.\n\nThe hotel is lovely and lively and has lots of good night life. Tonight they're holding an international evening, with lots of food from different countries.\n\nAs you know, we're here with our friends, John and Wendy, but they aren't staying as long as us, so we'll probably do the really 'touristy' things with them, and be lazy in our second week. You can hire small sailing boats for the day, so we think we're going to do that next week, and we're also going to try to make time to do some shopping!\n\nI hope you are ready for your big trip. You'll love Australia. In fact you'll probably end up staying there much longer than you've planned.\n\nHave a great time, and we'll see you when you get back.\n\nLove Kath and Ollie",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Tomorrow ___ on a glass-bottomed boat to look at the wonderful sea life.",
+      "options": {
+        "A": "we're going out",
+        "B": "we will go out"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "text": "...on Wednesday we think ___ a tour of the old town.",
+      "options": {
+        "A": "we're taking",
+        "B": "we'll take"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 3,
+      "text": "Ollie's aunt lives quite close, so ___ her too if we have time.",
+      "options": {
+        "A": "we're visiting",
+        "B": "we're going to visit"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 4,
+      "text": "Tonight ___ an international evening, with lots of food from different countries.",
+      "options": {
+        "A": "they're holding",
+        "B": "they'll hold"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 5,
+      "text": "...but ___ as long as us,",
+      "options": {
+        "A": "they aren't staying",
+        "B": "they won't stay"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 6,
+      "text": "...so ___ the really 'touristy' things with them.",
+      "options": {
+        "A": "we're probably doing",
+        "B": "we'll probably do"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 7,
+      "text": "...so we think ___ that next week,",
+      "options": {
+        "A": "we're doing",
+        "B": "we're going to do"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 8,
+      "text": "...___ to make time to do some shopping!",
+      "options": {
+        "A": "we're also going to try",
+        "B": "we're also trying"
+      },
+      "answer": "A"
+    },
+    {
+      "id": 9,
+      "text": "___ Australia.",
+      "options": {
+        "A": "You're loving",
+        "B": "You'll love"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 10,
+      "text": "In fact ___ staying there much longer than you've planned.",
+      "options": {
+        "A": "you're going to probably end up",
+        "B": "you'll probably end up"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 11,
+      "text": "Have a great time, and ___ you when you get back.",
+      "options": {
+        "A": "we're going to see",
+        "B": "we'll see"
+      },
+      "answer": "B"
+    }
+  ]
+}

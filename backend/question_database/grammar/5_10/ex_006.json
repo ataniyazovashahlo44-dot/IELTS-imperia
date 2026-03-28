@@ -1,0 +1,77 @@
+{
+  "id": "grammar_5_10_006",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "error_correction",
+  "title": "Exercise — Articles (a/an/the)",
+  "instruction": "In some of these sentences there is a mistake with articles. Underline each mistake and write the correction. If the sentence is correct, tick (✓).\n\nExample: 1 → the classical music (already shown)",
+  "passage": null,
+  "questions": [
+    {
+      "id": 2,
+      "text": "I saw a man sitting in a restaurant. A woman came and joined him, but the man got up and left without speaking to her!",
+      "errorWord": "A woman",
+      "answer": "✓"
+    },
+    {
+      "id": 3,
+      "text": "Sun was shining and it was a lovely day.",
+      "errorWord": "Sun",
+      "answer": "The sun"
+    },
+    {
+      "id": 4,
+      "text": "I can play piano.",
+      "errorWord": "piano",
+      "answer": "the piano"
+    },
+    {
+      "id": 5,
+      "text": "I come from United Arab Emirates.",
+      "errorWord": "United Arab Emirates",
+      "answer": "the United Arab Emirates"
+    },
+    {
+      "id": 6,
+      "text": "I've applied to study at the University of Edinburgh.",
+      "errorWord": "the University of Edinburgh",
+      "answer": "✓"
+    },
+    {
+      "id": 7,
+      "text": "I usually go to work by the bus.",
+      "errorWord": "the bus",
+      "answer": "bus"
+    },
+    {
+      "id": 8,
+      "text": "My husband is doctor.",
+      "errorWord": "doctor",
+      "answer": "a doctor"
+    },
+    {
+      "id": 9,
+      "text": "Sorry I'm late – car wouldn't start this morning.",
+      "errorWord": "car",
+      "answers": ["the car", "my car"]
+    },
+    {
+      "id": 10,
+      "text": "I'm going to take a cruise down river Nile.",
+      "errorWord": "river Nile",
+      "answer": "the river Nile"
+    },
+    {
+      "id": 11,
+      "text": "I once saw a cat wearing a pink coat and boots!",
+      "errorWord": "a pink coat",
+      "answer": "✓"
+    },
+    {
+      "id": 12,
+      "text": "My husband collects the antiques. He's always going to auctions.",
+      "errorWord": "the antiques",
+      "answer": "antiques"
+    }
+  ]
+}

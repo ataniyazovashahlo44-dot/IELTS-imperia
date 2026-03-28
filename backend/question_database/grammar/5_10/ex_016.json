@@ -1,0 +1,61 @@
+{
+    "id": "grammar_5_10_016",
+    "subject": "grammar",
+    "variantGroup": "5_10",
+    "type": "gap_fill",
+    "title": "Fill in the gaps with a suitable pronoun or there",
+    "instruction": "Fill in the gaps with a suitable pronoun or there.",
+    "passage": "Teacher: Do you think that governments spend too much on space exploration nowadays?\n\nStudent: Well, I think that there are a lot of different factors to take into consideration. For example some countries want to show the rest of the world that they are successful and they can do this with a space exploration program. It seems that it is more important for these countries to impress the world than to look after their own people. Sometimes it is difficult to understand this because every country in the world has its problems and has poor people that need to be looked after because they can't look after themselves. So, yes, I do think that these countries should look after people first before they start trying to send men to the moon! There are too many other problems here on earth that we need to sort out.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Well, I think that ___ are a lot of different factors to take into consideration.",
+            "answer": "there"
+        },
+        {
+            "id": 2,
+            "text": "For example some countries want to show the rest of the world that ___ are successful...",
+            "answer": "they"
+        },
+        {
+            "id": 3,
+            "text": "...and ___ can do this with a space exploration program.",
+            "answer": "they"
+        },
+        {
+            "id": 4,
+            "text": "___ seems that it is more important for these countries to impress the world...",
+            "answer": "It"
+        },
+        {
+            "id": 5,
+            "text": "It seems that ___ is more important for these countries to impress the world than to look after their own people.",
+            "answer": "it"
+        },
+        {
+            "id": 6,
+            "text": "Sometimes ___ is difficult to understand this because every country in the world has its problems...",
+            "answer": "it"
+        },
+        {
+            "id": 7,
+            "text": "...every country in the world has ___ problems and has poor people that need to be looked after...",
+            "answer": "its"
+        },
+        {
+            "id": 8,
+            "text": "...because they can't look after ___.",
+            "answer": "themselves"
+        },
+        {
+            "id": 9,
+            "text": "So, yes, I do think that these countries should look after people first before ___ start trying to send men to the moon!",
+            "answer": "they"
+        },
+        {
+            "id": 10,
+            "text": "___ are too many other problems here on earth that we need to sort out.",
+            "answer": "There"
+        }
+    ]
+}

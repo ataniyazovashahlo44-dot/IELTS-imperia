@@ -6,6 +6,8 @@ import AdminDashboard from '../components/Admin/Dashboard';
 import Students from '../components/Admin/Students';
 import AdminResults from '../components/Admin/Results';
 import AdminSettings from '../components/Admin/Settings';
+import Tests from '../components/Admin/Tests';
+import TestDetail from '../components/Admin/TestDetail';
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,6 +20,8 @@ export default function AdminPage() {
         <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           <Routes>
             <Route index element={<AdminDashboard />} />
+            <Route path="tests" element={<Tests />} />
+            <Route path="tests/:id" element={<TestDetail />} />
             <Route path="students" element={<Students />} />
             <Route path="results" element={<AdminResults />} />
             <Route path="settings" element={<AdminSettings />} />
@@ -28,3 +32,4 @@ export default function AdminPage() {
     </div>
   );
 }
+

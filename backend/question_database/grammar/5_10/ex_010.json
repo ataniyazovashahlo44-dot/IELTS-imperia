@@ -1,0 +1,82 @@
+{
+  "id": "grammar_5_10_010",
+  "subject": "grammar",
+  "variantGroup": "5_10",
+  "type": "gap_fill",
+  "title": "Exercise — Pronouns (Anatomy of a Bat)",
+  "instruction": "Look at the diagram and fill in the gaps with the correct pronoun.",
+  "image": "question_images/grammar_5_10_010.png",
+  "passage": null,
+  "questions": [
+    {
+      "id": 1,
+      "text": "Many species also have a membrane between ___ hind limbs enclosing the tail.",
+      "answer": "their"
+    },
+    {
+      "id": 2,
+      "text": "When it is cold, these bats wrap ___ up in their wings like a coat.",
+      "answer": "themselves"
+    },
+    {
+      "id": 3,
+      "text": "When it is cold, these bats wrap themselves up in ___ wings like a coat.",
+      "answer": "their"
+    },
+    {
+      "id": 4,
+      "text": "In warm weather ___ flap their wings in order to cool their bodies.",
+      "answer": "they"
+    },
+    {
+      "id": 5,
+      "text": "In warm weather they flap ___ wings in order to cool their bodies.",
+      "answer": "their"
+    },
+    {
+      "id": 6,
+      "text": "In warm weather they flap their wings in order to cool ___ bodies.",
+      "answer": "their"
+    },
+    {
+      "id": 7,
+      "text": "The bat has claws on ___ thumbs and sometimes on the toes of its fore and hind limbs.",
+      "answer": "its"
+    },
+    {
+      "id": 8,
+      "text": "The bat has claws on its thumbs and sometimes on the toes of ___ fore and hind limbs.",
+      "answer": "its"
+    },
+    {
+      "id": 9,
+      "text": "The rear claws enable ___ to hang itself on to a tree branch or ledge.",
+      "answer": "it"
+    },
+    {
+      "id": 10,
+      "text": "The rear claws enable it to hang ___ on to a tree branch or ledge.",
+      "answer": "itself"
+    },
+    {
+      "id": 11,
+      "text": "All bats are active at night or at twilight, so ___ eyes are poorly developed.",
+      "answer": "their"
+    },
+    {
+      "id": 12,
+      "text": "Instead ___ use their nose and ears to orientate themselves.",
+      "answer": "they"
+    },
+    {
+      "id": 13,
+      "text": "Instead they use ___ nose and ears to orientate themselves.",
+      "answer": "their"
+    },
+    {
+      "id": 14,
+      "text": "Instead they use their nose and ears to orientate ___.",
+      "answer": "themselves"
+    }
+  ]
+}

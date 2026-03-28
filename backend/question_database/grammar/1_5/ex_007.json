@@ -1,0 +1,91 @@
+{
+  "id": "grammar_1_5_007",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Present Perfect Simple / Continuous",
+  "instruction": "Fill in the gaps with a verb from the box in the present perfect simple or present perfect continuous. You will need to use some verbs more than once.\n\nVerb box: be | do | feel | have | live | pass | study | start | take | travel | want | work\n\nNote: Questions 17–21 are open-ended personal questions (answers will vary).",
+  "passage": "Interviewer: How long have you been living (1 you) here?\nStudent: I 've been living (2) in London for the past three years. I come from Japan originally. I 've been studying (3) at a college here since I arrived.\nInterviewer: Have you done (4 you) any travelling over the past three years?\nStudent: Yes, I 've been (5) really lucky. I have long holidays so I 've travelled (6) all over Europe. I especially liked Spain.\nInterviewer: What is the most interesting thing you 've done (7) recently?\nStudent: Well, I 've started (8) to play tennis, and I 've been having (9) singing lessons for a few months now too. But the thing that I am most proud of is that I 've just passed (10 just) my driving test. It's the first time I 've taken (11) it so I'm really pleased but I 've never felt (12 never) so nervous in my life!\nInterviewer: How do you think English will be useful in your life?\nStudent: I 've been doing (13) a Hospitality and Tourism course over here, so I need English for my studies and my job. I 've always wanted (14 always) to work in the tourist industry because I 've always been (15 always) interested in history and cultural sites, and I 've already worked (16 already) as a tour guide in my home town.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "How long ___ (you) here?",
+      "answer": "have you been living"
+    },
+    {
+      "id": 2,
+      "text": "I ___ in London for the past three years.",
+      "answer": "'ve been living"
+    },
+    {
+      "id": 3,
+      "text": "I ___ at a college here since I arrived.",
+      "answer": "'ve been studying"
+    },
+    {
+      "id": 4,
+      "text": "___ (you) any travelling over the past three years?",
+      "answer": "Have you done"
+    },
+    {
+      "id": 5,
+      "text": "Yes, I ___ really lucky.",
+      "answer": "'ve been"
+    },
+    {
+      "id": 6,
+      "text": "I ___ all over Europe.",
+      "answer": "'ve travelled"
+    },
+    {
+      "id": 7,
+      "text": "What is the most interesting thing you ___ recently?",
+      "answer": "'ve done"
+    },
+    {
+      "id": 8,
+      "text": "Well, I ___ to play tennis,",
+      "answer": "'ve started"
+    },
+    {
+      "id": 9,
+      "text": "...and I ___ singing lessons for a few months now too.",
+      "answers": ["'ve been having", "'ve been taking"]
+    },
+    {
+      "id": 10,
+      "text": "I ___ (just) my driving test.",
+      "answer": "'ve just passed"
+    },
+    {
+      "id": 11,
+      "text": "It's the first time I ___ it",
+      "answer": "'ve taken"
+    },
+    {
+      "id": 12,
+      "text": "I ___ (never) so nervous in my life!",
+      "answers": ["'ve never felt", "'ve never been"]
+    },
+    {
+      "id": 13,
+      "text": "I ___ a Hospitality and Tourism course over here,",
+      "answers": ["'ve been doing", "'ve been taking"]
+    },
+    {
+      "id": 14,
+      "text": "I ___ (always) to work in the tourist industry",
+      "answer": "'ve always wanted"
+    },
+    {
+      "id": 15,
+      "text": "...because I ___ (always) interested in history and cultural sites,",
+      "answer": "'ve always been"
+    },
+    {
+      "id": 16,
+      "text": "...and I ___ (already) as a tour guide in my home town.",
+      "answer": "'ve already worked"
+    }
+  ]
+}

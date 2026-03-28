@@ -1,0 +1,71 @@
+{
+  "id": "grammar_1_5_011",
+  "subject": "grammar",
+  "variantGroup": "1_5",
+  "type": "gap_fill",
+  "title": "Exercise — Future Forms (Model Answer)",
+  "instruction": "Fill in the gaps in the second half of this model answer with phrases from the box.\n\nEssay question: Thanks to modern technology, there have been enormous changes in the workplace over the past 100 years. What are the most significant changes that have occurred and what changes do you foresee in the next 100 years?\n\nPhrase box: are going to feel | are going to happen | are likely to lead to | are likely to occur | are predicted to work | is likely to become | will be | will continue | will develop | will find | will have | will result",
+  "passage": "So, now let us consider the changes that are likely to occur in the next 100 years. Unfortunately, I believe that not all changes will be for the better. For example, in the future more and more people are predicted to work from home and so they are going to feel more isolated from their colleagues. On the other hand, they will certainly have greater freedom to choose their working hours.\n\nA further possible change is that handwriting is likely to become obsolete. We are already so used to using a keyboard that today's children are losing the ability to spell without the aid of a word processor.\n\nWithout a doubt, even greater changes are going to happen in technology used in the workplace. Computers will undoubtedly continue to grow even more powerful and this will probably result in an even faster pace of life than we have now. Let us hope that our employers will find a way to reduce the stress on workers this fast pace can bring.\n\nI also think these improvements in technology are likely to lead to even more globalisation than now and companies will develop very strong international links.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "...the changes that ___ in the next 100 years.",
+      "answer": "are likely to occur"
+    },
+    {
+      "id": 2,
+      "text": "I believe that not all changes ___ for the better.",
+      "answer": "will be"
+    },
+    {
+      "id": 3,
+      "text": "...in the future more and more people ___ from home",
+      "answer": "are predicted to work"
+    },
+    {
+      "id": 4,
+      "text": "...and so they ___ more isolated from their colleagues.",
+      "answer": "are going to feel"
+    },
+    {
+      "id": 5,
+      "text": "On the other hand, they ___ (certainly) greater freedom to choose their working hours.",
+      "answer": "will certainly have"
+    },
+    {
+      "id": 6,
+      "text": "A further possible change is that handwriting ___ obsolete.",
+      "answer": "is likely to become"
+    },
+    {
+      "id": 7,
+      "text": "Without a doubt, even greater changes ___ in technology used in the workplace.",
+      "answer": "are going to happen"
+    },
+    {
+      "id": 8,
+      "text": "Computers ___ (undoubtedly) to grow even more powerful",
+      "answer": "will undoubtedly continue"
+    },
+    {
+      "id": 9,
+      "text": "...and this ___ (probably) in an even faster pace of life than we have now.",
+      "answer": "will probably result"
+    },
+    {
+      "id": 10,
+      "text": "Let us hope that our employers ___ a way to reduce the stress on workers this fast pace can bring.",
+      "answer": "will find"
+    },
+    {
+      "id": 11,
+      "text": "I also think these improvements in technology ___ even more globalisation than now",
+      "answer": "are likely to lead to"
+    },
+    {
+      "id": 12,
+      "text": "...and companies ___ very strong international links.",
+      "answer": "will develop"
+    }
+  ]
+}
