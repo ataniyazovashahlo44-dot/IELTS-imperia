@@ -11,73 +11,73 @@
         {
             "id": 1,
             "text": "People are said:",
-            "wrongPart": "are said",
+            "errorWord": "are said",
             "answer": "say"
         },
         {
             "id": 2,
             "text": "has changed by contact:",
-            "wrongPart": "has changed",
+            "errorWord": "has changed",
             "answer": "has been changed"
         },
         {
             "id": 3,
             "text": "might have been happened:",
-            "wrongPart": "might have been happened",
+            "errorWord": "might have been happened",
             "answer": "might have happened"
         },
         {
             "id": 4,
             "text": "have given opportunities:",
-            "wrongPart": "have given",
+            "errorWord": "have given",
             "answer": "have been given"
         },
         {
             "id": 5,
             "text": "have been benefited from:",
-            "wrongPart": "have been benefited",
+            "errorWord": "have been benefited",
             "answer": "have benefited"
         },
         {
             "id": 6,
             "text": "have been suggested:",
-            "wrongPart": "have been suggested",
+            "errorWord": "have been suggested",
             "answer": "have suggested"
         },
         {
             "id": 7,
             "text": "are continued:",
-            "wrongPart": "are continued",
+            "errorWord": "are continued",
             "answer": "continue"
         },
         {
             "id": 8,
             "text": "are being become:",
-            "wrongPart": "are being become",
+            "errorWord": "are being become",
             "answer": "are becoming"
         },
         {
             "id": 9,
             "text": "feels to be too dominant by:",
-            "wrongPart": "feels",
+            "errorWord": "feels",
             "answer": "is felt"
         },
         {
             "id": 10,
             "text": "have been come:",
-            "wrongPart": "have been come",
+            "errorWord": "have been come",
             "answer": "have come"
         },
         {
             "id": 11,
             "text": "has affected in a big way by:",
-            "wrongPart": "has affected",
+            "errorWord": "has affected",
             "answer": "has been affected"
         },
         {
             "id": 12,
             "text": "it will use by all countries:",
-            "wrongPart": "will use",
+            "errorWord": "will use",
             "answer": "will be used"
         }
     ]

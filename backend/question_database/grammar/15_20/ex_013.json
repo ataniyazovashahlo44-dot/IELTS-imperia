@@ -11,73 +11,73 @@
         {
             "id": 1,
             "text": "There has been a rise in the number of people buying their own homes.",
-            "wrongPart": "in",
+            "errorWord": "in",
             "answer": "✓"
         },
         {
             "id": 2,
             "text": "It is not difficult to distinguish amongst the emotional response to this crime and the law's response.",
-            "wrongPart": "amongst",
+            "errorWord": "amongst",
             "answer": "between"
         },
         {
             "id": 3,
             "text": "There is no need about a new school in this area.",
-            "wrongPart": "about",
+            "errorWord": "about",
             "answer": "for"
         },
         {
             "id": 4,
             "text": "We want the government to promise to make a change in the law.",
-            "wrongPart": "in",
+            "errorWord": "in",
             "answer": "✓"
         },
         {
             "id": 5,
             "text": "I hate the way she always laughs to people.",
-            "wrongPart": "to",
+            "errorWord": "to",
             "answer": "at"
         },
         {
             "id": 6,
             "text": "I've decided to apply to that job in the newspaper.",
-            "wrongPart": "to",
+            "errorWord": "to",
             "answer": "for"
         },
         {
             "id": 7,
             "text": "Professor Ho has a good knowledge about his subject.",
-            "wrongPart": "about",
+            "errorWord": "about",
             "answer": "of"
         },
         {
             "id": 8,
             "text": "I'm afraid I broke this glass in accident.",
-            "wrongPart": "in",
+            "errorWord": "in",
             "answer": "by"
         },
         {
             "id": 9,
             "text": "My husband's staying at my cousin while he is on business in America.",
-            "wrongPart": "at",
+            "errorWord": "at",
             "answer": "with"
         },
         {
             "id": 10,
             "text": "I gave him one of my paintings in return for his help when I moved house.",
-            "wrongPart": "in return for",
+            "errorWord": "in return for",
             "answer": "✓"
         },
         {
             "id": 11,
             "text": "Why do governments always insist in doing things that are unpopular?",
-            "wrongPart": "in",
+            "errorWord": "in",
             "answer": "on"
         },
         {
             "id": 12,
             "text": "When I was in school I did much more sport than I do these days.",
-            "wrongPart": "in",
+            "errorWord": "in",
             "answer": "at"
         }
     ]

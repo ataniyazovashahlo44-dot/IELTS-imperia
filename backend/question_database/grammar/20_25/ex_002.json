@@ -4,44 +4,55 @@
     "variantGroup": "20_25",
     "type": "matching",
     "title": "Cohesion: Referencing in an Essay",
-    "instruction": "Match the sentence beginnings (a-g) to the endings (1-7) from an essay about camera invention to create coherent sentences.",
+    "instruction": "Match the sentence beginnings (1-7) to the endings (a-g) from an essay about camera invention to create coherent sentences.",
     "image": null,
     "passage": "Prompt: 'The camera has changed the way we look at the world and the way that we celebrate special occasions.' To what extent do you agree with this statement?",
+    "leftLabel": "Sentence beginnings",
+    "rightLabel": "Options",
+    "options": {
+        "a": "has brought many changes to our lives.",
+        "b": "the way we see and experience the world.",
+        "c": "and use it to create photographic records of their experiences.",
+        "d": "more important than the event or experience it is recording?",
+        "e": "cameras often have a primary role.",
+        "f": "with the enjoyment of the occasion.",
+        "g": "so that it can be remembered in the future."
+    },
     "questions": [
         {
             "id": 1,
-            "left": "The invention of the camera",
-            "right": "has brought many changes to our lives."
+            "text": "The invention of the camera",
+            "answer": "a"
         },
         {
             "id": 2,
-            "left": "One of these is",
-            "right": "the way we see and experience the world."
+            "text": "One of these is",
+            "answer": "b"
         },
         {
             "id": 3,
-            "left": "Most adults in this country have a camera these days",
-            "right": "and use it to create photographic records of their experiences."
+            "text": "Most adults in this country have a camera these days",
+            "answer": "c"
         },
         {
             "id": 4,
-            "left": "But has the photograph become",
-            "right": "more important than the event or experience it is recording?"
+            "text": "But has the photograph become",
+            "answer": "d"
         },
         {
             "id": 5,
-            "left": "On important occasions such as weddings,",
-            "right": "cameras often have a primary role."
+            "text": "On important occasions such as weddings,",
+            "answer": "e"
         },
         {
             "id": 6,
-            "left": "Unfortunately, this can often interfere",
-            "right": "with the enjoyment of the occasion."
+            "text": "Unfortunately, this can often interfere",
+            "answer": "f"
         },
         {
             "id": 7,
-            "left": "However, it is also true that the photographs record the event",
-            "right": "so that it can be remembered in the future."
+            "text": "However, it is also true that the photographs record the event",
+            "answer": "g"
         }
     ]
 }

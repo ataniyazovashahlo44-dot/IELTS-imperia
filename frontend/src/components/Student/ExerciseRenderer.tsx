@@ -47,7 +47,6 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
         const val = getAnswer(q.id);
         parts.push(
           <span key={`inp-${q.id}`} className="inline-flex items-baseline gap-0.5 mx-0.5">
-            <span className="text-gray-400 text-xs font-serif select-none">{q.id}</span>
             <input
               type="text"
               value={val}
@@ -96,7 +95,9 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer }: Props)
             <InstructionBox text={exercise.instruction} />
             {exercise.questions.map(q => {
               const val = getAnswer(q.id);
-              const parts = q.text.split('___');
+              // Strip leading "N. " prefix from q.text if the data already includes it
+              const cleanText = q.text.replace(new RegExp(`^${q.id}\\.\\s*`), '');
+              const parts = cleanText.split('___');
 
               return (
                 <div key={q.id} className="flex items-start gap-3">
