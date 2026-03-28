@@ -1,0 +1,102 @@
+{
+    "id": "grammar_10_15_011",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "mcq",
+    "title": "Reporting Verbs",
+    "instruction": "Underline (choose) the correct verb in each sentence.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Some people ___ that banning cars from city centres would reduce pollution.",
+            "options": {
+                "A": "argue",
+                "B": "remind"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "The organisation campaigns against pollution and for the environment and they ___ people to start walking and cycling more.",
+            "options": {
+                "A": "insist",
+                "B": "urge"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 3,
+            "text": "My boyfriend is always forgetting things so it was a good thing I ___ him to bring his passport when we went on holiday.",
+            "options": {
+                "A": "reminded",
+                "B": "suggested"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "I was very unhappy with the service so I ___ to the manager and he gave me a discount on my meal.",
+            "options": {
+                "A": "complained",
+                "B": "insisted"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 5,
+            "text": "I needed to talk to my boss so I ___ a meeting and we arranged one for later that day.",
+            "options": {
+                "A": "reminded",
+                "B": "suggested"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 6,
+            "text": "The students felt very strongly about the issue and ___ on seeing the vice-chancellor to discuss it.",
+            "options": {
+                "A": "refused",
+                "B": "insisted"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 7,
+            "text": "I asked him really nicely but he still ___ to help me.",
+            "options": {
+                "A": "refused",
+                "B": "denied"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "The tennis player regretted his actions and ___ for his behaviour afterwards.",
+            "options": {
+                "A": "blamed",
+                "B": "apologised"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 9,
+            "text": "Jane was having difficulties sleeping and the doctor ___ her to take some rest from her heavy work schedule.",
+            "options": {
+                "A": "advised",
+                "B": "suggested"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 10,
+            "text": "The armed robbers ___ the bank staff not to move or they might use their guns.",
+            "options": {
+                "A": "warned",
+                "B": "announced"
+            },
+            "answer": "A"
+        }
+    ]
+}

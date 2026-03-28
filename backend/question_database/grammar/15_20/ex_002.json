@@ -1,0 +1,102 @@
+{
+    "id": "grammar_15_20_002",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "mcq",
+    "title": "Verb Patterns: Meaning Change",
+    "instruction": "Choose the correct form of the verbs.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Mario remembered ___ his assignment to his tutor because he had spoken to her about its length, but she insisted that she had never received it.",
+            "options": {
+                "A": "to give",
+                "B": "giving"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 2,
+            "text": "If you can't find the information at the library, try ___ on the Internet.",
+            "options": {
+                "A": "to look",
+                "B": "looking"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 3,
+            "text": "She studied medicine at university and went on ___ a surgeon.",
+            "options": {
+                "A": "to become",
+                "B": "becoming"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "Look at Mum's car! It definitely needs ___!",
+            "options": {
+                "A": "to clean",
+                "B": "cleaning"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 5,
+            "text": "I'll never forget ___ off that swing when I was a child.",
+            "options": {
+                "A": "to fall",
+                "B": "falling"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 6,
+            "text": "I was really nervous about the interview, and although I tried ___ , I was awake most of the night.",
+            "options": {
+                "A": "not to worry",
+                "B": "not worrying"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "The new government needs ___ notice of the opinions of the people.",
+            "options": {
+                "A": "to take",
+                "B": "taking"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "It seems that the new system of sending out reminders has worked, because this year 90% of members remembered ___ their membership in time.",
+            "options": {
+                "A": "to renew",
+                "B": "renewing"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 9,
+            "text": "Economists predict that house prices will go on ___ for at least another year.",
+            "options": {
+                "A": "to rise",
+                "B": "rising"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 10,
+            "text": "We weren't able to see the concert because Tamsin forgot ___ the tickets.",
+            "options": {
+                "A": "to bring",
+                "B": "bringing"
+            },
+            "answer": "A"
+        }
+    ]
+}

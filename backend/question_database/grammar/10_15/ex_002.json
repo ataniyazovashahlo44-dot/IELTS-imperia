@@ -1,0 +1,82 @@
+{
+    "id": "grammar_10_15_002",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Dialogue: Comparing Countries",
+    "instruction": "Fill in the gaps with the words in brackets in a comparative or superlative form.",
+    "image": null,
+    "passage": "Teacher: What are 1 ___ (obvious) differences you have noticed between your own country and this one?\n\nStudent: Oh there are so many! In my country people are 2 ___ (not/interested) in foreigners as people here, who are much 3 ___ (friendly). They are always kind and welcoming. Also, the weather is very different. It's much 4 ___ (hot) in my country. It's only autumn but I am feeling cold here already and it's getting 5 ___ (cold) every day. I don't like that. Then there's the food. Your food is 6 ___ ours. Our food is 7 ___ (spicy) and 8 ___ (delicious). I think it's 9 ___ (good) in the world! It is 10 ___ (not/expensive) either. I've also noticed that people here eat slightly 11 ___ (early) and they eat their meals 12 ___ (quickly). And I am beginning to change my own habits too! 13 ___ (long) I stay here 14 ___ (fast) I seem to be eating.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Gap 1 (obvious)",
+            "answer": "the most obvious"
+        },
+        {
+            "id": 2,
+            "text": "Gap 2 (not/interested)",
+            "answer": "not as interested"
+        },
+        {
+            "id": 3,
+            "text": "Gap 3 (friendly)",
+            "answer": "friendlier"
+        },
+        {
+            "id": 4,
+            "text": "Gap 4 (hot)",
+            "answer": "hotter"
+        },
+        {
+            "id": 5,
+            "text": "Gap 5 (cold)",
+            "answer": "colder"
+        },
+        {
+            "id": 6,
+            "text": "Gap 6 (not/good)",
+            "answer": "not as good as"
+        },
+        {
+            "id": 7,
+            "text": "Gap 7 (spicy)",
+            "answer": "spicier"
+        },
+        {
+            "id": 8,
+            "text": "Gap 8 (delicious)",
+            "answer": "more delicious"
+        },
+        {
+            "id": 9,
+            "text": "Gap 9 (good)",
+            "answer": "the best"
+        },
+        {
+            "id": 10,
+            "text": "Gap 10 (not/expensive)",
+            "answer": "not as expensive"
+        },
+        {
+            "id": 11,
+            "text": "Gap 11 (early)",
+            "answer": "earlier"
+        },
+        {
+            "id": 12,
+            "text": "Gap 12 (quickly)",
+            "answer": "more quickly"
+        },
+        {
+            "id": 13,
+            "text": "Gap 13 (long)",
+            "answer": "The longer"
+        },
+        {
+            "id": 14,
+            "text": "Gap 14 (fast)",
+            "answer": "the faster"
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+{
+    "id": "grammar_20_25_004",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Voice: Active and Passive forms",
+    "instruction": "Fill in the gaps with an appropriate form (active or passive) of the verb in brackets.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. For a long time people thought (think) the giant panda was a type of raccoon.",
+            "answer": "thought"
+        },
+        {
+            "id": 2,
+            "text": "2. At the beginning of the experiment, the chemicals ___ (place) in the beaker.",
+            "answer": "are placed|||were placed"
+        },
+        {
+            "id": 3,
+            "text": "3. In medieval times the earth ___ (believe) to be flat.",
+            "answer": "was believed"
+        },
+        {
+            "id": 4,
+            "text": "4. Up until now students ___ (allow) to wear what they want, but the new head-teacher has decided to introduce a uniform.",
+            "answer": "have been allowed"
+        },
+        {
+            "id": 5,
+            "text": "5. I can't drive you to the airport because my car ___ (service) tomorrow.",
+            "answer": "is being serviced|||is serviced"
+        },
+        {
+            "id": 6,
+            "text": "6. Next year the new theatre ___ (open) by some of Britain's biggest acting stars.",
+            "answer": "will be opened"
+        },
+        {
+            "id": 7,
+            "text": "7. It ___ (expect) that the President will resign due to the recent revelations.",
+            "answer": "is expected"
+        },
+        {
+            "id": 8,
+            "text": "8. Chocolate ___ (make) from the bean of the cacao tree.",
+            "answer": "is made"
+        },
+        {
+            "id": 9,
+            "text": "9. This report ___ (claim) that there is corruption throughout the company.",
+            "answer": "claims"
+        },
+        {
+            "id": 10,
+            "text": "10. Several students ___ (know) to have cheated in their exams.",
+            "answer": "are known"
+        },
+        {
+            "id": 11,
+            "text": "11. People need ___ (encourage) to use public transport if we want to reduce our carbon emissions.",
+            "answer": "to be encouraged|||encouraging"
+        },
+        {
+            "id": 12,
+            "text": "12. I went on holiday because I really needed ___ (take) a break.",
+            "answer": "to take"
+        }
+    ]
+}

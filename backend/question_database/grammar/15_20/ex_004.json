@@ -1,0 +1,82 @@
+{
+    "id": "grammar_15_20_004",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Verb Patterns: Complaint Letter",
+    "instruction": "Fill in the gaps in the letter using the verbs (and objects) in brackets in their correct form.",
+    "image": null,
+    "passage": "Dear Sir,\nI am writing to complain about the service I received in your hotel at the weekend. I arrived at your hotel at lunchtime on Friday and your receptionist 1 [1] (tell/me/take) a seat while she dealt with some other customers. I 2 [2] (not feel like/wait) after a long journey but I sat down anyway. However, after your receptionist 3 [3] (finish/talk) to the other customers she walked away and left no one behind the desk. After about ten minutes, I rang the bell, but still no one came.\nI 4 [4] (try/find) someone else to help me, and when I\n5 [5] (fail/do) this I went behind the desk and called through the door. The receptionist was sitting in the back room at the computer. When she\n6 [6] (see/me/stand) in the doorway, she apologized and said she\n7 [7] (need/send) an urgent email and 8 [8] (carry on/look) at her screen.\n\nIf this had been the only poor service I received during my stay, I would not\n9 [9] (bother/write) this letter. However, later that evening, in the dining room, I had another bad experience. Your menu only had one vegetarian dish, so I ordered this. Imagine my horror when I 10 [10] (start/eat) and discovered meat in the dish. I 11 [11] (consider/leave) immediately, but instead I explained the situation to the waiter. I\n12 [12] (expect/him/get) me another vegetarian meal, but instead he simply shrugged his shoulders, removed the plate and walked away.\n\nI 13 [13] (hope/receive) a full apology from you for this poor service and some recompense for the unpleasant time I experienced whilst staying in your hotel. I 14 [14] (advise/you/give) your staff some customer care training in the immediate future.\n\nYours faithfully,\nGeraint Rees",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. (tell/me/take):",
+            "answer": "told me to take"
+        },
+        {
+            "id": 2,
+            "text": "2. (not feel like/wait):",
+            "answer": "did not feel like waiting|||didn't feel like waiting"
+        },
+        {
+            "id": 3,
+            "text": "3. (finish/talk):",
+            "answer": "finished talking|||had finished talking"
+        },
+        {
+            "id": 4,
+            "text": "4. (try/find):",
+            "answer": "tried to find"
+        },
+        {
+            "id": 5,
+            "text": "5. (fail/do):",
+            "answer": "failed to do"
+        },
+        {
+            "id": 6,
+            "text": "6. (see/me/stand):",
+            "answer": "saw me standing"
+        },
+        {
+            "id": 7,
+            "text": "7. (need/send):",
+            "answer": "needed to send|||had needed to send"
+        },
+        {
+            "id": 8,
+            "text": "8. (carry on/look):",
+            "answer": "carried on looking"
+        },
+        {
+            "id": 9,
+            "text": "9. (bother/write):",
+            "answer": "have bothered to write"
+        },
+        {
+            "id": 10,
+            "text": "10. (start/eat):",
+            "answer": "started eating|||started to eat"
+        },
+        {
+            "id": 11,
+            "text": "11. (consider/leave):",
+            "answer": "considered leaving"
+        },
+        {
+            "id": 12,
+            "text": "12. (expect/him/get):",
+            "answer": "expected him to get"
+        },
+        {
+            "id": 13,
+            "text": "13. (hope/receive):",
+            "answer": "hope to receive"
+        },
+        {
+            "id": 14,
+            "text": "14. (advise/you/give):",
+            "answer": "advise you to give"
+        }
+    ]
+}

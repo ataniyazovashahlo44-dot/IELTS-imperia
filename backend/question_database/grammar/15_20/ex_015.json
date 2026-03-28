@@ -1,0 +1,77 @@
+{
+    "id": "grammar_15_20_015",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Prepositions: Formal Letter",
+    "instruction": "Fill in the gaps in the letter with the correct prepositions.",
+    "image": null,
+    "passage": "Dear Mr Rees,\nThank you for your letter of 21 June. I was very disturbed 1 by (by) your account of what happened in our hotel last week, and I am writing to apologise 2 [2] this. I can understand that you were shocked 3 [3] the way the employee spoke to you. There can be no excuse 4 [4] such behaviour and I fully understand why you felt the need to complain 5 [5] the situation. I can provide no explanation 6 [6] the way the receptionist behaved.\n\nOur hotel group has a reputation 7 [7] being good 8 [8] looking after our customers, and I am very sorry that your experience 9 [9] our service did not confirm this. I intend to deal 10 [10] the staff member appropriately and I will ensure that she does not repeat this behaviour 11 [11] sending her on a retraining course next week. I would like to assure you that the behaviour you encountered is not typical 12 [12] our staff.\n\nAs the manager, I am responsible 13 [13] all of our employees so please accept my apologies again and this voucher worth £50 to spend in any 14 [14] our hotels.\n\nYours sincerely,\nClive Martin\nHotel Manager",
+    "questions": [
+        {
+            "id": 2,
+            "text": "2. apologise:",
+            "answer": "for"
+        },
+        {
+            "id": 3,
+            "text": "3. shocked:",
+            "answer": "by"
+        },
+        {
+            "id": 4,
+            "text": "4. excuse:",
+            "answer": "for"
+        },
+        {
+            "id": 5,
+            "text": "5. complain:",
+            "answer": "about"
+        },
+        {
+            "id": 6,
+            "text": "6. explanation:",
+            "answer": "for|||of"
+        },
+        {
+            "id": 7,
+            "text": "7. reputation:",
+            "answer": "for"
+        },
+        {
+            "id": 8,
+            "text": "8. good:",
+            "answer": "at"
+        },
+        {
+            "id": 9,
+            "text": "9. experience:",
+            "answer": "of"
+        },
+        {
+            "id": 10,
+            "text": "10. deal:",
+            "answer": "with"
+        },
+        {
+            "id": 11,
+            "text": "11. behavior ___ sending:",
+            "answer": "by"
+        },
+        {
+            "id": 12,
+            "text": "12. typical:",
+            "answer": "of"
+        },
+        {
+            "id": 13,
+            "text": "13. responsible:",
+            "answer": "for"
+        },
+        {
+            "id": 14,
+            "text": "14. any:",
+            "answer": "of"
+        }
+    ]
+}

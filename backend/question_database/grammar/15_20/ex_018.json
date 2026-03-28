@@ -1,0 +1,60 @@
+{
+    "id": "grammar_15_20_018",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "error_correction",
+    "title": "Relative Clauses: Email Extracts",
+    "instruction": "There is a mistake with relative clauses in each of the email extracts below. Find the mistakes and correct them.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "I want to get in touch with the woman which we met at the meeting last week.",
+            "wrongPart": "which",
+            "answer": "who|||whom"
+        },
+        {
+            "id": 2,
+            "text": "I'm sending this email to ask for more information about the language courses which I saw them advertised in The Daily Star yesterday.",
+            "wrongPart": "them",
+            "answer": " "
+        },
+        {
+            "id": 3,
+            "text": "I'm finding my new job exhausting, that is not surprising considering I have to travel so much.",
+            "wrongPart": "that",
+            "answer": "which"
+        },
+        {
+            "id": 4,
+            "text": "I really enjoyed the lecture which you gave it on Wednesday, and am thinking about doing my assignment on the same topic.",
+            "wrongPart": "it",
+            "answer": " "
+        },
+        {
+            "id": 5,
+            "text": "It's the one which in you have written your lecture notes.",
+            "wrongPart": "which in",
+            "answer": "which you have written your lecture notes in|||in which"
+        },
+        {
+            "id": 6,
+            "text": "I've got today's newspaper which has a list of films.",
+            "wrongPart": "newspaper which",
+            "answer": "newspaper, which"
+        },
+        {
+            "id": 7,
+            "text": "I want some of those bread rolls what we had last week.",
+            "wrongPart": "what",
+            "answer": "which|||that"
+        },
+        {
+            "id": 8,
+            "text": "You are clearly a person who life is full and busy.",
+            "wrongPart": "who",
+            "answer": "whose"
+        }
+    ]
+}

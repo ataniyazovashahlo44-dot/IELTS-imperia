@@ -1,0 +1,72 @@
+{
+    "id": "grammar_15_20_010",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "error_correction",
+    "title": "Mixed Conditionals: Mistake correction",
+    "instruction": "Find and correct the one mistake in each sentence below.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "If I hadn't ate so much I wouldn't have a stomach ache now.",
+            "wrongPart": "ate",
+            "answer": "eaten"
+        },
+        {
+            "id": 2,
+            "text": "What would you done if you'd failed the exam?",
+            "wrongPart": "would you done",
+            "answer": "would you have done"
+        },
+        {
+            "id": 3,
+            "text": "I am starting university next autumn if I hadn't had such bad exam results.",
+            "wrongPart": "am starting",
+            "answer": "would be starting"
+        },
+        {
+            "id": 4,
+            "text": "If the government would have kept their promise, taxes wouldn't have gone up last year.",
+            "wrongPart": "would have kept",
+            "answer": "had kept"
+        },
+        {
+            "id": 5,
+            "text": "I would have finished my essay on time if I didn't have the accident.",
+            "wrongPart": "didn't have",
+            "answer": "hadn't had"
+        },
+        {
+            "id": 6,
+            "text": "If I was getting married next weekend, I was very excited by now.",
+            "wrongPart": "was very excited",
+            "answer": "'d be very excited|||would be very excited"
+        },
+        {
+            "id": 7,
+            "text": "If the economic conditions had been better when I bought this house, I might make a fortune by now.",
+            "wrongPart": "might make",
+            "answer": "might have made"
+        },
+        {
+            "id": 8,
+            "text": "Life today will be very different if Thomas Edison hadn't invented the electric light.",
+            "wrongPart": "will be",
+            "answer": "would be"
+        },
+        {
+            "id": 9,
+            "text": "If you were more considerate, you didn't make so much noise last night.",
+            "wrongPart": "didn't make",
+            "answer": "wouldn't have made"
+        },
+        {
+            "id": 10,
+            "text": "If I didn't go to university, I wouldn't be doing this job now.",
+            "wrongPart": "didn't go",
+            "answer": "hadn't gone"
+        }
+    ]
+}

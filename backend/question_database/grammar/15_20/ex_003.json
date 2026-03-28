@@ -1,0 +1,82 @@
+{
+    "id": "grammar_15_20_003",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Verb Patterns: Error Correction",
+    "instruction": "Decide if the underlined sections ([1], [2], etc.) in the dialogue are correct or not. Type '✓' if they are right and type the correct version if they are wrong.",
+    "image": null,
+    "passage": "Teacher: What impact do you feel a good learning experience at school can have on people in terms of future learning?\nStudent: Oh, well, obviously, having a good experience as a student will 1 [1] positive about learning in general. If you've had supportive teachers at school who 2 [2], you are more likely 3 [3].\nTeacher: Can you give me an example?\nStudent: Well, with my art classes, my teacher was so supportive that I 4 [4]. However, I have had other teachers who 5 [5], and that 6 [6].\nTeacher: How can teachers ensure that their students have a positive learning experience?\nStudent: I think teachers 7 [7]. If they aren't interested, their students 8 [8]. Also, if students 9 [9], they are more likely to learn. Students 10 [10] if they like what they are doing. So teachers should 11 [11].\nTeacher: Do you think that the curriculum in schools allows teachers to be creative and make their lessons interesting?\nStudent: Yes, in my country teachers must follow a curriculum, but the government 12 [12]. That means that teachers can 13 [13]. So, teachers can still be creative and 14 [14].",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. allow you feel",
+            "answer": "allow you to feel"
+        },
+        {
+            "id": 2,
+            "text": "2. encouraged you to work hard",
+            "answer": "✓"
+        },
+        {
+            "id": 3,
+            "text": "3. to go on to be",
+            "answer": "✓"
+        },
+        {
+            "id": 4,
+            "text": "4. tried very hard pleasing",
+            "answer": "tried very hard to please"
+        },
+        {
+            "id": 5,
+            "text": "5. have made me to feel",
+            "answer": "have made me feel"
+        },
+        {
+            "id": 6,
+            "text": "6. made me wanting",
+            "answer": "made me want"
+        },
+        {
+            "id": 7,
+            "text": "7. need to be",
+            "answer": "✓"
+        },
+        {
+            "id": 8,
+            "text": "8. will stop to make",
+            "answer": "will stop making"
+        },
+        {
+            "id": 9,
+            "text": "9. enjoy being",
+            "answer": "✓"
+        },
+        {
+            "id": 10,
+            "text": "10. don't mind to work",
+            "answer": "don't mind working"
+        },
+        {
+            "id": 11,
+            "text": "11. try to make",
+            "answer": "✓"
+        },
+        {
+            "id": 12,
+            "text": "12. doesn't force them teach",
+            "answer": "doesn't force them to teach"
+        },
+        {
+            "id": 13,
+            "text": "13. decide to teach",
+            "answer": "✓"
+        },
+        {
+            "id": 14,
+            "text": "14. let their students deciding",
+            "answer": "let their students decide"
+        }
+    ]
+}

@@ -1,0 +1,84 @@
+{
+    "id": "grammar_20_25_003",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "error_correction",
+    "title": "Voice: Active or Passive?",
+    "instruction": "There are 12 mistakes with active or passive verbs in this conversation. Find and correct them.",
+    "image": null,
+    "passage": "Teacher: People are said that the increase in travel will lead to a loss of different cultures around the world. Do you agree?\nStudent: Well, yes, I suppose that is a possibility. I'm sure the way of life of many people around the world has changed by contact with tourists. But the change might have been happened anyway, I suppose.\nTeacher: Yes, maybe. So, do you think we should try to stop the disappearance of native cultures?\nStudent: Oh, yes. I think it will be very sad if we lose different cultures. They enrich our world, don't they? But it is also argued that many people from poor countries have given opportunities that they wouldn't have had if there wasn't any tourism. Their cultures may have changed, but they have been benefited from improvements in education and health as well as their standard of living.\nTeacher: So do you think that improvements like this inevitably bring about a loss of culture, as some people have been suggested?\nStudent: I suppose I do think that, yes. As we are continued to be provided with better and better education and we have more and more contact with the world outside our own countries, we are being become more and more the same!\nTeacher: Can you give some examples of what you mean?\nStudent: Well, in my country we now have American restaurants and we watch American movies on TV. American culture feels to be too dominant by many people in my country. And English words have been come into my language too.\nTeacher: Oh, that's interesting. And do you think that there will one day be only one language in the world?\nStudent: Well, the way we live has affected in a big way by things like the Internet, email and cheap travel. All countries are using English for these things, and so we all know a little bit of English already. But I am not sure it will use by all countries instead of their own language. That seems unlikely to me.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "People are said:",
+            "wrongPart": "are said",
+            "answer": "say"
+        },
+        {
+            "id": 2,
+            "text": "has changed by contact:",
+            "wrongPart": "has changed",
+            "answer": "has been changed"
+        },
+        {
+            "id": 3,
+            "text": "might have been happened:",
+            "wrongPart": "might have been happened",
+            "answer": "might have happened"
+        },
+        {
+            "id": 4,
+            "text": "have given opportunities:",
+            "wrongPart": "have given",
+            "answer": "have been given"
+        },
+        {
+            "id": 5,
+            "text": "have been benefited from:",
+            "wrongPart": "have been benefited",
+            "answer": "have benefited"
+        },
+        {
+            "id": 6,
+            "text": "have been suggested:",
+            "wrongPart": "have been suggested",
+            "answer": "have suggested"
+        },
+        {
+            "id": 7,
+            "text": "are continued:",
+            "wrongPart": "are continued",
+            "answer": "continue"
+        },
+        {
+            "id": 8,
+            "text": "are being become:",
+            "wrongPart": "are being become",
+            "answer": "are becoming"
+        },
+        {
+            "id": 9,
+            "text": "feels to be too dominant by:",
+            "wrongPart": "feels",
+            "answer": "is felt"
+        },
+        {
+            "id": 10,
+            "text": "have been come:",
+            "wrongPart": "have been come",
+            "answer": "have come"
+        },
+        {
+            "id": 11,
+            "text": "has affected in a big way by:",
+            "wrongPart": "has affected",
+            "answer": "has been affected"
+        },
+        {
+            "id": 12,
+            "text": "it will use by all countries:",
+            "wrongPart": "will use",
+            "answer": "will be used"
+        }
+    ]
+}

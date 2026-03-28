@@ -1,0 +1,82 @@
+{
+    "id": "grammar_15_20_007",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Conditionals: Dialogue Proofreading",
+    "instruction": "Decide if the underlined verbs ([1], [2], etc.) in the dialogue are correct or not. Type '✓' if they are right and type the correct version if they are wrong.",
+    "image": null,
+    "passage": "Teacher: Is it better to have one special friend or lots of good ones?\nStudent: I think that if you have lots of friends, you 1 [1]. However, I feel that everyone should have someone special. If you 2 [2], you won't have someone to talk to at difficult times in your life.\nTeacher: When do people make most friends?\nStudent: Well, everyone makes friends when they are at school. If you 3 [3] where everyone is your own age, you 4 [4].\nTeacher: Do you think that friends need to be similar ages?\nStudent: Well, generally friends from school are similar ages. But when you 5 [5], for example, you meet people of different ages. If you get on well with someone and you 6 [6], then age 7 [7].\nTeacher: Do people need to have things in common to be friends?\nStudent: Well, yes. If you 8 [8], you will probably get on well. But having said that, I have a very good friend who is completely different from me. She loves sport and I hate it. If you asked me why we were friends, I 9 [9]! Maybe it's just chance - if you are in a certain place at a certain time you 10 [10], but if you 11 [11] at a different time in a different place it 12 [12].\nTeacher: What different roles do friends play in people's lives?\nStudent: Well, your friends are the people you choose to be with. And if you 13 [13], you often turn to your friends. It works the other way too. When your friends need you, you 14 [14].",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. will be lucky",
+            "answer": "are lucky"
+        },
+        {
+            "id": 2,
+            "text": "2. won't have a special friend",
+            "answer": "don't have"
+        },
+        {
+            "id": 3,
+            "text": "3. are in an environment",
+            "answer": "✓"
+        },
+        {
+            "id": 4,
+            "text": "4. would probably make",
+            "answer": "will probably"
+        },
+        {
+            "id": 5,
+            "text": "5. started work",
+            "answer": "start"
+        },
+        {
+            "id": 6,
+            "text": "6. will have a lot in common",
+            "answer": "have"
+        },
+        {
+            "id": 7,
+            "text": "7. won't be important",
+            "answer": "isn't"
+        },
+        {
+            "id": 8,
+            "text": "8. like the same things",
+            "answer": "✓"
+        },
+        {
+            "id": 9,
+            "text": "9. am not able to say",
+            "answer": "wouldn't be able"
+        },
+        {
+            "id": 10,
+            "text": "10. become friends",
+            "answer": "✓"
+        },
+        {
+            "id": 11,
+            "text": "11. will meet the same person",
+            "answer": "met"
+        },
+        {
+            "id": 12,
+            "text": "12. didn't happen",
+            "answer": "might not happen|||may not happen"
+        },
+        {
+            "id": 13,
+            "text": "13. will need help",
+            "answer": "need"
+        },
+        {
+            "id": 14,
+            "text": "14. will help them",
+            "answer": "help"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "id": "grammar_10_15_003",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Prepositions: of, in, for, on, to, with",
+    "instruction": "Fill in the gaps with of, in, for, on, to or with.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "My family live in an old, wooden house ___ shutters.",
+            "answer": "with"
+        },
+        {
+            "id": 2,
+            "text": "Our main meal ___ the day usually includes rice and vegetables.",
+            "answer": "of"
+        },
+        {
+            "id": 3,
+            "text": "She got the best exam results ___ the whole school.",
+            "answer": "in"
+        },
+        {
+            "id": 4,
+            "text": "At a wedding reception in Britain, all the guests usually get a piece ___ the cake.",
+            "answer": "of"
+        },
+        {
+            "id": 5,
+            "text": "In my country there are special universities ___ talented sportsmen and women.",
+            "answer": "for"
+        },
+        {
+            "id": 6,
+            "text": "You need a large amount ___ money if you want to travel around the world.",
+            "answer": "of"
+        },
+        {
+            "id": 7,
+            "text": "My recent business trip ___ Florida was a great success.",
+            "answer": "to"
+        },
+        {
+            "id": 8,
+            "text": "The house ___ the corner is for sale.",
+            "answer": "on"
+        },
+        {
+            "id": 9,
+            "text": "The weather ___ Greece is wonderful compared with here.",
+            "answer": "in"
+        },
+        {
+            "id": 10,
+            "text": "You should buy a grammar book ___ answers, so that you can practise by yourself.",
+            "answer": "with"
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+{
+    "id": "grammar_15_20_012",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "mcq",
+    "title": "Dependent Prepositions & Collocations",
+    "instruction": "Choose the correct word (A, B or C) to complete each sentence.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "I still haven't forgiven her ___ her behaviour in front of my boss.",
+            "options": {
+                "A": "for",
+                "B": "of",
+                "C": "from"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "I'm going to ___ to your parents about your exam results.",
+            "options": {
+                "A": "talk",
+                "B": "discuss",
+                "C": "ask"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 3,
+            "text": "I'm scared ___ making a fool of myself when I give the presentation.",
+            "options": {
+                "A": "for",
+                "B": "to",
+                "C": "of"
+            },
+            "answer": "C"
+        },
+        {
+            "id": 4,
+            "text": "I'm very ___ in you. You've made a real mess of things.",
+            "options": {
+                "A": "concerned",
+                "B": "astonished",
+                "C": "disappointed"
+            },
+            "answer": "C"
+        },
+        {
+            "id": 5,
+            "text": "The new drug prevents the bacteria ___ growing.",
+            "options": {
+                "A": "to",
+                "B": "from",
+                "C": "in"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 6,
+            "text": "There are many things ___ with our society today.",
+            "options": {
+                "A": "bad",
+                "B": "wrong",
+                "C": "disturbing"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 7,
+            "text": "It was very generous ___ you to offer to help me.",
+            "options": {
+                "A": "of",
+                "B": "about",
+                "C": "for"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "The president first became ___ in politics as a student.",
+            "options": {
+                "A": "aware",
+                "B": "involved",
+                "C": "enthusiastic"
+            },
+            "answer": "B"
+        }
+    ]
+}

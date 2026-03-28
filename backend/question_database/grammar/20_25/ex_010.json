@@ -1,0 +1,84 @@
+{
+    "id": "grammar_20_25_010",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "mcq",
+    "title": "Adverbs of Attitude",
+    "instruction": "Underline the correct word or phrase in the sentences below to indicate the speaker's attitude or source of information.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. I'm very worried about the plans to build a new shopping centre here. ___ my friend they want to knock down some of the houses.",
+            "options": {
+                "A": "According to",
+                "B": "Apparently"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "2. ___, I believe that we will live longer in the future.",
+            "options": {
+                "A": "Apparently,",
+                "B": "Personally,"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 3,
+            "text": "3. Joshua is working this weekend so ___ he will have some time off at a later date.",
+            "options": {
+                "A": "presumably",
+                "B": "actually"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "4. We cannot say for sure but ___ an advertising campaign would encourage people to recycle their waste more.",
+            "options": {
+                "A": "definitely",
+                "B": "perhaps"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 5,
+            "text": "5. ___, we can see that the experiments done by the early scientists have had a great effect on our lives today.",
+            "options": {
+                "A": "Overall,",
+                "B": "Luckily,"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 6,
+            "text": "6. We should ___ all reflect on the way we live our lives and try to be more environmentally aware.",
+            "options": {
+                "A": "probably",
+                "B": "personally"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "7. ___, John agreed to come when I invited him - I hadn't expected that!",
+            "options": {
+                "A": "Certainly,",
+                "B": "Surprisingly,"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 8,
+            "text": "8. ___ the number of students leaving university without completing their degrees is rising.",
+            "options": {
+                "A": "In my opinion",
+                "B": "Unfortunately"
+            },
+            "answer": "B"
+        }
+    ]
+}

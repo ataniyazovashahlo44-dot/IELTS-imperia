@@ -1,0 +1,67 @@
+{
+    "id": "grammar_20_25_013",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Word Formation: Adjective to Noun",
+    "instruction": "Complete the sentences with the noun form of the adjectives in brackets.",
+    "image": null,
+    "passage": "Example: The graphs show a significant difference (different) between the ages at which men and women marry.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. The ___ (strong) of the government's argument for changing the law is that many car accidents happen whilst drivers are speaking on their mobile phones.",
+            "answer": "strength"
+        },
+        {
+            "id": 2,
+            "text": "2. The ___ (deep) of the lake means that no one has ever seen the bottom.",
+            "answer": "depth"
+        },
+        {
+            "id": 3,
+            "text": "3. Some parts of the world are not only important in terms of their biodiversity, but they also have a special ___ (beautiful) that must be conserved.",
+            "answer": "beauty"
+        },
+        {
+            "id": 4,
+            "text": "4. This is a good essay in parts, but you need to express yourself with more ___ (clear) at times.",
+            "answer": "clarity"
+        },
+        {
+            "id": 5,
+            "text": "5. The discovery of a new species of monkey in Africa is of great ___ (interesting) to both naturalists and the general public alike.",
+            "answer": "interest"
+        },
+        {
+            "id": 6,
+            "text": "6. The ___ (difficult) facing the scientists now is how to prove their theory.",
+            "answer": "difficulty"
+        },
+        {
+            "id": 7,
+            "text": "7. The results of this research need to be treated with ___ (cautious).",
+            "answer": "caution"
+        },
+        {
+            "id": 8,
+            "text": "8. The ___ (significant) of the findings surprised even the researchers.",
+            "answer": "significance"
+        },
+        {
+            "id": 9,
+            "text": "9. Many older people are afraid to go out at night due to the increase in ___ (violent) in our larger cities.",
+            "answer": "violence"
+        },
+        {
+            "id": 10,
+            "text": "10. The current ___ (controversial) over pensions is likely to continue for some time.",
+            "answer": "controversy"
+        },
+        {
+            "id": 11,
+            "text": "11. We apologise for any ___ (confusing) caused by the last-minute change to the schedule.",
+            "answer": "confusion"
+        }
+    ]
+}

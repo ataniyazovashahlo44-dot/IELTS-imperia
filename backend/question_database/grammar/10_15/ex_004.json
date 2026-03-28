@@ -1,0 +1,42 @@
+{
+    "id": "grammar_10_15_004",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Sentence Joining: Noun Phrases",
+    "instruction": "Join the two sentences to make one sentence using a noun phrase. Add prepositions where necessary.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. I live in Malaysia. I live in the capital city. -> I live in the ___ Malaysia.",
+            "answer": "capital city of"
+        },
+        {
+            "id": 2,
+            "text": "2. Many people buy their own home. The number is increasing. -> The number of ___ increasing.",
+            "answer": "people buying their own home is"
+        },
+        {
+            "id": 3,
+            "text": "3. A proposal was made by the education department. It was rejected by the government. -> The proposal ___ the government.",
+            "answer": "made by the education department was rejected by"
+        },
+        {
+            "id": 4,
+            "text": "4. We have computer software. The software's purpose is to predict future earthquakes. -> We have computer software ___ earthquakes.",
+            "answer": "to predict|||for predicting"
+        },
+        {
+            "id": 5,
+            "text": "5. A new dictionary is about to be published. The dictionary contains more words than ever before. -> A new dictionary ___ to be published.",
+            "answer": "containing more words than ever before is about"
+        },
+        {
+            "id": 6,
+            "text": "6. My favourite novel is a story. The story is based on the author's own experience. -> My favourite novel ___ own experience.",
+            "answer": "is a story based on the author's"
+        }
+    ]
+}

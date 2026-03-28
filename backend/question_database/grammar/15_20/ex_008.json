@@ -1,0 +1,102 @@
+{
+    "id": "grammar_15_20_008",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "mcq",
+    "title": "Conditional Conjunctions",
+    "instruction": "Choose (underline) the correct words to complete the sentences.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "I'll put my umbrella in my bag ___ it rains later.",
+            "options": {
+                "A": "in case",
+                "B": "provided that"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "___ you pay me in advance, I'll buy the tickets for you.",
+            "options": {
+                "A": "Unless",
+                "B": "As long as"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 3,
+            "text": "I'm going to get fat ___ I stop eating so much chocolate.",
+            "options": {
+                "A": "if",
+                "B": "unless"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 4,
+            "text": "You must follow the instructions accurately ___ you want to risk damaging the machine.",
+            "options": {
+                "A": "in case",
+                "B": "unless"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 5,
+            "text": "When I travel on planes I always put my toothbrush in my hand luggage ___ my suitcase gets lost.",
+            "options": {
+                "A": "in case",
+                "B": "if"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 6,
+            "text": "Ice skating is fun ___ you are willing to fall over a lot!",
+            "options": {
+                "A": "as long as",
+                "B": "when"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "Dear Mr Brown, I am writing to inform you that your library books are overdue. ___ you return them immediately, you will not be fined.",
+            "options": {
+                "A": "Provided that",
+                "B": "When"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "I've just signed the contract for the job in Indonesia, starting in April. ___ I move there, I'll have to sell my car.",
+            "options": {
+                "A": "When",
+                "B": "If"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 9,
+            "text": "I wouldn't stay out in the sun too long ___ I were you.",
+            "options": {
+                "A": "as long as",
+                "B": "if"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 10,
+            "text": "I don't really like going to parties ___ I know most people there.",
+            "options": {
+                "A": "unless",
+                "B": "as long as"
+            },
+            "answer": "A"
+        }
+    ]
+}

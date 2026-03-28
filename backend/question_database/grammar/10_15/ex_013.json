@@ -1,0 +1,72 @@
+{
+    "id": "grammar_10_15_013",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "sentence_transformation",
+    "title": "Reporting Verbs Transformation",
+    "instruction": "Report each of the sentences below using a verb from the list: agree, apologise, ask, deny, encourage, persuaded, promise, refuse, suggest. Remember that you do not need to report the original words exactly.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "stem": "'We are going to lower taxes and reduce unemployment!'",
+            "prompt": "The government ___",
+            "answer": "promised to lower taxes and reduce unemployment"
+        },
+        {
+            "id": 2,
+            "stem": "'I really think you should apply for the job. You'd have a good chance of getting it.'",
+            "prompt": "She ___",
+            "answer": "encouraged me to apply for the job"
+        },
+        {
+            "id": 3,
+            "stem": "'No, I won't help you. Do it yourself!'",
+            "prompt": "He ___",
+            "answer": "refused to help me"
+        },
+        {
+            "id": 4,
+            "stem": "'Oh, okay, I'll go to the meeting.'",
+            "prompt": "She ___",
+            "answer": "agreed to go to the meeting"
+        },
+        {
+            "id": 5,
+            "stem": "'I didn't cause the accident. It wasn't me.'",
+            "prompt": "He ___",
+            "answer": "denied causing the accident|||denied having caused the accident|||denied that he had caused the accident"
+        },
+        {
+            "id": 6,
+            "stem": "'We are very sorry that we lost your application form.'",
+            "prompt": "They ___",
+            "answer": "apologised for losing my application form"
+        },
+        {
+            "id": 7,
+            "stem": "'Why aren't there many poisonous snakes in Britain?'",
+            "prompt": "He ___",
+            "answer": "asked why there aren't many poisonous snakes in Britain|||asked why there weren't many poisonous snakes in Britain"
+        },
+        {
+            "id": 8,
+            "stem": "'Are you going to the lecture tomorrow?'",
+            "prompt": "She ___",
+            "answer": "asked if I was going to the lecture the next day|||asked whether I was going to the lecture the next day|||asked if I'm going to the lecture tomorrow"
+        },
+        {
+            "id": 9,
+            "stem": "'Why don't you have a day off? You could do with a rest.'",
+            "prompt": "She ___",
+            "answer": "suggested that I have a day off|||suggested I have a day off|||suggested that I had a day off|||suggested I had a day off"
+        },
+        {
+            "id": 10,
+            "stem": "'Please come to the theatre with me, Dan. I really think you'll enjoy it.' 'Oh, alright then, Claire.'",
+            "prompt": "Claire ___",
+            "answer": "persuaded Dan to go to the theatre with her|||persuaded Dan to come to the theatre with her"
+        }
+    ]
+}

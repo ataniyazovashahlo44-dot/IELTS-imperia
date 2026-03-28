@@ -1,0 +1,42 @@
+{
+    "id": "grammar_15_20_017",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "sentence_transformation",
+    "title": "Non-defining Relative Clauses",
+    "instruction": "Rewrite the sentences below as single sentences using non-defining relative clauses (who, which, whose, where). Include commas where necessary.",
+    "image": null,
+    "passage": "Example: My father lives in a small house full of ornaments. This makes it really difficult to clean. \nAnswer: My father lives in a small house full of ornaments, which makes it really difficult to clean.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Some students take a year out before university. This allows them to work or travel.",
+            "answer": "Some students take a year out before university, which allows them to work or travel."
+        },
+        {
+            "id": 2,
+            "text": "The Guggenheim Museum is in Bilbao. It only displays contemporary art.",
+            "answer": "The Guggenheim Museum, which is in Bilbao, only displays contemporary art.|||The Guggenheim Museum, which only displays contemporary art, is in Bilbao."
+        },
+        {
+            "id": 3,
+            "text": "My English teacher is leaving. His lectures are very interesting.",
+            "answer": "My English teacher, whose lectures are very interesting, is leaving."
+        },
+        {
+            "id": 4,
+            "text": "The lecture was about current economic policy. It was not very easy to understand.",
+            "answer": "The lecture, which was about current economic policy, was not very easy to understand.|||The lecture, which was not very easy to understand, was about current economic policy."
+        },
+        {
+            "id": 5,
+            "text": "In 1951 my parents arrived in New York. They stayed there for the rest of their lives.",
+            "answer": "My parents arrived in New York in 1951, where they stayed for the rest of their lives.|||In 1951 my parents arrived in New York, where they stayed for the rest of their lives."
+        },
+        {
+            "id": 6,
+            "text": "I gave my assignment to the faculty secretary. She was not very friendly.",
+            "answer": "I gave my assignment to the faculty secretary, who was not very friendly."
+        }
+    ]
+}

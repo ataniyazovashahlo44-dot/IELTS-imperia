@@ -1,0 +1,87 @@
+{
+    "id": "grammar_15_20_006",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "First and Second Conditionals",
+    "instruction": "Fill in the gaps in the extracts below using the verbs in brackets in the correct form.",
+    "image": null,
+    "passage": "1 My parents would love (love) it if I 1 [1] (become) a doctor but I'm not sure I'd be able to face all those years of study. Also if I 2 [2] (be) a doctor, I 3 [3] (hate) all those hours you have to work.\n\n2 These days I use the Internet more and more to do my shopping. If I 4 [4] (not/have) my computer, I 5 [5] (not/know) what to do. I buy clothes, books and DVDs online as well as holidays. If you 6 [6] (not/find) what you want in the shops, you 7 [7] (find) it on the Internet. I'm going to Barcelona in a few weeks and I'm going to buy my ticket on the Internet because it 8 [8] (save) me about £50 if I 9 [9] (do) it that way.\n\n3 This production of Shakespeare's play 10 [10] (surprise) you, unless you 11 [11] (be used to) seeing all the characters being played by just two people!\n\n4 Eggs are best kept at a cool room temperature, so I don't keep my eggs in the fridge. If I 12 [12] (keep) them in the fridge I 13 [13] (take) them out half an hour before cooking. However, not everyone has somewhere cool to keep eggs. If you 14 [14] (not/have) a cool place to store them in your home, you 15 [15] (have to) use the fridge, but just remember to take them out in time.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. (become):",
+            "answer": "became"
+        },
+        {
+            "id": 2,
+            "text": "2. (be):",
+            "answer": "were|||was"
+        },
+        {
+            "id": 3,
+            "text": "3. (hate):",
+            "answer": "'d hate|||would hate"
+        },
+        {
+            "id": 4,
+            "text": "4. (not/have):",
+            "answer": "didn't have|||did not have"
+        },
+        {
+            "id": 5,
+            "text": "5. (not/know):",
+            "answer": "wouldn't know|||would not know"
+        },
+        {
+            "id": 6,
+            "text": "6. (not/find):",
+            "answer": "don't find|||can't find"
+        },
+        {
+            "id": 7,
+            "text": "7. (find):",
+            "answer": "'ll find|||will find"
+        },
+        {
+            "id": 8,
+            "text": "8. (save):",
+            "answer": "will save"
+        },
+        {
+            "id": 9,
+            "text": "9. (do):",
+            "answer": "do"
+        },
+        {
+            "id": 10,
+            "text": "10. (surprise):",
+            "answer": "will surprise"
+        },
+        {
+            "id": 11,
+            "text": "11. (be used to):",
+            "answer": "are used to"
+        },
+        {
+            "id": 12,
+            "text": "12. (keep):",
+            "answer": "kept"
+        },
+        {
+            "id": 13,
+            "text": "13. (take):",
+            "answer": "'d take|||would take"
+        },
+        {
+            "id": 14,
+            "text": "14. (not/have):",
+            "answer": "don't have"
+        },
+        {
+            "id": 15,
+            "text": "15. (have to):",
+            "answer": "'ll have to|||will have to"
+        }
+    ]
+}

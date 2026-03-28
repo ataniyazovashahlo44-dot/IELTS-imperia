@@ -1,0 +1,57 @@
+{
+    "id": "grammar_10_15_001",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Adjectives: Comparative and Superlative Forms",
+    "instruction": "Fill in the gaps with the adjectives in the box in a comparative or superlative form.\n\nAdjectives: brave, effective, exciting, expensive, fast, happy, good, heavy, small",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "I travelled through Turkey by train because it was ___ way to cross the country.",
+            "answer": "the fastest"
+        },
+        {
+            "id": 2,
+            "text": "Scientists have discovered a tiny bacteria living in the deep ocean. They say it is ___ living organism known to man.",
+            "answer": "the smallest"
+        },
+        {
+            "id": 3,
+            "text": "It is almost impossible to find a parking space in the city centre so it is ___ to travel by public transport if you need to go there.",
+            "answer": "better"
+        },
+        {
+            "id": 4,
+            "text": "Pain killers are much ___ now so they reduce pain a lot faster than in the past.",
+            "answer": "more effective"
+        },
+        {
+            "id": 5,
+            "text": "I like all kinds of sports, but I think football is ___ game to watch because it is so fast-moving.",
+            "answer": "the most exciting"
+        },
+        {
+            "id": 6,
+            "text": "Nick did a bungee-jump, but I was too scared. He's much ___ than me.",
+            "answer": "braver"
+        },
+        {
+            "id": 7,
+            "text": "I think people from the north of my country are ___ than people from the south. In the south no one ever seems to smile, but it's the opposite in the north.",
+            "answer": "happier"
+        },
+        {
+            "id": 8,
+            "text": "The website listed hotels in a wide price range. I was amazed that the ___ ones cost over $500 a night.",
+            "answer": "most expensive"
+        },
+        {
+            "id": 9,
+            "text": "Weightlifters these days are lifting ___ weights than ever before.",
+            "answer": "heavier"
+        }
+    ]
+}

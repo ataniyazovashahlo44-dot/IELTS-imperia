@@ -1,0 +1,57 @@
+{
+    "id": "grammar_20_25_012",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Word Formation: Noun Forms",
+    "instruction": "Write possible noun forms for the following verbs. Separate multiple answers with a semicolon (;).",
+    "image": null,
+    "passage": "Example: to research -> research; researcher",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. to study:",
+            "answer": "study; studies; student"
+        },
+        {
+            "id": 2,
+            "text": "2. to find:",
+            "answer": "findings; find"
+        },
+        {
+            "id": 3,
+            "text": "3. to respond:",
+            "answer": "response; respondent"
+        },
+        {
+            "id": 4,
+            "text": "4. to measure:",
+            "answer": "measurement; measure"
+        },
+        {
+            "id": 5,
+            "text": "5. to earn:",
+            "answer": "earnings; earner"
+        },
+        {
+            "id": 6,
+            "text": "6. to advertise:",
+            "answer": "advertisement; advertiser; advertising"
+        },
+        {
+            "id": 7,
+            "text": "7. to examine:",
+            "answer": "examination; examiner"
+        },
+        {
+            "id": 8,
+            "text": "8. to suggest:",
+            "answer": "suggestion"
+        },
+        {
+            "id": 9,
+            "text": "9. to create:",
+            "answer": "creation; creator; creativity"
+        }
+    ]
+}

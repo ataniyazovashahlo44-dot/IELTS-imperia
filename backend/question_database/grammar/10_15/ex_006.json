@@ -1,0 +1,84 @@
+{
+    "id": "grammar_10_15_006",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "mcq",
+    "title": "Modals: Probability and Deduction",
+    "instruction": "Choose the sentence (a or b) which best matches the context on the right.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Context: He has a British passport.",
+            "options": {
+                "A": "He might be British.",
+                "B": "He must be British."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 2,
+            "text": "Context: I just saw him in the corridor talking to a student.",
+            "options": {
+                "A": "Our teacher can't be off sick.",
+                "B": "Our teacher may not be off sick."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 3,
+            "text": "Context: I advise you to take some warm clothes just in case.",
+            "options": {
+                "A": "It can be cold in Delhi in December.",
+                "B": "It must be cold in Delhi in December."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "Context: He wasn't home when I called at seven.",
+            "options": {
+                "A": "John can't have been working late last night.",
+                "B": "John might have been working late last night."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 5,
+            "text": "Context: He has shares in the most successful company of all time.",
+            "options": {
+                "A": "He can't be a millionaire.",
+                "B": "He must be a millionaire."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 6,
+            "text": "Context: It depends if I finish my essay before then.",
+            "options": {
+                "A": "I may come to the lecture this afternoon.",
+                "B": "I must come to the lecture this afternoon."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "Context: Not many people passed it.",
+            "options": {
+                "A": "The exam may have been very difficult.",
+                "B": "The exam must have been very difficult."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 8,
+            "text": "Context: We will have to give him directions.",
+            "options": {
+                "A": "John couldn't know how to get here.",
+                "B": "John might not know how to get here."
+            },
+            "answer": "B"
+        }
+    ]
+}

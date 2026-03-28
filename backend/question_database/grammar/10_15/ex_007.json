@@ -1,0 +1,105 @@
+{
+    "id": "grammar_10_15_007",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "mcq",
+    "title": "Modals: Obligation, Necessity and Prohibition",
+    "instruction": "Underline (choose) the correct words. Sometimes both options are possible.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "In my office you ___ wear a suit but lots of people do.",
+            "options": {
+                "A": "have to",
+                "B": "don't have to"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 2,
+            "text": "These pills ___ be taken if you are under twelve years old.",
+            "options": {
+                "A": "must not",
+                "B": "don't have to"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 3,
+            "text": "I ___ leave now because I have a meeting.",
+            "options": {
+                "A": "must",
+                "B": "have to"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 4,
+            "text": "I ___ to the station to pick her up because she decided to get the bus, so I finished my essay instead.",
+            "options": {
+                "A": "didn't need to go",
+                "B": "needn't have gone"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 5,
+            "text": "Notice to all conference participants: Please note that you ___ register before entering the conference hall.",
+            "options": {
+                "A": "must",
+                "B": "have got to"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 6,
+            "text": "You ___ smoke inside but you can smoke outside.",
+            "options": {
+                "A": "mustn't",
+                "B": "don't have to"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "When I was at university I ___ write my assignments by hand because there weren't any computers then.",
+            "options": {
+                "A": "must",
+                "B": "had to"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 8,
+            "text": "British dog-owners ___ have passports for their dogs when they travel abroad.",
+            "options": {
+                "A": "have to",
+                "B": "must"
+            },
+            "answers": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 9,
+            "text": "Next year I'll ___ a job to pay back all the money I've borrowed from the bank for my university fees.",
+            "options": {
+                "A": "have to get",
+                "B": "must get"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 10,
+            "text": "The interview went really well so I ___ about it so much beforehand.",
+            "options": {
+                "A": "didn't need to worry",
+                "B": "needn't have worried"
+            },
+            "answer": "B"
+        }
+    ]
+}

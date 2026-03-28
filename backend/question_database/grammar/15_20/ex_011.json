@@ -1,0 +1,62 @@
+{
+    "id": "grammar_15_20_011",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Regrets: Wish and Should",
+    "instruction": "Fill in the gaps using wish or should and the words in brackets in the correct form.",
+    "image": null,
+    "passage": "1 You shouldn't have left (not/leave) school so young. You'd have a better job now.\n2 I really 1 [1] (you/ask) me before borrowing the car yesterday. I needed to use it.\n3 I'm not enjoying my degree course at all. I 2 [2] (I/not/choose) physics. I 3 [3] (choose) maths instead because I used to love it at school.\n4 I 4 [4] (I/study) languages at school because now I travel regularly for work to Berlin and Paris.\n5 That man is really annoying me. I 5 [5] (he/stop) whistling.\n6 We're lost again. We always get lost when you have the map. You 6 [6] (let) me have the map from the start!\n7 I 7 [7] (I/have) more time to work on this assignment. I'm worried I won't finish it by the deadline.\n8 I 8 [8] (it/stop) raining. I want to go for a walk.\n9 I have terrible problems with my knees. I 9 [9] (I/not/do) so much running when I was younger.\n10 You 10 [10] (not/tell) Paula about the party - it was meant to be a surprise.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "2. (you/ask):",
+            "answer": "wish you'd asked|||wish you had asked"
+        },
+        {
+            "id": 2,
+            "text": "3. (I/not/choose):",
+            "answer": "wish I hadn't chosen|||wish I had not chosen|||shouldn't have chosen|||should not have chosen"
+        },
+        {
+            "id": 3,
+            "text": "3. (choose):",
+            "answer": "should have chosen"
+        },
+        {
+            "id": 4,
+            "text": "4. (I/study):",
+            "answer": "wish I'd studied|||wish I had studied"
+        },
+        {
+            "id": 5,
+            "text": "5. (he/stop):",
+            "answer": "wish he'd stop|||wish he would stop"
+        },
+        {
+            "id": 6,
+            "text": "6. (let):",
+            "answer": "should have let"
+        },
+        {
+            "id": 7,
+            "text": "7. (I/have):",
+            "answer": "wish I had"
+        },
+        {
+            "id": 8,
+            "text": "8. (it/stop):",
+            "answer": "wish it would stop"
+        },
+        {
+            "id": 9,
+            "text": "9. (I/not/do):",
+            "answer": "wish I hadn't done|||wish I had not done|||shouldn't have done|||should not have done"
+        },
+        {
+            "id": 10,
+            "text": "10. (not/tell):",
+            "answer": "shouldn't have told|||should not have told"
+        }
+    ]
+}

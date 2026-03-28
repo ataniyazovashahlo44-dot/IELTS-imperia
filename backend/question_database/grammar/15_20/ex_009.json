@@ -1,0 +1,77 @@
+{
+    "id": "grammar_15_20_009",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Third Conditionals: Research Evaluation",
+    "instruction": "Fill in the gaps in the dialogue using the verbs in brackets in the correct form (Third Conditional).",
+    "image": null,
+    "passage": "Tutor: Tell me what you intend to write in your evaluation of your research.\nStudent: Well, firstly, if I had (1 had) a larger number of questionnaires returned, I 2 [2] (get) more useful data.\nTutor: Is there anything you could have done to improve that?\nStudent: Well, I suppose I 3 [3] (receive) more completed questionnaires if I 4 [4] (make) the questions easier to answer, for example, 'yes/no' questions.\nTutor: Yes, I think you are right. People are too busy to answer complicated questions. Any other things you might change?\nStudent: Yes. I think I 5 [5] (be) more successful with my interviews as well if I 6 [6] (plan) the questions more thoroughly beforehand, although I'm not sure about that. If I 7 [7] (prepare) the questions in more detail, it 8 [8] (restrict) the interviewees too much. Oh, and another thing: if I 9 [9] (start) collecting data sooner, it 10 [10] (not/be) such a rush in the end.\nTutor: Good. I must admit that if you 11 [11] (not/leave) it all so late, I 12 [12] (be able to) support you more. If you 13 [13] (come) to see me before you sent out your questionnaires, I 14 [14] (help) you. It is a shame that your data was so disappointing because your research questions were very interesting.",
+    "questions": [
+        {
+            "id": 2,
+            "text": "2. (get):",
+            "answer": "would have got|||might have got|||'d have got"
+        },
+        {
+            "id": 3,
+            "text": "3. (receive):",
+            "answer": "would have received|||might have received|||'d have received"
+        },
+        {
+            "id": 4,
+            "text": "4. (make):",
+            "answer": "had made|||'d made"
+        },
+        {
+            "id": 5,
+            "text": "5. (be):",
+            "answer": "would have been|||might have been|||'d have been"
+        },
+        {
+            "id": 6,
+            "text": "6. (plan):",
+            "answer": "had planned|||'d planned"
+        },
+        {
+            "id": 7,
+            "text": "7. (prepare):",
+            "answer": "had prepared|||'d prepared"
+        },
+        {
+            "id": 8,
+            "text": "8. (restrict):",
+            "answer": "would have restricted|||might have restricted"
+        },
+        {
+            "id": 9,
+            "text": "9. (start):",
+            "answer": "had started|||'d started"
+        },
+        {
+            "id": 10,
+            "text": "10. (not/be):",
+            "answer": "wouldn't have been|||would not have been"
+        },
+        {
+            "id": 11,
+            "text": "11. (not/leave):",
+            "answer": "hadn't left|||had not left"
+        },
+        {
+            "id": 12,
+            "text": "12. (be able to):",
+            "answer": "would have been able|||might have been able"
+        },
+        {
+            "id": 13,
+            "text": "13. (come):",
+            "answer": "had come|||'d come"
+        },
+        {
+            "id": 14,
+            "text": "14. (help):",
+            "answer": "would have helped|||could have helped"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "id": "grammar_15_20_005",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "matching",
+    "title": "Conditionals: Sentence Matching",
+    "instruction": "Match the beginnings (1-8) and the endings (a-h) of these sentences.",
+    "image": null,
+    "passage": null,
+    "options": {
+        "a": "we'll give you the job.",
+        "b": "if you don't get accepted at Macquarie University?",
+        "c": "I'll take you somewhere nice to celebrate.",
+        "d": "if you put diesel fuel into a petrol-driven car?",
+        "e": "it forms a skin on the top.",
+        "f": "I'll be home by six o'clock tonight.",
+        "g": "you won't be able to open the cupboard.",
+        "h": "if my boss allows me to work from home sometimes."
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "If I win the competition,",
+            "answer": "c"
+        },
+        {
+            "id": 2,
+            "text": "If you boil milk,",
+            "answer": "e"
+        },
+        {
+            "id": 3,
+            "text": "What will you do",
+            "answer": "b"
+        },
+        {
+            "id": 4,
+            "text": "What happens to the engine",
+            "answer": "d"
+        },
+        {
+            "id": 5,
+            "text": "If I get all my work done in time,",
+            "answer": "f"
+        },
+        {
+            "id": 6,
+            "text": "I might buy a new laptop computer",
+            "answer": "h"
+        },
+        {
+            "id": 7,
+            "text": "If you agree to enrol in the diploma course,",
+            "answer": "a"
+        },
+        {
+            "id": 8,
+            "text": "If you put the sofa there,",
+            "answer": "g"
+        }
+    ]
+}

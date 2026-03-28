@@ -1,0 +1,47 @@
+{
+    "id": "grammar_20_25_011",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "sentence_transformation",
+    "title": "Replacing Phrases with Adverbs",
+    "instruction": "Replace the underlined part of each sentence with an adverb from the box (actually, apparently, evidently, frankly, on the whole, possibly, surprisingly, unfortunately) that has a similar meaning.",
+    "image": null,
+    "passage": "Example: I've heard that he is a teacher. -> Apparently",
+    "questions": [
+        {
+            "id": 1,
+            "text": "To be honest I don't really like this kind of literature.",
+            "answer": "Frankly"
+        },
+        {
+            "id": 2,
+            "text": "I found it unexpected that the survey revealed that university students today spend longer on their work than in the past.",
+            "answer": "Surprisingly"
+        },
+        {
+            "id": 3,
+            "text": "I'm not happy about it but I can't come to your party because I'm working.",
+            "answer": "Unfortunately"
+        },
+        {
+            "id": 4,
+            "text": "To sum it up, it seems that people prefer to spend festivals with their families or friends rather than alone.",
+            "answer": "On the whole"
+        },
+        {
+            "id": 5,
+            "text": "From what I have read in the journal, it seems that scientists believe the new drug will work.",
+            "answer": "Evidently"
+        },
+        {
+            "id": 6,
+            "text": "I am not absolutely certain about this but if we reduce the amount we consume, we will become healthier.",
+            "answer": "Possibly"
+        },
+        {
+            "id": 7,
+            "text": "As a matter of fact I think this is the best piece of work you've done so far.",
+            "answer": "Actually"
+        }
+    ]
+}

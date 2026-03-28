@@ -1,0 +1,118 @@
+{
+    "id": "grammar_10_15_005",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "mcq",
+    "title": "Ability: can, could, be able to, manage to",
+    "instruction": "Underline (choose) the most suitable words. Sometimes both options are possible.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "He's a concert pianist and he ___ to play all Beethoven's sonatas.",
+            "options": {
+                "A": "can",
+                "B": "manages to"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "When I lived in a small town I ___ walk almost everywhere, but now I live in the capital city I need a car.",
+            "options": {
+                "A": "was able to",
+                "B": "could"
+            },
+            "answers": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 3,
+            "text": "They worked all night and ___ to finish the report just in time.",
+            "options": {
+                "A": "could",
+                "B": "managed to"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 4,
+            "text": "The protestors ___ persuade the president to change the law.",
+            "options": {
+                "A": "didn't manage to",
+                "B": "couldn't"
+            },
+            "answers": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 5,
+            "text": "Next year she ___ join the club, but she's not old enough yet.",
+            "options": {
+                "A": "can",
+                "B": "will be able to"
+            },
+            "answers": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "In my country it ___ get very cold in the winter.",
+            "options": {
+                "A": "can",
+                "B": "is able to"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "I was nearly late as the bus didn't come, but luckily I ___ to get a taxi.",
+            "options": {
+                "A": "could",
+                "B": "managed to"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 8,
+            "text": "I hope that I ___ sightseeing when I'm in New York next week on business, but I've got a busy schedule.",
+            "options": {
+                "A": "will be able to / will manage to",
+                "B": "will manage to / will be able to"
+            },
+            "answers": [
+                "A",
+                "B"
+            ],
+            "note": "Image shows both forms as individual options but usually they are separate A/B. I will use A and B separately."
+        },
+        {
+            "id": 8,
+            "text": "I hope that I ___ some sightseeing when I'm in New York next week on business, but I've got a busy schedule.",
+            "options": {
+                "A": "will be able to do",
+                "B": "will manage to do"
+            },
+            "answers": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "id": 9,
+            "text": "She didn't get good enough grades to go to her first choice of university but she ___ get a place at another one.",
+            "options": {
+                "A": "could",
+                "B": "was able to"
+            },
+            "answer": "B"
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+{
+    "id": "grammar_15_20_001",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Verb Patterns: Infinitive or -ing form",
+    "instruction": "Fill in the gaps with the correct form of the verbs in brackets.",
+    "image": null,
+    "passage": "Tutor: So have you managed 1 [1] (finish) the assignment, Kumiko?\nKumiko: Well, I've nearly finished but I forgot 2 [2] (add) a bibliography, so I'd like 3 [3] (have) an extension, if that's possible?\nTutor: How long will you need 4 [4] (do) it?\nKumiko: I aim 5 [5] (finish) it today, but maybe two days would be the best thing.\nTutor: Yes, that's fine. Have you begun 6 [6] (work) on your dissertation yet?\nKumiko: Yes, I started 7 [7] (write) my questionnaire a couple of weeks ago, but I stopped 8 [8] (complete) this assignment. I'm planning 9 [9] (get) the questionnaire ready by the end of the week, and I'm hoping 10 [10] (show) it to you for your comments before I use it. Could we meet next week?\nTutor: Yes, of course. I'm afraid I can't find my diary though. I remember 11 [11] (put) it in my briefcase this morning, but it doesn't seem 12 [12] (be) there. Why don't you email me with a suitable time?\nKumiko: Yes, okay.\nTutor: So, I'll see you in the seminar tomorrow. Don't forget 13 [13] (email) me!\nKumiko: Thank you, I'll try 14 [14] (remember).",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. (finish):",
+            "answer": "to finish"
+        },
+        {
+            "id": 2,
+            "text": "2. (add):",
+            "answer": "to add"
+        },
+        {
+            "id": 3,
+            "text": "3. (have):",
+            "answer": "to have"
+        },
+        {
+            "id": 4,
+            "text": "4. (do):",
+            "answer": "to do"
+        },
+        {
+            "id": 5,
+            "text": "5. (finish):",
+            "answer": "to finish"
+        },
+        {
+            "id": 6,
+            "text": "6. (work):",
+            "answer": "working|||to work"
+        },
+        {
+            "id": 7,
+            "text": "7. (write):",
+            "answer": "writing|||to write"
+        },
+        {
+            "id": 8,
+            "text": "8. (complete):",
+            "answer": "to complete"
+        },
+        {
+            "id": 9,
+            "text": "9. (get):",
+            "answer": "to get"
+        },
+        {
+            "id": 10,
+            "text": "10. (show):",
+            "answer": "to show"
+        },
+        {
+            "id": 11,
+            "text": "11. (put):",
+            "answer": "putting"
+        },
+        {
+            "id": 12,
+            "text": "12. (be):",
+            "answer": "to be"
+        },
+        {
+            "id": 13,
+            "text": "13. (email):",
+            "answer": "to email"
+        },
+        {
+            "id": 14,
+            "text": "14. (remember):",
+            "answer": "to remember"
+        }
+    ]
+}

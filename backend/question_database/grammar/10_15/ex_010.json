@@ -1,0 +1,72 @@
+{
+    "id": "grammar_10_15_010",
+    "subject": "grammar",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Modals: Travel Advice Dialogue",
+    "instruction": "Fill in the gaps with the correct form of (not) have to, ought to or must(n't) and the verbs in brackets.",
+    "image": null,
+    "passage": "Teacher: Do you think it's a good thing for young people to travel to different countries before settling down to a job?\nStudent: Yes, I think it's a really exciting and interesting thing to do.\nTeacher: What 1 [1] (you/think) about if you're going to go travelling?\nStudent: Well, you 2 [2] (consider) lots of things first. For example, you\n3 [3] (have) enough money in the first place, so you\n4 [4] (work) a bit first to save some money. Then another\nimportant thing to consider is who to go with. You 5 [5] (travel)\nwith a friend, but it is probably safer and less lonely if you do. Also, you\n6 [6] (learn) a bit about the countries before you go. It's a good\nidea to research cultural issues, so that you don't offend people by your\nbehaviour. If you go to Nepal, for example, you 7 [7] (shout) or\nraise your voice in public, and you 8 [8] (always/walk) around a\nBuddhist temple in a clockwise direction. You 9 [9] (find out)\nthese things before you go.\nTeacher: What things 10 [10] (you/arrange) before you travel?\nStudent: Well, to visit some countries you 11 [11] (have) a visa, so you\n12 [12] (organise) that before you go.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. (you/think):",
+            "answer": "do you have to think"
+        },
+        {
+            "id": 2,
+            "text": "2. (consider):",
+            "answer": "have to consider|||ought to consider"
+        },
+        {
+            "id": 3,
+            "text": "3. (have):",
+            "answer": "have to have"
+        },
+        {
+            "id": 4,
+            "text": "4. (work):",
+            "answer": "ought to work"
+        },
+        {
+            "id": 5,
+            "text": "5. (travel):",
+            "answer": "don't have to travel"
+        },
+        {
+            "id": 6,
+            "text": "6. (learn):",
+            "answer": "ought to learn"
+        },
+        {
+            "id": 7,
+            "text": "7. (shout):",
+            "answer": "mustn't shout"
+        },
+        {
+            "id": 8,
+            "text": "8. (always/walk):",
+            "answer": "must always walk"
+        },
+        {
+            "id": 9,
+            "text": "9. (find out):",
+            "answer": "ought to find out"
+        },
+        {
+            "id": 10,
+            "text": "10. (you/arrange):",
+            "answer": "do you have to arrange"
+        },
+        {
+            "id": 11,
+            "text": "11. (have):",
+            "answer": "have to have"
+        },
+        {
+            "id": 12,
+            "text": "12. (organise):",
+            "answer": "ought to organise|||have to organise"
+        }
+    ]
+}

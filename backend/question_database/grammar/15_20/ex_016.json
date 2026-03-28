@@ -1,0 +1,57 @@
+{
+    "id": "grammar_15_20_016",
+    "subject": "grammar",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Relative Clauses: Match and Join",
+    "instruction": "Join the sentence beginnings (1-10) with the endings (a-j) by adding a relative pronoun (who, which, that, where, when, whose, why).",
+    "image": null,
+    "passage": "Example: The college has many students who are classed as 'mature' because they are over 21.\n\n1 My cousin Phillip is a solicitor; he was the one 1 [1].\n2 I went to a school 2 [2].\n3 I visited the theatre 3 [3].\n4 Why don't you call again at a time 4 [4].\n5 Mrs Jackson is the kind of teacher 5 [5].\n6 Faraday was the man 6 [6].\n7 Is there any reason 7 [7].\n8 What was the name of that company 8 [8].\n9 That's the woman 9 [9].\n\nOptions to match:\na. Mozart performed many of his operas.\nb. flat I rent.\nc. every student wants to have.\ne. advised me to study law.\nf. I'm not as busy.\ng. invented the first electric motor.\nh. factory burned down yesterday?\ni. didn't have very good sports facilities.\nj. manufacturers like to keep demand above supply?",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. he was the one:",
+            "answer": "who advised me to study law|||that advised me to study law"
+        },
+        {
+            "id": 2,
+            "text": "2. I went to a school:",
+            "answer": "which didn't have very good sports facilities|||that didn't have very good sports facilities"
+        },
+        {
+            "id": 3,
+            "text": "3. I visited the theatre:",
+            "answer": "where Mozart performed many of his operas"
+        },
+        {
+            "id": 4,
+            "text": "4. call again at a time:",
+            "answer": "when I'm not as busy|||that I'm not as busy"
+        },
+        {
+            "id": 5,
+            "text": "5. Mrs Jackson is the kind of teacher:",
+            "answer": "who every student wants to have|||that every student wants to have|||every student wants to have"
+        },
+        {
+            "id": 6,
+            "text": "6. Faraday was the man:",
+            "answer": "who invented the first electric motor|||that invented the first electric motor"
+        },
+        {
+            "id": 7,
+            "text": "7. Is there any reason:",
+            "answer": "why manufacturers like to keep demand above supply|||manufacturers like to keep demand above supply"
+        },
+        {
+            "id": 8,
+            "text": "8. name of that company:",
+            "answer": "whose factory burned down yesterday"
+        },
+        {
+            "id": 9,
+            "text": "9. That's the woman:",
+            "answer": "whose flat I rent"
+        }
+    ]
+}

@@ -1,0 +1,120 @@
+{
+    "id": "grammar_20_25_006",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "mcq",
+    "title": "Linking Words: Best Endings",
+    "instruction": "Choose the best endings for these sentences based on the linking words used.",
+    "image": null,
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "1. I hurt my knee quite badly so...",
+            "options": {
+                "A": "I had to go to hospital.",
+                "B": "I didn't have the right running shoes."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "2. One way to improve your health is to eat more fruit and vegetables. Alternatively,",
+            "options": {
+                "A": "you could increase your risk of heart disease.",
+                "B": "you could exercise more."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 3,
+            "text": "3. Humans like to form social groups. Likewise,",
+            "options": {
+                "A": "many other mammals live independently of each other.",
+                "B": "many other mammals live together in small communities."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 4,
+            "text": "4. I didn't work hard at school. Consequently,",
+            "options": {
+                "A": "I did well at university.",
+                "B": "I failed most of my exams."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 5,
+            "text": "5. I believe travelling can help us to understand other cultures. Furthermore,",
+            "options": {
+                "A": "it can help you to become more independent.",
+                "B": "it can be a lonely experience at times."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 6,
+            "text": "6. In spite of the fact that learning to speak a foreign language requires a lot of time and effort,",
+            "options": {
+                "A": "many people give up after a short time.",
+                "B": "many people manage it successfully."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 7,
+            "text": "7. In my experience, vegetarians tend to be quite healthy. In contrast,",
+            "options": {
+                "A": "many meat-eaters do not have a healthy diet.",
+                "B": "they look after their bodies well."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "8. Fifty per cent of all newspaper readers in this country only read the sports section of the paper. In other words,",
+            "options": {
+                "A": "many people are not interested in news.",
+                "B": "sports are reported very well in the newspaper."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 9,
+            "text": "9. Sydney is the biggest city in Australia, yet",
+            "options": {
+                "A": "it isn't the capital.",
+                "B": "it is the oldest city."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 10,
+            "text": "10. You wouldn't be allowed to drive in my country because",
+            "options": {
+                "A": "there is no point in getting a car.",
+                "B": "you need to be over 21."
+            },
+            "answer": "B"
+        },
+        {
+            "id": 11,
+            "text": "11. Studies suggest that although sales of cookery books have increased significantly in the past five years,",
+            "options": {
+                "A": "we spend less time than ever in the kitchen.",
+                "B": "we enjoy experimenting."
+            },
+            "answer": "A"
+        },
+        {
+            "id": 12,
+            "text": "12. There are delays on all trains due to the fact that",
+            "options": {
+                "A": "passengers should allow extra time.",
+                "B": "there is a shortage of drivers."
+            },
+            "answer": "B"
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "id": "grammar_20_25_009",
+    "subject": "grammar",
+    "variantGroup": "20_25",
+    "type": "sentence_transformation",
+    "title": "Linking Words: Sentence Transformation",
+    "instruction": "Write one or two sentences with a similar meaning to the sentences below, using the words in brackets and any other words you need.",
+    "image": null,
+    "passage": "Example: Despite the rise in profits this year, our company is still losing money. (although) \nAnswer: Although there has been a rise in profits this year, our company is still losing money.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "The head of my department called an emergency meeting so I had to cancel all of my afternoon appointments. (because)",
+            "answer": "I had to cancel all of my afternoon appointments because the head of my department called an emergency meeting."
+        },
+        {
+            "id": 2,
+            "text": "It is now much cheaper to rent a DVD at home so fewer people are going to the cinema these days. (due to)",
+            "answer": "Fewer people are going to the cinema these days due to the fact that it is now much cheaper to rent a DVD at home.|||Fewer people are going to the cinema these days due to it being much cheaper to rent a DVD at home."
+        },
+        {
+            "id": 3,
+            "text": "The cost of basic foods has risen because petrol prices increased last month. (As a result)",
+            "answer": "Petrol prices increased last month. As a result, the cost of basic foods has risen."
+        },
+        {
+            "id": 4,
+            "text": "Although there are over 30 girls on this course, the boys still outnumber the girls by two to one. (but)",
+            "answer": "There are over 30 girls on this course but the boys still outnumber the girls by two to one."
+        },
+        {
+            "id": 5,
+            "text": "Although there are some advantages to the pace of modern life, it also has its disadvantages. (However)",
+            "answer": "There are some advantages to the pace of modern life. However, it also has its disadvantages."
+        },
+        {
+            "id": 6,
+            "text": "The numbers of red deer in the wild increased slightly in the 1980s, although the increase was not sufficient to take them off the endangered species list. (in spite of)",
+            "answer": "In spite of the fact that the number of red deer in the wild increased slightly in the 1980s, it (the increase) was not sufficient to take them off the endangered species list.|||In spite of the slight increase in the number of red deer in the wild in the 1980s, this was not sufficient to take them off the endangered species list."
+        }
+    ]
+}
