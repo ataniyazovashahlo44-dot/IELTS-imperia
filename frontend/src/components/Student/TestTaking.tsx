@@ -14,6 +14,10 @@ export default function TestTaking() {
   const [submitting, setSubmitting] = useState(false);
   const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
 
+  // Settings Modal State
+  const [showSettings, setShowSettings] = useState(false);
+  const [fontSize, setFontSize] = useState<'normal' | 'large'>('normal');
+
   useAntiCheat(testSessionId, true);
 
   useEffect(() => {
@@ -43,9 +47,13 @@ export default function TestTaking() {
         const res = await studentApi.advanceSection(testSessionId);
         goToNextSection(res.data.data);
       } else {
-        await studentApi.submitTest(testSessionId, getAllAnswers());
+        const res = await studentApi.submitTest(testSessionId, getAllAnswers());
         goToNextSection(null);
-        navigate('/student/results');
+        if (res?.data?.data?.id) {
+          navigate(`/student/results/${res.data.data.id}`);
+        } else {
+          navigate('/student/results');
+        }
       }
     } catch {
       goToNextSection(null);
@@ -110,7 +118,10 @@ export default function TestTaking() {
           {/* Timer + Skip */}
           <div className="flex items-center justify-end gap-4">
             {/* Settings icon */}
-            <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+            <button
+              onClick={() => setShowSettings(true)}
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -134,15 +145,17 @@ export default function TestTaking() {
       </div>
 
       {/* Main content — exercise renderer */}
-      <main className="flex-1 overflow-hidden">
-        {currentExercise && (
-          <ExerciseRenderer
-            key={`${currentSection.sectionOrder}-${currentExerciseIdx}`}
-            exercise={currentExercise}
-            answers={answers}
-            onAnswer={handleAnswer}
-          />
-        )}
+      <main className="flex-1 overflow-auto" style={fontSize === 'large' ? { zoom: 1.15 } as React.CSSProperties : {}}>
+        <div className="h-full">
+          {currentExercise && (
+            <ExerciseRenderer
+              key={`${currentSection.sectionOrder}-${currentExerciseIdx}`}
+              exercise={currentExercise}
+              answers={answers}
+              onAnswer={handleAnswer}
+            />
+          )}
+        </div>
       </main>
 
       {/* Bottom navigation — Part buttons */}
@@ -168,10 +181,10 @@ export default function TestTaking() {
                 onClick={() => setCurrentExerciseIdx(i)}
                 title={`${answered}/${total} answered`}
                 className={`flex-shrink-0 px-3 py-1.5 rounded-lg border text-[11px] sm:text-xs font-bold transition-all ${isCurrent
-                    ? 'bg-[#E31E24] border-[#E31E24] text-white shadow-md'
-                    : isComplete
-                      ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
-                      : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-300'
+                  ? 'bg-[#E31E24] border-[#E31E24] text-white shadow-md'
+                  : isComplete
+                    ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                    : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-300'
                   }`}
               >
                 {i + 1}-Part
@@ -197,6 +210,72 @@ export default function TestTaking() {
           </button>
         )}
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-gray-900 w-full max-w-sm rounded-2xl p-6 shadow-2xl relative">
+            <button onClick={() => setShowSettings(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 className="text-lg font-black text-gray-900 dark:text-white mb-6">Test Sozlamalari</h3>
+
+            <div className="space-y-5">
+              {/* Theme Toggle */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-gray-800 dark:text-gray-200">Tungi rejim</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Ko'zni toliqtirmaslik uchun</p>
+                </div>
+                <button
+                  onClick={() => document.documentElement.classList.toggle('dark')}
+                  className="w-12 h-6 bg-gray-200 dark:bg-emerald-600 rounded-full relative transition-colors"
+                >
+                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 dark:translate-x-6 transition-transform shadow-sm" />
+                </button>
+              </div>
+
+              {/* Font Size Toggle */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-gray-800 dark:text-gray-200">Matn o'lchami</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">O'qishga oson bo'lishi uchun</p>
+                </div>
+                <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 gap-1 w-24">
+                  <button
+                    onClick={() => setFontSize('normal')}
+                    className={`px-2 py-1 flex-1 text-sm font-bold rounded-md transition-all ${fontSize === 'normal' ? 'bg-white dark:bg-gray-700 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => setFontSize('large')}
+                    className={`px-2 py-1 flex-1 text-base font-black rounded-md transition-all ${fontSize === 'large' ? 'bg-white dark:bg-gray-700 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  >
+                    A+
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
+                {/* Fullscreen Toggle */}
+                <button
+                  onClick={() => {
+                    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                    else document.exitFullscreen();
+                  }}
+                  className="w-full py-2.5 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl text-sm font-bold transition-colors flex items-center justify-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+                  To'liq ekran rejimi
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
