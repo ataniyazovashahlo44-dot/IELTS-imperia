@@ -174,6 +174,9 @@ export default function TestTaking() {
               subject={currentSection.subject}
               answers={answers}
               onAnswer={handleAnswer}
+              onSubmit={submitSection}
+              submitting={submitting}
+              isLast={isLast}
             />
           ) : currentExercise ? (
             <ExerciseRenderer
@@ -186,26 +189,10 @@ export default function TestTaking() {
         </div>
       </main>
 
-      {/* Bottom navigation */}
+      {/* Bottom navigation — only for EXERCISE sections */}
+      {!isPracticeTest && (
       <div className="flex-shrink-0 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-3 px-4 sm:px-6 flex justify-between items-center gap-2 z-40">
-
-        {isPracticeTest ? (
-          // Practice test: just a submit button, no part navigation
-          <>
-            <div className="flex-1 flex items-center">
-              <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                {answeredCount}/{totalCount} javob berildi
-              </span>
-            </div>
-            <button
-              onClick={submitSection}
-              disabled={submitting}
-              className="flex-shrink-0 px-6 py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 disabled:opacity-50 text-xs shadow-md transition-all whitespace-nowrap"
-            >
-              {submitting ? 'Saving...' : isLast ? 'Submit ✓' : 'Next Section →'}
-            </button>
-          </>
-        ) : (
+        {(
           // Exercise section: part navigation
           <>
             <button
@@ -260,6 +247,7 @@ export default function TestTaking() {
           </>
         )}
       </div>
+      )}
 
       {/* Settings Modal */}
       {showSettings && (

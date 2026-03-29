@@ -7,8 +7,9 @@ import CreateTest from './CreateTest';
 
 interface TestSection {
     id: string;
-    sectionType: string;
-    numberOfQuestions: number;
+    subject: string;        // GRAMMAR | VOCABULARY
+    sectionType: string;    // EXERCISE | PRACTICE_TEST
+    numberOfExercises: number;
     timeAllocated: number;
     sectionOrder: number;
 }
@@ -141,17 +142,22 @@ export default function Tests() {
                                         {/* Bo'limlar */}
                                         <td className="px-5 py-4 hidden sm:table-cell">
                                             <div className="flex flex-wrap gap-1.5">
-                                                {test.sections.map(s => (
-                                                    <span
-                                                        key={s.id}
-                                                        className={`text-xs font-medium px-2 py-0.5 rounded-md ${s.sectionType === 'VOCABULARY'
-                                                                ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400'
-                                                                : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
+                                                {test.sections.map(s => {
+                                                    const isVocab = s.subject === 'VOCABULARY';
+                                                    const isPractice = s.sectionType === 'PRACTICE_TEST';
+                                                    return (
+                                                        <span
+                                                            key={s.id}
+                                                            className={`text-xs font-medium px-2 py-0.5 rounded-md ${
+                                                                isVocab
+                                                                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400'
+                                                                    : 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400'
                                                             }`}
-                                                    >
-                                                        {s.sectionType === 'VOCABULARY' ? 'Vocab' : 'Grammar'} ({s.numberOfQuestions})
-                                                    </span>
-                                                ))}
+                                                        >
+                                                            {isVocab ? 'Vocab' : 'Grammar'}{isPractice ? ' · PT' : ''} ({s.numberOfExercises})
+                                                        </span>
+                                                    );
+                                                })}
                                             </div>
                                         </td>
 
