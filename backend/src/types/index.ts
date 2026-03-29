@@ -2,6 +2,7 @@ import { Request } from 'express';
 
 export type UserRole = 'ADMIN' | 'STUDENT';
 export type SectionSubject = 'VOCABULARY' | 'GRAMMAR';
+export type SectionType = 'EXERCISE' | 'PRACTICE_TEST';
 
 export type ExerciseType =
   | 'gap_fill'
@@ -97,12 +98,35 @@ export interface ClientExercise {
   options?: Record<string, string>;
 }
 
+// ─── Practice Test Question Types ───────────────────────────────────────────
+
+export interface PracticeQuestion {
+  id: string;                  // e.g. "practice_vocabulary_1_5_001"
+  subject: SectionSubject;
+  variantGroup: VariantGroup;
+  text: string;
+  options: string[];           // array of option texts (no A/B/C/D labels)
+  answer: string;              // correct answer text
+}
+
+export interface ClientPracticeOption {
+  label: string;               // "A" | "B" | "C" | "D"
+  text: string;                // option text
+}
+
+export interface ClientPracticeQuestion {
+  id: string;
+  text: string;
+  options: ClientPracticeOption[]; // shuffled, labelled — NO answer
+}
+
 // ─── Section Config (for test creation) ─────────────────────────────────────
 
 export interface SectionConfig {
   subject: SectionSubject;
+  sectionType: SectionType;
   variantGroups: string[];     // ["1_5", "10_15"]
-  numberOfExercises: number;
+  numberOfExercises: number;   // for PRACTICE_TEST: number of questions
   timeAllocated: number;       // minutes
   sectionOrder: number;
 }

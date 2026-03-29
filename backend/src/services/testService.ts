@@ -21,6 +21,7 @@ export async function createTest(
       sections: {
         create: sections.map(s => ({
           subject: s.subject,
+          sectionType: s.sectionType || 'EXERCISE',
           variantGroups: JSON.stringify(s.variantGroups),
           numberOfExercises: s.numberOfExercises,
           timeAllocated: s.timeAllocated,

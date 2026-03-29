@@ -1,5 +1,6 @@
 export type UserRole = 'ADMIN' | 'STUDENT';
 export type SectionSubject = 'VOCABULARY' | 'GRAMMAR';
+export type SectionType = 'EXERCISE' | 'PRACTICE_TEST';
 export type ExerciseType =
   | 'gap_fill'
   | 'mcq'
@@ -34,6 +35,19 @@ export interface AuthState {
   isLoading: boolean;
 }
 
+// ─── Practice Test Question types (client-facing, no answers) ───────────────
+
+export interface ClientPracticeOption {
+  label: string;  // "A" | "B" | "C" | "D"
+  text: string;
+}
+
+export interface ClientPracticeQuestion {
+  id: string;
+  text: string;
+  options: ClientPracticeOption[];  // shuffled, labelled
+}
+
 // ─── Exercise / Question types (client-facing, no answers) ──────────────────
 
 export interface ClientQuestion {
@@ -65,6 +79,7 @@ export interface ClientExercise {
 
 export interface SectionConfig {
   subject: SectionSubject;
+  sectionType: SectionType;
   variantGroups: string[];
   numberOfExercises: number;
   timeAllocated: number;
@@ -89,9 +104,11 @@ export interface TestSession {
 
 export interface CurrentSection {
   subject: SectionSubject;
+  sectionType: SectionType;
   sectionOrder: number;
   deadline: string;
-  exercises: ClientExercise[];
+  exercises?: ClientExercise[];           // EXERCISE sections
+  questions?: ClientPracticeQuestion[];   // PRACTICE_TEST sections
   answers?: SubmitAnswer[];
 }
 

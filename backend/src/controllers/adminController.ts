@@ -3,13 +3,14 @@ import { z } from 'zod';
 import { AuthRequest, SectionConfig, VARIANT_GROUPS } from '../types';
 import { createTest, getAdminTests, toggleTestStatus } from '../services/testService';
 import { getStudentsForAdmin } from '../services/resultService';
-import { countAvailableExercises } from '../utils/questionLoader';
+import { countAvailableExercises, countAvailablePracticeQuestions } from '../utils/questionLoader';
 import prisma from '../config/database';
 
 const sectionSchema = z.object({
   subject: z.enum(['VOCABULARY', 'GRAMMAR']),
+  sectionType: z.enum(['EXERCISE', 'PRACTICE_TEST']).default('EXERCISE'),
   variantGroups: z.array(z.enum(VARIANT_GROUPS)).min(1, 'At least one variant group required'),
-  numberOfExercises: z.number().int().min(1).max(50),
+  numberOfExercises: z.number().int().min(1).max(200),
   timeAllocated: z.number().int().min(1).max(180),
   sectionOrder: z.number().int().min(1).max(10),
 });
@@ -30,15 +31,26 @@ export async function handleCreateTest(req: AuthRequest, res: Response): Promise
 
     const { title, maxAttempts, sections } = parsed.data;
 
-    // Validate exercise availability per section
+    // Validate availability per section
     for (const s of sections) {
-      const available = countAvailableExercises(s.subject, s.variantGroups);
-      if (s.numberOfExercises > available) {
-        res.status(400).json({
-          success: false,
-          message: `Only ${available} ${s.subject.toLowerCase()} exercises available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
-        });
-        return;
+      if (s.sectionType === 'PRACTICE_TEST') {
+        const available = countAvailablePracticeQuestions(s.subject, s.variantGroups);
+        if (s.numberOfExercises > available) {
+          res.status(400).json({
+            success: false,
+            message: `Only ${available} ${s.subject.toLowerCase()} practice questions available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
+          });
+          return;
+        }
+      } else {
+        const available = countAvailableExercises(s.subject, s.variantGroups);
+        if (s.numberOfExercises > available) {
+          res.status(400).json({
+            success: false,
+            message: `Only ${available} ${s.subject.toLowerCase()} exercises available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
+          });
+          return;
+        }
       }
     }
 

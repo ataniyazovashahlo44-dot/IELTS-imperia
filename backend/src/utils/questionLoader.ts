@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Exercise, SectionSubject, VARIANT_GROUPS } from '../types';
+import { Exercise, SectionSubject, VARIANT_GROUPS, PracticeQuestion, ClientPracticeQuestion, ClientPracticeOption } from '../types';
 
 const DB_DIR = path.resolve(__dirname, '../../question_database');
 
@@ -72,6 +72,95 @@ export function selectRandomExercises(pool: Exercise[], count: number): Exercise
  */
 export function countAvailableExercises(subject: string, groups: string[]): number {
   return loadExercisesFromGroups(subject, groups).length;
+}
+
+// ─── Practice Test Loaders ───────────────────────────────────────────────────
+
+/**
+ * Load practice test questions from a single variant group folder.
+ */
+export function loadPracticeQuestionsFromGroup(subject: string, group: string): PracticeQuestion[] {
+  const subjectDir = subject.toLowerCase(); // "grammar" | "vocabulary"
+  const dir = path.join(DB_DIR, 'practice_tests', subjectDir, group);
+
+  if (!fs.existsSync(dir)) return [];
+
+  const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
+  const questions: PracticeQuestion[] = [];
+
+  for (const file of files) {
+    try {
+      const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
+      const parsed = JSON.parse(raw) as PracticeQuestion;
+      questions.push(parsed);
+    } catch (err) {
+      console.error(`Failed to parse practice question file: practice_tests/${subjectDir}/${group}/${file}`, err);
+    }
+  }
+
+  return questions;
+}
+
+/**
+ * Load practice test questions from multiple variant groups (merged pool).
+ */
+export function loadPracticeQuestionsFromGroups(subject: string, groups: string[]): PracticeQuestion[] {
+  const all: PracticeQuestion[] = [];
+  for (const group of groups) {
+    all.push(...loadPracticeQuestionsFromGroup(subject, group));
+  }
+  return all;
+}
+
+/**
+ * Count available practice test questions for a given subject + variant groups.
+ */
+export function countAvailablePracticeQuestions(subject: string, groups: string[]): number {
+  return loadPracticeQuestionsFromGroups(subject, groups).length;
+}
+
+/**
+ * Randomly select N unique practice questions from a pool.
+ */
+export function selectRandomPracticeQuestions(pool: PracticeQuestion[], count: number): PracticeQuestion[] {
+  if (count >= pool.length) return shuffle(pool);
+  return shuffle(pool).slice(0, count);
+}
+
+/**
+ * Build client-safe practice question payload (strip answers, shuffle options).
+ * Returns: { clientQuestions, answerMap }
+ * answerMap: questionId -> correct answer TEXT
+ */
+export function buildClientPracticeQuestions(questions: PracticeQuestion[]): {
+  clientQuestions: ClientPracticeQuestion[];
+  answerMap: Record<string, string>;
+} {
+  const clientQuestions: ClientPracticeQuestion[] = [];
+  const answerMap: Record<string, string> = {};
+  const labels = ['A', 'B', 'C', 'D'];
+
+  for (const q of questions) {
+    // Store correct answer text
+    answerMap[q.id] = q.answer;
+
+    // Shuffle options array (Fisher-Yates)
+    const shuffledOptions = shuffle([...q.options]);
+
+    // Assign A/B/C/D labels
+    const labelledOptions: ClientPracticeOption[] = shuffledOptions.map((text, i) => ({
+      label: labels[i] || String(i + 1),
+      text,
+    }));
+
+    clientQuestions.push({
+      id: q.id,
+      text: q.text,
+      options: labelledOptions,
+    });
+  }
+
+  return { clientQuestions, answerMap };
 }
 
 /**

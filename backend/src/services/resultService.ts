@@ -1,7 +1,7 @@
 import prisma from '../config/database';
 import { SubmitAnswer } from '../types';
 import { getAnswerMap, clearAnswerMap } from './sessionService';
-import { loadAllExercises, loadExercisesFromGroups } from '../utils/questionLoader';
+import { loadAllExercises, loadExercisesFromGroups, loadPracticeQuestionsFromGroups } from '../utils/questionLoader';
 
 function gradeAnswer(selected: string, correct: string): boolean {
   if (!selected || !correct) return false;
@@ -47,32 +47,50 @@ export async function submitTest(studentId: string, testSessionId: string, answe
 
   for (const sec of testSession.sections) {
     const variantGroups: string[] = JSON.parse(sec.variantGroups);
-    let pool;
-    if (variantGroups.length === 5) {
-      pool = loadAllExercises(sec.subject);
-    } else {
-      pool = loadExercisesFromGroups(sec.subject, variantGroups);
-    }
+    const sectionType = (sec as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
+    const ids = selectedExercisesMap[String(sec.sectionOrder)] || [];
 
-    const exerciseIds = selectedExercisesMap[String(sec.sectionOrder)] || [];
-    for (const exId of exerciseIds) {
-      const ex = pool.find(e => e.id === exId);
-      if (ex) {
-        for (const q of ex.questions) {
-          const anyQ = q as Record<string, unknown>;
-          let exactAnswer = '';
-          if (Array.isArray(anyQ.answers) && anyQ.answers.length > 0) {
-            exactAnswer = (anyQ.answers as string[]).join('|||');
-          } else {
-            exactAnswer = q.answer || '';
-          }
-
+    if (sectionType === 'PRACTICE_TEST') {
+      // Practice test: each ID is a single question file
+      const pool = loadPracticeQuestionsFromGroups(sec.subject, variantGroups);
+      for (const qId of ids) {
+        const q = pool.find(pq => pq.id === qId);
+        if (q) {
           requiredQuestions.push({
-            questionId: `${ex.id}_${q.id}`,
+            questionId: q.id,
             questionType: sec.subject as 'VOCABULARY' | 'GRAMMAR',
-            questionText: q.text || '',
-            exactAnswer
+            questionText: q.text,
+            exactAnswer: q.answer,
           });
+        }
+      }
+    } else {
+      // Regular exercise section
+      let pool;
+      if (variantGroups.length === 5) {
+        pool = loadAllExercises(sec.subject);
+      } else {
+        pool = loadExercisesFromGroups(sec.subject, variantGroups);
+      }
+
+      for (const exId of ids) {
+        const ex = pool.find(e => e.id === exId);
+        if (ex) {
+          for (const q of ex.questions) {
+            const anyQ = q as Record<string, unknown>;
+            let exactAnswer = '';
+            if (Array.isArray(anyQ.answers) && anyQ.answers.length > 0) {
+              exactAnswer = (anyQ.answers as string[]).join('|||');
+            } else {
+              exactAnswer = q.answer || '';
+            }
+            requiredQuestions.push({
+              questionId: `${ex.id}_${q.id}`,
+              questionType: sec.subject as 'VOCABULARY' | 'GRAMMAR',
+              questionText: q.text || '',
+              exactAnswer,
+            });
+          }
         }
       }
     }

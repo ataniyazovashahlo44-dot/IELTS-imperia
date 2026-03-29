@@ -5,6 +5,9 @@ import {
   loadAllExercises,
   selectRandomExercises,
   buildClientExercises,
+  loadPracticeQuestionsFromGroups,
+  selectRandomPracticeQuestions,
+  buildClientPracticeQuestions,
 } from '../utils/questionLoader';
 import { validatePinAndGetSections } from './testService';
 
@@ -54,11 +57,13 @@ export async function joinTest(studentId: string, pin: string) {
       const exerciseIds = selectedExercisesMap[String(currentSection.sectionOrder)] || [];
       const currentClientExercises = getClientExercisesForSection(currentSection, exerciseIds);
 
+      const resumeSectionType = (currentSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
       return {
         testSessionId: session.id,
         title: session.title,
         sections: sections.map(s => ({
           subject: s.subject,
+          sectionType: (s as unknown as { sectionType?: string }).sectionType || 'EXERCISE',
           variantGroups: JSON.parse(s.variantGroups),
           numberOfExercises: s.numberOfExercises,
           timeAllocated: s.timeAllocated,
@@ -66,9 +71,12 @@ export async function joinTest(studentId: string, pin: string) {
         })),
         currentSection: {
           subject: currentSection.subject,
+          sectionType: resumeSectionType,
           sectionOrder: currentSection.sectionOrder,
           deadline: existing.sectionDeadline,
-          exercises: currentClientExercises,
+          ...(resumeSectionType === 'PRACTICE_TEST'
+            ? { questions: currentClientExercises }
+            : { exercises: currentClientExercises }),
           answers: JSON.parse(existing.answers || '[]'),
         },
       };
@@ -89,37 +97,46 @@ export async function joinTest(studentId: string, pin: string) {
     throw new Error(`Maximum attempts (${session.maxAttempts}) reached for this test`);
   }
 
-  // Select random exercises for ALL sections upfront
+  // Select random exercises/questions for ALL sections upfront
   const selectedExercisesMap: Record<string, string[]> = {};
   const allAnswerMaps: Record<string, string> = {};
   const globalUsedIds = new Set<string>();
 
   for (const sec of sections) {
     const variantGroups: string[] = JSON.parse(sec.variantGroups);
+    const sectionType = (sec as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
 
-    // Load pool: if "full" flag or all groups selected, load all
-    let pool;
-    if (variantGroups.length === 5) {
-      pool = loadAllExercises(sec.subject);
+    if (sectionType === 'PRACTICE_TEST') {
+      // Practice test: load individual questions, shuffle order + options per student
+      const pool = loadPracticeQuestionsFromGroups(sec.subject, variantGroups);
+      const availablePool = pool.filter(q => !globalUsedIds.has(q.id));
+      const selectionPool = availablePool.length >= sec.numberOfExercises ? availablePool : pool;
+      const selected = selectRandomPracticeQuestions(selectionPool, sec.numberOfExercises);
+
+      selectedExercisesMap[String(sec.sectionOrder)] = selected.map(q => q.id);
+      selected.forEach(q => globalUsedIds.add(q.id));
+
+      const { answerMap } = buildClientPracticeQuestions(selected);
+      Object.assign(allAnswerMaps, answerMap);
     } else {
-      pool = loadExercisesFromGroups(sec.subject, variantGroups);
+      // Regular exercise section
+      let pool;
+      if (variantGroups.length === 5) {
+        pool = loadAllExercises(sec.subject);
+      } else {
+        pool = loadExercisesFromGroups(sec.subject, variantGroups);
+      }
+
+      const availablePool = pool.filter(ex => !globalUsedIds.has(ex.id));
+      const selectionPool = availablePool.length >= sec.numberOfExercises ? availablePool : pool;
+      const selected = selectRandomExercises(selectionPool, sec.numberOfExercises);
+
+      selectedExercisesMap[String(sec.sectionOrder)] = selected.map(e => e.id);
+      selected.forEach(e => globalUsedIds.add(e.id));
+
+      const { answerMap } = buildClientExercises(selected);
+      Object.assign(allAnswerMaps, answerMap);
     }
-
-    // Filter out already used exercises to avoid duplicates across sections
-    const availablePool = pool.filter(ex => !globalUsedIds.has(ex.id));
-
-    // Fallback to full pool if not enough unique exercises (legacy/fallback)
-    const selectionPool = availablePool.length >= sec.numberOfExercises ? availablePool : pool;
-
-    const selected = selectRandomExercises(selectionPool, sec.numberOfExercises);
-    selectedExercisesMap[String(sec.sectionOrder)] = selected.map(e => e.id);
-
-    // Mark as used
-    selected.forEach(e => globalUsedIds.add(e.id));
-
-    // Build client exercises and collect answer maps
-    const { answerMap } = buildClientExercises(selected);
-    Object.assign(allAnswerMaps, answerMap);
   }
 
   // Store all answer maps for this student+test
@@ -143,13 +160,15 @@ export async function joinTest(studentId: string, pin: string) {
 
   // Build client payload for first section
   const firstExerciseIds = selectedExercisesMap[String(firstSection.sectionOrder)];
-  const firstClientExercises = getClientExercisesForSection(firstSection, firstExerciseIds);
+  const firstSectionType = (firstSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
+  const firstClientContent = getClientContentForSection(firstSection, firstExerciseIds);
 
   return {
     testSessionId: session.id,
     title: session.title,
     sections: sections.map(s => ({
       subject: s.subject,
+      sectionType: (s as unknown as { sectionType?: string }).sectionType || 'EXERCISE',
       variantGroups: JSON.parse(s.variantGroups),
       numberOfExercises: s.numberOfExercises,
       timeAllocated: s.timeAllocated,
@@ -157,9 +176,12 @@ export async function joinTest(studentId: string, pin: string) {
     })),
     currentSection: {
       subject: firstSection.subject,
+      sectionType: firstSectionType,
       sectionOrder: firstSection.sectionOrder,
       deadline: sectionDeadline,
-      exercises: firstClientExercises,
+      ...(firstSectionType === 'PRACTICE_TEST'
+        ? { questions: firstClientContent }
+        : { exercises: firstClientContent }),
     },
   };
 }
@@ -206,26 +228,41 @@ export async function advanceSection(studentId: string, testSessionId: string, c
     },
   });
 
-  // Get pre-selected exercise IDs for this section
+  // Get pre-selected exercise/question IDs for this section
   const selectedExercisesMap: Record<string, string[]> = JSON.parse(activeSession.selectedExercises);
   const exerciseIds = selectedExercisesMap[String(nextSection.sectionOrder)] || [];
-  const clientExercises = getClientExercisesForSection(nextSection, exerciseIds);
+  const nextSectionType = (nextSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
+  const clientContent = getClientContentForSection(nextSection, exerciseIds);
 
   return {
     subject: nextSection.subject,
+    sectionType: nextSectionType,
     sectionOrder: nextSection.sectionOrder,
     deadline: sectionDeadline,
-    exercises: clientExercises,
+    ...(nextSectionType === 'PRACTICE_TEST'
+      ? { questions: clientContent }
+      : { exercises: clientContent }),
   };
 }
 
-// ─── Internal: build client exercises for a section from stored IDs ─────────
+// ─── Internal: build client content for a section from stored IDs ────────────
 
-function getClientExercisesForSection(
-  section: { subject: string; variantGroups: string },
-  exerciseIds: string[]
+function getClientContentForSection(
+  section: { subject: string; variantGroups: string; sectionType?: string },
+  ids: string[]
 ): unknown[] {
   const variantGroups: string[] = JSON.parse(section.variantGroups);
+  const sectionType = (section as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
+
+  if (sectionType === 'PRACTICE_TEST') {
+    const pool = loadPracticeQuestionsFromGroups(section.subject, variantGroups);
+    // Preserve the stored (shuffled) order
+    const selected = ids
+      .map(id => pool.find(q => q.id === id))
+      .filter(Boolean) as import('../types').PracticeQuestion[];
+    const { clientQuestions } = buildClientPracticeQuestions(selected);
+    return clientQuestions;
+  }
 
   let pool;
   if (variantGroups.length === 5) {
@@ -234,8 +271,7 @@ function getClientExercisesForSection(
     pool = loadExercisesFromGroups(section.subject, variantGroups);
   }
 
-  // Filter to only the selected exercise IDs (preserving order)
-  const selectedExercises = exerciseIds
+  const selectedExercises = ids
     .map(id => pool.find(e => e.id === id))
     .filter(Boolean) as import('../types').Exercise[];
 

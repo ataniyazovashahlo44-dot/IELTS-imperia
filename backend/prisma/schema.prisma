@@ -54,6 +54,7 @@ model TestSection {
   testSessionId     String
   testSession       TestSession   @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
   subject           SectionSubject
+  sectionType       SectionType   @default(EXERCISE)
   variantGroups     String        // JSON array: '["1_5","10_15"]'
   numberOfExercises Int
   timeAllocated     Int           // minutes for entire section
@@ -67,6 +68,11 @@ model TestSection {
 enum SectionSubject {
   VOCABULARY
   GRAMMAR
+}
+
+enum SectionType {
+  EXERCISE
+  PRACTICE_TEST
 }
 
 model Result {

@@ -6,7 +6,8 @@ import { studentApi } from '../../services/api';
 import { connectSocket } from '../../services/socketClient';
 import Timer from '../Common/Timer';
 import ExerciseRenderer from './ExerciseRenderer';
-import { ClientExercise, SubmitAnswer } from '../../types';
+import PracticeTestRenderer from './PracticeTestRenderer';
+import { ClientExercise, ClientPracticeQuestion, SubmitAnswer } from '../../types';
 
 export default function TestTaking() {
   const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection } = useTest();
@@ -85,13 +86,15 @@ export default function TestTaking() {
     return null;
   }
 
-  const exercises = currentSection.exercises as ClientExercise[];
-  const currentExercise = exercises[currentExerciseIdx];
+  const isPracticeTest = currentSection.sectionType === 'PRACTICE_TEST';
+  const exercises = (!isPracticeTest ? currentSection.exercises : []) as ClientExercise[];
+  const practiceQuestions = (isPracticeTest ? currentSection.questions : []) as ClientPracticeQuestion[];
+  const currentExercise = !isPracticeTest ? exercises[currentExerciseIdx] : null;
 
-  // Count answered questions across all exercises in this section
-  const allQuestionIds = exercises.flatMap(ex =>
-    ex.questions.map(q => `${ex.id}_${q.id}`)
-  );
+  // Count answered questions
+  const allQuestionIds = isPracticeTest
+    ? practiceQuestions.map(q => q.id)
+    : exercises.flatMap(ex => ex.questions.map(q => `${ex.id}_${q.id}`));
   const answeredCount = allQuestionIds.filter(id => answers[id]).length;
   const totalCount = allQuestionIds.length;
 
@@ -101,7 +104,7 @@ export default function TestTaking() {
     ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300'
     : 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300';
 
-  // Count answered per exercise for the part buttons
+  // Count answered per exercise for the part buttons (only for EXERCISE sections)
   const exerciseAnsweredCounts = exercises.map(ex => {
     const ids = ex.questions.map(q => `${ex.id}_${q.id}`);
     return ids.filter(id => answers[id]).length;
@@ -161,70 +164,100 @@ export default function TestTaking() {
         </div>
       </div>
 
-      {/* Main content — exercise renderer */}
+      {/* Main content */}
       <main className="flex-1 overflow-hidden" style={fontSize === 'large' ? { zoom: 1.15 } as React.CSSProperties : {}}>
         <div className="h-full relative overflow-hidden">
-          {currentExercise && (
+          {isPracticeTest ? (
+            <PracticeTestRenderer
+              key={`practice-${currentSection.sectionOrder}`}
+              questions={practiceQuestions}
+              subject={currentSection.subject}
+              answers={answers}
+              onAnswer={handleAnswer}
+            />
+          ) : currentExercise ? (
             <ExerciseRenderer
               key={`${currentSection.sectionOrder}-${currentExerciseIdx}`}
               exercise={currentExercise}
               answers={answers}
               onAnswer={handleAnswer}
             />
-          )}
+          ) : null}
         </div>
       </main>
 
-      {/* Bottom navigation — Part buttons */}
+      {/* Bottom navigation */}
       <div className="flex-shrink-0 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-3 px-4 sm:px-6 flex justify-between items-center gap-2 z-40">
-        <button
-          onClick={() => setCurrentExerciseIdx(i => Math.max(0, i - 1))}
-          disabled={currentExerciseIdx === 0}
-          className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-100 dark:border-gray-700 text-gray-400 dark:text-gray-500 disabled:opacity-20 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-        >
-          &lsaquo; Prev
-        </button>
 
-        <div className="flex-1 overflow-x-auto no-scrollbar flex items-center justify-start gap-1.5 px-2">
-          {exercises.map((ex, i) => {
-            const answered = exerciseAnsweredCounts[i];
-            const total = ex.questions.length;
-            const isCurrent = i === currentExerciseIdx;
-            const isComplete = answered === total && total > 0;
-
-            return (
-              <button
-                key={ex.id}
-                onClick={() => setCurrentExerciseIdx(i)}
-                title={`${answered}/${total} answered`}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-lg border text-[11px] sm:text-xs font-bold transition-all ${isCurrent
-                  ? 'bg-[#E31E24] border-[#E31E24] text-white shadow-md'
-                  : isComplete
-                    ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
-                    : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-300'
-                  }`}
-              >
-                {i + 1}-Part
-              </button>
-            );
-          })}
-        </div>
-
-        {currentExerciseIdx < exercises.length - 1 ? (
-          <button
-            onClick={() => setCurrentExerciseIdx(i => Math.min(exercises.length - 1, i + 1))}
-            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-100 dark:border-gray-700 text-gray-400 dark:text-gray-500 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            Next &rsaquo;
-          </button>
+        {isPracticeTest ? (
+          // Practice test: just a submit button, no part navigation
+          <>
+            <div className="flex-1 flex items-center">
+              <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                {answeredCount}/{totalCount} javob berildi
+              </span>
+            </div>
+            <button
+              onClick={submitSection}
+              disabled={submitting}
+              className="flex-shrink-0 px-6 py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 disabled:opacity-50 text-xs shadow-md transition-all whitespace-nowrap"
+            >
+              {submitting ? 'Saving...' : isLast ? 'Submit ✓' : 'Next Section →'}
+            </button>
+          </>
         ) : (
-          <button
-            onClick={submitSection}
-            disabled={submitting}
-            className="flex-shrink-0 px-4 py-1.5 sm:px-6 sm:py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 disabled:opacity-50 text-[11px] sm:text-xs shadow-md transition-all whitespace-nowrap"
-          >
-            {submitting ? 'Saving...' : isLast ? 'Submit ✓' : 'Next Section →'}
-          </button>
+          // Exercise section: part navigation
+          <>
+            <button
+              onClick={() => setCurrentExerciseIdx(i => Math.max(0, i - 1))}
+              disabled={currentExerciseIdx === 0}
+              className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-100 dark:border-gray-700 text-gray-400 dark:text-gray-500 disabled:opacity-20 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              &lsaquo; Prev
+            </button>
+
+            <div className="flex-1 overflow-x-auto no-scrollbar flex items-center justify-start gap-1.5 px-2">
+              {exercises.map((ex, i) => {
+                const answered = exerciseAnsweredCounts[i];
+                const total = ex.questions.length;
+                const isCurrent = i === currentExerciseIdx;
+                const isComplete = answered === total && total > 0;
+
+                return (
+                  <button
+                    key={ex.id}
+                    onClick={() => setCurrentExerciseIdx(i)}
+                    title={`${answered}/${total} answered`}
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-lg border text-[11px] sm:text-xs font-bold transition-all ${isCurrent
+                      ? 'bg-[#E31E24] border-[#E31E24] text-white shadow-md'
+                      : isComplete
+                        ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                        : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-300'
+                      }`}
+                  >
+                    {i + 1}-Part
+                  </button>
+                );
+              })}
+            </div>
+
+            {currentExerciseIdx < exercises.length - 1 ? (
+              <button
+                onClick={() => setCurrentExerciseIdx(i => Math.min(exercises.length - 1, i + 1))}
+                className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-100 dark:border-gray-700 text-gray-400 dark:text-gray-500 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                Next &rsaquo;
+              </button>
+            ) : (
+              <button
+                onClick={submitSection}
+                disabled={submitting}
+                className="flex-shrink-0 px-4 py-1.5 sm:px-6 sm:py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 disabled:opacity-50 text-[11px] sm:text-xs shadow-md transition-all whitespace-nowrap"
+              >
+                {submitting ? 'Saving...' : isLast ? 'Submit ✓' : 'Next Section →'}
+              </button>
+            )}
+          </>
         )}
       </div>
 

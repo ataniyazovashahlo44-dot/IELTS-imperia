@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { adminApi } from '../../services/api';
-import { SectionSubject, VARIANT_GROUPS, VARIANT_GROUP_LABELS, VariantGroup } from '../../types';
+import { SectionSubject, SectionType, VARIANT_GROUPS, VARIANT_GROUP_LABELS, VariantGroup } from '../../types';
 
 interface SectionForm {
   subject: SectionSubject;
+  sectionType: SectionType;
   variantGroups: string[];
   numberOfExercises: number;
   timeAllocated: number;
@@ -19,7 +20,7 @@ export default function CreateTest({ onSuccess }: Props) {
   const [title, setTitle] = useState('');
   const [maxAttempts, setMaxAttempts] = useState(1);
   const [sections, setSections] = useState<SectionForm[]>([
-    { subject: 'GRAMMAR', variantGroups: ['1_5'], numberOfExercises: 3, timeAllocated: 20, sectionOrder: 1 },
+    { subject: 'GRAMMAR', sectionType: 'EXERCISE', variantGroups: ['1_5'], numberOfExercises: 3, timeAllocated: 20, sectionOrder: 1 },
   ]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ export default function CreateTest({ onSuccess }: Props) {
     const nextOrder = sections.length + 1;
     setSections(prev => [...prev, {
       subject: 'GRAMMAR',
+      sectionType: 'EXERCISE',
       variantGroups: ['1_5'],
       numberOfExercises: 3,
       timeAllocated: 20,
@@ -164,10 +166,36 @@ export default function CreateTest({ onSuccess }: Props) {
               )}
             </div>
 
-            {/* Subject + Exercises + Time */}
+            {/* Section Type Toggle */}
+            <div className="flex gap-2 p-1 bg-gray-100 dark:bg-gray-900 rounded-xl">
+              <button
+                type="button"
+                onClick={() => updateSection(idx, 'sectionType', 'EXERCISE')}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  section.sectionType === 'EXERCISE'
+                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700'
+                }`}
+              >
+                Mashq (Exercise)
+              </button>
+              <button
+                type="button"
+                onClick={() => updateSection(idx, 'sectionType', 'PRACTICE_TEST')}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  section.sectionType === 'PRACTICE_TEST'
+                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700'
+                }`}
+              >
+                Practice Test
+              </button>
+            </div>
+
+            {/* Subject + Questions/Exercises count + Time */}
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className={labelClass}>Turi</label>
+                <label className={labelClass}>Fan</label>
                 <select
                   value={section.subject}
                   onChange={e => updateSection(idx, 'subject', e.target.value)}
@@ -178,11 +206,11 @@ export default function CreateTest({ onSuccess }: Props) {
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Mashqlar soni</label>
+                <label className={labelClass}>{section.sectionType === 'PRACTICE_TEST' ? 'Savollar soni' : 'Mashqlar soni'}</label>
                 <input
                   type="number"
                   min={1}
-                  max={50}
+                  max={200}
                   value={section.numberOfExercises}
                   onChange={e => updateSection(idx, 'numberOfExercises', parseInt(e.target.value) || 1)}
                   className={inputClass}
