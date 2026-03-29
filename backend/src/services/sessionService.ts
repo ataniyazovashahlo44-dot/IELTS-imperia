@@ -55,7 +55,7 @@ export async function joinTest(studentId: string, pin: string) {
 
       const selectedExercisesMap: Record<string, string[]> = JSON.parse(existing.selectedExercises);
       const exerciseIds = selectedExercisesMap[String(currentSection.sectionOrder)] || [];
-      const currentClientExercises = getClientExercisesForSection(currentSection, exerciseIds);
+      const currentClientExercises = getClientContentForSection(currentSection, exerciseIds);
 
       const resumeSectionType = (currentSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
       return {
