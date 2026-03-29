@@ -87,8 +87,8 @@ export default function TestTaking() {
   }
 
   const isPracticeTest = currentSection.sectionType === 'PRACTICE_TEST';
-  const exercises = (!isPracticeTest ? currentSection.exercises : []) as ClientExercise[];
-  const practiceQuestions = (isPracticeTest ? currentSection.questions : []) as ClientPracticeQuestion[];
+  const exercises = (!isPracticeTest ? (currentSection.exercises ?? []) : []) as ClientExercise[];
+  const practiceQuestions = (isPracticeTest ? (currentSection.questions ?? []) : []) as ClientPracticeQuestion[];
   const currentExercise = !isPracticeTest ? exercises[currentExerciseIdx] : null;
 
   // Count answered questions

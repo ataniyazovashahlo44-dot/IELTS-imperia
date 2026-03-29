@@ -4,6 +4,26 @@ import { studentApi } from '../../services/api';
 import { Result, StudentAnswer } from '../../types';
 import Loading from '../Common/Loading';
 
+// Extract exerciseId from questionId
+// Regular: "grammar_1_5_001_3" → "grammar_1_5_001"
+// Practice: "practice_vocabulary_1_5_001" → "practice_vocabulary_1_5_001"
+function extractExerciseId(questionId: string): string {
+  if (questionId.startsWith('practice_')) return questionId;
+  const parts = questionId.split('_');
+  // Last part is the question number — remove it
+  return parts.slice(0, -1).join('_');
+}
+
+function groupByExercise(answers: StudentAnswer[]): { exerciseId: string; answers: StudentAnswer[] }[] {
+  const map = new Map<string, StudentAnswer[]>();
+  for (const a of answers) {
+    const exId = extractExerciseId(a.questionId);
+    if (!map.has(exId)) map.set(exId, []);
+    map.get(exId)!.push(a);
+  }
+  return Array.from(map.entries()).map(([exerciseId, answers]) => ({ exerciseId, answers }));
+}
+
 export default function ResultDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -22,9 +42,11 @@ export default function ResultDetail() {
   if (loading) return <Loading />;
   if (!result) return null;
 
-  const vocabAnswers = result.answers?.filter(a => a.questionType === 'VOCABULARY') ?? [];
-  const grammarAnswers = result.answers?.filter(a => a.questionType === 'GRAMMAR') ?? [];
-  const displayAnswers = activeTab === 'vocab' ? vocabAnswers : activeTab === 'grammar' ? grammarAnswers : (result.answers ?? []);
+  const allAnswers = result.answers ?? [];
+  const vocabAnswers = allAnswers.filter(a => a.questionType === 'VOCABULARY');
+  const grammarAnswers = allAnswers.filter(a => a.questionType === 'GRAMMAR');
+  const displayAnswers = activeTab === 'vocab' ? vocabAnswers : activeTab === 'grammar' ? grammarAnswers : allAnswers;
+  const grouped = groupByExercise(displayAnswers);
 
   const sc = (s: number) => s >= 80 ? 'text-emerald-500' : s >= 60 ? 'text-amber-500' : 'text-red-500';
   const scBg = (s: number) => s >= 80 ? 'from-emerald-500 to-teal-500' : s >= 60 ? 'from-amber-500 to-orange-500' : 'from-red-500 to-rose-500';
@@ -107,39 +129,63 @@ export default function ResultDetail() {
           ))}
         </div>
 
-        {displayAnswers.map((a: StudentAnswer, i: number) => (
-          <div
-            key={a.id}
-            className={`rounded-2xl border p-4 animate-slide-up ${a.isCorrect
-              ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-100 dark:border-emerald-900/50'
-              : 'bg-red-50 dark:bg-red-950/20 border-red-100 dark:border-red-900/50'}`}
-            style={{ animationDelay: `${i * 30}ms` }}
-          >
-            <div className="flex items-start gap-3">
-              <div className={`w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 font-black text-xs mt-0.5
-                ${a.isCorrect ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
-                {a.isCorrect ? '✓' : '✗'}
+        {grouped.map(({ exerciseId, answers: exAnswers }, groupIdx) => {
+          const correct = exAnswers.filter(a => a.isCorrect).length;
+          const total = exAnswers.length;
+          const isPractice = exerciseId.startsWith('practice_');
+          const partLabel = isPractice
+            ? `Practice Q${groupIdx + 1}`
+            : `Part ${groupIdx + 1}`;
+
+          return (
+            <div key={exerciseId} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+              {/* Exercise header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                <span className="text-xs font-black text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                  {partLabel}
+                </span>
+                <span className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
+                  correct === total
+                    ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                    : correct === 0
+                    ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+                    : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
+                }`}>
+                  {correct}/{total} to'g'ri
+                </span>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-800 dark:text-gray-200 font-medium leading-snug">{a.questionText}</p>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm">
-                  <span className="flex items-center gap-1">
-                    <span className="text-xs text-gray-400 dark:text-gray-500">Your answer:</span>
-                    <span className={`font-bold text-xs ${a.isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
-                      {a.selectedAnswer || '—'}
-                    </span>
-                  </span>
-                  {!a.isCorrect && (
-                    <span className="flex items-center gap-1">
-                      <span className="text-xs text-gray-400 dark:text-gray-500">Correct:</span>
-                      <span className="font-bold text-xs text-emerald-600 dark:text-emerald-400">{a.correctAnswer}</span>
-                    </span>
-                  )}
-                </div>
+
+              {/* Questions in this exercise */}
+              <div className="divide-y divide-gray-50 dark:divide-gray-800">
+                {exAnswers.map((a: StudentAnswer, i: number) => (
+                  <div key={a.id} className="flex items-start gap-3 px-4 py-3">
+                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 font-black text-[10px] mt-0.5
+                      ${a.isCorrect ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
+                      {i + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-800 dark:text-gray-200 font-medium leading-snug">{a.questionText}</p>
+                      <div className="flex flex-wrap gap-x-4 gap-y-0.5 mt-1.5">
+                        <span className="flex items-center gap-1">
+                          <span className="text-[11px] text-gray-400 dark:text-gray-500">Javob:</span>
+                          <span className={`font-bold text-[11px] ${a.isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                            {a.selectedAnswer || '—'}
+                          </span>
+                        </span>
+                        {!a.isCorrect && (
+                          <span className="flex items-center gap-1">
+                            <span className="text-[11px] text-gray-400 dark:text-gray-500">To'g'ri:</span>
+                            <span className="font-bold text-[11px] text-emerald-600 dark:text-emerald-400">{a.correctAnswer}</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
