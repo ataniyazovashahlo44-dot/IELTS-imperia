@@ -159,11 +159,10 @@ export default function TestTaking() {
         <div className="max-w-full mx-auto grid grid-cols-3 items-center">
 
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white flex items-center">
-              <span className="text-red-600 mr-0.5 transform -translate-y-1">♛</span>
-              IELTS Imperia
-            </span>
+          <div className="flex items-center">
+            <div className="rounded-lg dark:bg-white dark:px-2 dark:py-1 transition-colors">
+              <img src="/logo.png" alt="IELTS Imperia" className="h-7 w-auto object-contain" />
+            </div>
           </div>
 
           {/* Status badge */}

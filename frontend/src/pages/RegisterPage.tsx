@@ -6,20 +6,12 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-5">
-            <img
-              src="/logo.png"
-              alt="IELTS Imperia"
-              className="h-12 w-auto object-contain dark:brightness-0 dark:invert"
-              onError={e => {
-                e.currentTarget.style.display = 'none';
-                const fb = e.currentTarget.nextElementSibling as HTMLElement;
-                if (fb) fb.style.display = 'flex';
-              }}
-            />
-            <div style={{ display: 'none' }} className="items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30">
-                <span className="text-white text-xl font-black">IE</span>
-              </div>
+            <div className="rounded-xl dark:bg-white dark:px-4 dark:py-2 transition-colors">
+              <img
+                src="/logo.png"
+                alt="IELTS Imperia"
+                className="h-12 w-auto object-contain"
+              />
             </div>
           </div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">Hisob yaratish</h1>
