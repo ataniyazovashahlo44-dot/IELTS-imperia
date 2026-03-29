@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { studentApi } from '../../services/api';
 import { useTest } from '../../context/TestContext';
+import { SS_PIN, SS_ANSWERS } from '../../context/TestContext';
 
 interface Props { onClose: () => void; }
 
@@ -39,6 +40,11 @@ export default function TestJoin({ onClose }: Props) {
     setError(''); setLoading(true);
     try {
       const res = await studentApi.joinTest(pin);
+      // Save PIN for auto-rejoin on refresh; clear stale answers from any prior test
+      try {
+        sessionStorage.removeItem(SS_ANSWERS);
+        sessionStorage.setItem(SS_PIN, pin);
+      } catch {}
       initTest(res.data.data); onClose(); navigate('/student/test');
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;

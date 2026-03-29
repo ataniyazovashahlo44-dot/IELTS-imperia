@@ -3,6 +3,9 @@ import {
   JoinTestResponse, SectionConfig, CurrentSection, SubmitAnswer
 } from '../types';
 
+export const SS_PIN = 'ielts_active_pin';
+export const SS_ANSWERS = 'ielts_test_answers';
+
 type TestPhase = 'idle' | 'join' | 'in-section' | 'section-transition' | 'completed';
 
 interface TestContextType {
@@ -31,7 +34,12 @@ export function TestProvider({ children }: { children: React.ReactNode }) {
   const [answers, setAnswers] = useState<Record<string, SubmitAnswer>>({});
 
   const setAnswer = useCallback((questionId: string, answer: SubmitAnswer) => {
-    setAnswers(prev => ({ ...prev, [questionId]: answer }));
+    setAnswers(prev => {
+      const next = { ...prev, [questionId]: answer };
+      // Immediately persist to sessionStorage — refresh-safe
+      try { sessionStorage.setItem(SS_ANSWERS, JSON.stringify(next)); } catch {}
+      return next;
+    });
   }, []);
 
   const initTest = useCallback((data: JoinTestResponse) => {
@@ -40,17 +48,24 @@ export function TestProvider({ children }: { children: React.ReactNode }) {
     setSections(data.sections);
     setCurrentSection(data.currentSection);
 
-    // Restore answers if any (from Resume logic)
+    // Start with server-saved answers (from resume)
+    let restored: Record<string, SubmitAnswer> = {};
     if (data.currentSection?.answers) {
-      const restored: Record<string, SubmitAnswer> = {};
       data.currentSection.answers.forEach(a => {
         restored[a.questionId] = a;
       });
-      setAnswers(restored);
-    } else {
-      setAnswers({});
     }
 
+    // Overlay with sessionStorage answers (they're always fresher — saved on every answer)
+    try {
+      const savedJson = sessionStorage.getItem(SS_ANSWERS);
+      if (savedJson) {
+        const saved = JSON.parse(savedJson) as Record<string, SubmitAnswer>;
+        restored = { ...restored, ...saved };
+      }
+    } catch {}
+
+    setAnswers(restored);
     setPhase('in-section');
   }, []);
 
@@ -77,6 +92,10 @@ export function TestProvider({ children }: { children: React.ReactNode }) {
     setSections([]);
     setCurrentSection(null);
     setAnswers({});
+    try {
+      sessionStorage.removeItem(SS_ANSWERS);
+      sessionStorage.removeItem(SS_PIN);
+    } catch {}
   }, []);
 
   return (

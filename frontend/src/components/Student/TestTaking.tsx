@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTest } from '../../context/TestContext';
+import { SS_PIN, SS_ANSWERS } from '../../context/TestContext';
 import { useAntiCheat } from '../../hooks/useAntiCheat';
 import { studentApi } from '../../services/api';
 import { connectSocket } from '../../services/socketClient';
@@ -10,9 +11,10 @@ import PracticeTestRenderer from './PracticeTestRenderer';
 import { ClientExercise, ClientPracticeQuestion, SubmitAnswer } from '../../types';
 
 export default function TestTaking() {
-  const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection } = useTest();
+  const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection, initTest } = useTest();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+  const [restoring, setRestoring] = useState(false);
   const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
 
   // Settings Modal State
@@ -20,6 +22,34 @@ export default function TestTaking() {
   const [fontSize, setFontSize] = useState<'normal' | 'large'>('normal');
 
   useAntiCheat(testSessionId, true);
+
+  // ── Auto-rejoin on refresh ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (phase !== 'idle' || testSessionId) return;
+
+    const savedPin = sessionStorage.getItem(SS_PIN);
+    if (!savedPin) {
+      const timer = setTimeout(() => navigate('/student'), 100);
+      return () => clearTimeout(timer);
+    }
+
+    setRestoring(true);
+    studentApi.joinTest(savedPin)
+      .then(res => {
+        initTest(res.data.data);
+        // Stay on /student/test — no navigation needed
+      })
+      .catch(() => {
+        // Session expired or test ended — clear and go to dashboard
+        try {
+          sessionStorage.removeItem(SS_PIN);
+          sessionStorage.removeItem(SS_ANSWERS);
+        } catch {}
+        navigate('/student');
+      })
+      .finally(() => setRestoring(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, testSessionId]);
 
   useEffect(() => {
     if (!testSessionId) return;
@@ -45,11 +75,15 @@ export default function TestTaking() {
       const ord = currentSection?.sectionOrder ?? 1;
       const hasNext = sections.some(s => s.sectionOrder === ord + 1);
       if (hasNext) {
-        // Pass current answers when advancing to ensure they are saved in DB
         const res = await studentApi.advanceSection(testSessionId, getAllAnswers());
         goToNextSection(res.data.data);
       } else {
         const res = await studentApi.submitTest(testSessionId, getAllAnswers());
+        // Test fully complete — clear session restore data
+        try {
+          sessionStorage.removeItem(SS_PIN);
+          sessionStorage.removeItem(SS_ANSWERS);
+        } catch {}
         if (res?.data?.data?.id) {
           navigate(`/student/results/${res.data.data.id}`, { replace: true });
         } else {
@@ -60,27 +94,34 @@ export default function TestTaking() {
     } catch (err) {
       console.error('Submit/Advance error:', err);
       alert('Xatolik yuz berdi. Iltimos, internetingizni tekshirib qaytadan urinib ko\'ring.');
-      // Do NOT navigate to results on failure, let student retry
     } finally {
       setSubmitting(false);
     }
   }, [testSessionId, submitting, currentSection, sections, getAllAnswers, goToNextSection, navigate]);
 
-  // Periodic Auto-save (every 30 seconds)
+  // ── Autosave to server every 10 seconds ────────────────────────────────────
   useEffect(() => {
     if (!testSessionId || phase !== 'in-section') return;
     const interval = setInterval(() => {
       studentApi.saveAnswers(testSessionId, getAllAnswers()).catch(e => console.warn('Autosave failed:', e));
-    }, 30000);
+    }, 10000);
     return () => clearInterval(interval);
   }, [testSessionId, getAllAnswers, phase]);
 
-  useEffect(() => {
-    if (phase === 'idle' && (!currentSection || !testSessionId)) {
-      const timer = setTimeout(() => navigate('/student'), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [currentSection, testSessionId, navigate, phase]);
+  // ── Spinner while restoring ─────────────────────────────────────────────────
+  if (restoring) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[#FDFDFD] dark:bg-gray-950">
+        <div className="flex flex-col items-center gap-3">
+          <svg className="w-8 h-8 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+          </svg>
+          <p className="text-sm font-semibold text-gray-400 dark:text-gray-500">Qayta ulanmoqda...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!currentSection || !testSessionId) {
     return null;
@@ -193,7 +234,6 @@ export default function TestTaking() {
       {!isPracticeTest && (
       <div className="flex-shrink-0 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-3 px-4 sm:px-6 flex justify-between items-center gap-2 z-40">
         {(
-          // Exercise section: part navigation
           <>
             <button
               onClick={() => setCurrentExerciseIdx(i => Math.max(0, i - 1))}
