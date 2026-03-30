@@ -27,20 +27,25 @@ function gradeAnswer(selected: string, correct: string): boolean {
 }
 
 export async function submitTest(studentId: string, testSessionId: string, answers: SubmitAnswer[]) {
-  const activeSession = await prisma.activeSession.findFirst({
-    where: { studentId, testSessionId, isActive: true },
-  });
+  const [activeSession, testSession] = await Promise.all([
+    prisma.activeSession.findFirst({
+      where: { studentId, testSessionId, isActive: true },
+    }),
+    prisma.testSession.findUnique({
+      where: { id: testSessionId },
+      include: { sections: true },
+    }),
+  ]);
 
-  const testSession = await prisma.testSession.findUnique({
-    where: { id: testSessionId },
-    include: { sections: true },
-  });
+  if (!testSession) throw new Error('Test topilmadi');
+  if (!activeSession) throw new Error('Aktiv sessiya topilmadi. Test allaqachon yakunlangan bo\'lishi mumkin');
 
-  if (!testSession || !activeSession) {
-    throw new Error('Test session or active session not found');
+  let selectedExercisesMap: Record<string, string[]> = {};
+  try {
+    selectedExercisesMap = JSON.parse(activeSession.selectedExercises);
+  } catch {
+    throw new Error('Sessiya ma\'lumotlari buzilgan');
   }
-
-  const selectedExercisesMap: Record<string, string[]> = JSON.parse(activeSession.selectedExercises);
 
   // Build the master list of all required questions by loading them
   const requiredQuestions: { questionId: string, questionType: 'VOCABULARY' | 'GRAMMAR', questionText: string, exactAnswer: string }[] = [];

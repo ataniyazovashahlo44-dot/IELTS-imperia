@@ -12,11 +12,11 @@ const submitSchema = z.object({
   answers: z.array(
     z.object({
       questionId: z.string(),
-      questionType: z.enum(['VOCABULARY', 'GRAMMAR']),
+      questionType: z.string().transform(v => v.toUpperCase()).pipe(z.enum(['VOCABULARY', 'GRAMMAR'])),
       selectedAnswer: z.string(),
-      questionText: z.string(),
+      questionText: z.string().optional().default(''),
     })
-  ),
+  ).default([]),
 });
 
 export async function handleJoinTest(req: AuthRequest, res: Response): Promise<void> {
@@ -54,8 +54,9 @@ export async function handleAdvanceSection(req: AuthRequest, res: Response): Pro
     const nextSection = await advanceSection(req.user!.userId, testSessionId, (answers || []) as SubmitAnswer[]);
     res.json({ success: true, data: nextSection });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Failed to advance section';
-    res.status(400).json({ success: false, message });
+    console.error('[Advance] Error:', err);
+    const message = err instanceof Error ? err.message : 'Bo\'limga o\'tishda xatolik';
+    res.status(500).json({ success: false, message });
   }
 }
 
@@ -79,25 +80,31 @@ export async function handleSubmitTest(req: AuthRequest, res: Response): Promise
     const { testSessionId } = req.params;
     const parsed = submitSchema.safeParse(req.body);
     if (!parsed.success) {
-      res.status(400).json({ success: false, message: 'Invalid answers format' });
+      console.error('[Submit] Validation failed:', JSON.stringify(parsed.error.errors));
+      res.status(400).json({ success: false, message: 'Javoblar formati noto\'g\'ri', details: parsed.error.errors });
       return;
     }
 
     const result = await submitTest(req.user!.userId, testSessionId, parsed.data.answers as SubmitAnswer[]);
 
     // Notify admin
-    const io = getIO();
-    io.to(`admin_room`).emit('student_submitted', {
-      studentId: req.user!.userId,
-      username: req.user!.username,
-      testSessionId,
-      totalScore: result.totalScore,
-    });
+    try {
+      const io = getIO();
+      io.to(`admin_room`).emit('student_submitted', {
+        studentId: req.user!.userId,
+        username: req.user!.username,
+        testSessionId,
+        totalScore: result.totalScore,
+      });
+    } catch (socketErr) {
+      console.warn('[Submit] Socket notify failed (non-fatal):', socketErr);
+    }
 
     res.json({ success: true, data: result });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Failed to submit test';
-    res.status(400).json({ success: false, message });
+    console.error('[Submit] Error:', err);
+    const message = err instanceof Error ? err.message : 'Test yakunlashda xatolik yuz berdi';
+    res.status(500).json({ success: false, message });
   }
 }
 

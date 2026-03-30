@@ -13,7 +13,7 @@ const backendOrigin = isDev ? '' : (import.meta.env.VITE_API_URL || '');
 export const uploadsURL = (relativePath: string) =>
   `${backendOrigin}/uploads/${relativePath}`;
 
-const api = axios.create({ baseURL, timeout: 15000 });
+const api = axios.create({ baseURL, timeout: 30000 });
 
 api.interceptors.request.use(config => {
   const token = getToken();
@@ -55,9 +55,10 @@ export const adminApi = {
 export const studentApi = {
   getDashboard: () => api.get('/student/dashboard'),
   joinTest: (pin: string) => api.post('/student/test/join', { pin }),
-  advanceSection: (testSessionId: string, answers?: object[]) => api.post('/student/test/advance', { testSessionId, answers }),
+  advanceSection: (testSessionId: string, answers?: object[]) =>
+    api.post('/student/test/advance', { testSessionId, answers }, { timeout: 60000 }),
   submitTest: (testSessionId: string, answers: object[]) =>
-    api.post(`/student/test/${testSessionId}/submit`, { answers }),
+    api.post(`/student/test/${testSessionId}/submit`, { answers }, { timeout: 60000 }),
   saveAnswers: (testSessionId: string, answers: object[]) =>
     api.post('/student/test/save-answers', { testSessionId, answers }),
   reportTabSwitch: (testSessionId: string) =>

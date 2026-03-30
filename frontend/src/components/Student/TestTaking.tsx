@@ -103,9 +103,14 @@ export default function TestTaking() {
         }
         goToNextSection(null);
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Submit/Advance error:', err);
-      alert('Xatolik yuz berdi. Iltimos, internetingizni tekshirib qaytadan urinib ko\'ring.');
+      const serverMsg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      const isTimeout = (err as { code?: string })?.code === 'ECONNABORTED';
+      const msg = isTimeout
+        ? 'Server vaqt tugadi. Qaytadan urinib ko\'ring.'
+        : serverMsg || 'Xatolik yuz berdi. Iltimos, qaytadan urinib ko\'ring.';
+      alert(msg);
     } finally {
       setSubmitting(false);
     }
