@@ -7,7 +7,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-5">
-            <Logo className="h-12" wrapDark />
+            <Logo className="h-20" wrapDark />
           </div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">Hisob yaratish</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1.5 text-sm">Talaba sifatida ro'yxatdan o'ting</p>
