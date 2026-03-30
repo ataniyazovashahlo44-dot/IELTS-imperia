@@ -6,8 +6,16 @@
     "title": "Voice: Active vs Passive in an Essay",
     "instruction": "Read the essay below about air pollution and choose the correct words (active or passive) for each gap.",
     "image": null,
-    "passage": "Air pollution in cities is growing at an alarming rate. What measures could be taken to address this problem?\n\nAir pollution can 1 be defined (define / be defined) as the addition of something harmful to the air at a faster rate than it can 2 [2]. Everyone should be concerned about air pollution. It 3 [3] us all, and as it 4 [4] to worsen, so the environmental impact increases.\n\nOne of the major causes of air pollution in cities is car use. Cars 5 [5] for even the shortest of journeys, and all efforts by governments to encourage people 6 [6] public transport seem to be failing. Industry is another major cause of pollution in our cities, but fortunately, new industrial sites 7 [7] away from large urban centres.\n\nIt 8 [8] that there are too many contributing factors for us 9 [9] exactly which one is the main problem, but I believe that one of the most serious problems that needs 10 [10] is the use of the car. In some cities laws 11 [11] concerning car use. Athens, for example, only 12 [12] a certain number of cars into the city centre each day. In my opinion, this is a good idea. With this kind of law, people have no choice and 13 [13] to use buses and trains. This ensures governments 14 [14] that public transport 15 [15], and can therefore justify the investment and expense of ensuring the system works properly.\n\nAnother thing governments could do is to force people 16 [16] for carbon emissions and fine people with cars that produce high levels of harmful gases.",
+    "passage": "Air pollution in cities is growing at an alarming rate. What measures could be taken to address this problem?\n\nAir pollution can 1 [1] as the addition of something harmful to the air at a faster rate than it can 2 [2]. Everyone should be concerned about air pollution. It 3 [3] us all, and as it 4 [4] to worsen, so the environmental impact increases.\n\nOne of the major causes of air pollution in cities is car use. Cars 5 [5] for even the shortest of journeys, and all efforts by governments to encourage people 6 [6] public transport seem to be failing. Industry is another major cause of pollution in our cities, but fortunately, new industrial sites 7 [7] away from large urban centres.\n\nIt 8 [8] that there are too many contributing factors for us 9 [9] exactly which one is the main problem, but I believe that one of the most serious problems that needs 10 [10] is the use of the car. In some cities laws 11 [11] concerning car use. Athens, for example, only 12 [12] a certain number of cars into the city centre each day. In my opinion, this is a good idea. With this kind of law, people have no choice and 13 [13] to use buses and trains. This ensures governments 14 [14] that public transport 15 [15], and can therefore justify the investment and expense of ensuring the system works properly.\n\nAnother thing governments could do is to force people 16 [16] for carbon emissions and fine people with cars that produce high levels of harmful gases.",
     "questions": [
+        {
+            "id": 1,
+            "options": {
+                "A": "define",
+                "B": "be defined"
+            },
+            "answer": "B"
+        },
         {
             "id": 2,
             "options": {

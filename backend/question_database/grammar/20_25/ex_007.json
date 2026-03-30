@@ -6,8 +6,16 @@
     "title": "Linking Expressions in an Essay",
     "instruction": "Read the essay about banning smoking in public places and underline the correct linking expressions.",
     "image": null,
-    "passage": "It is generally accepted that smoking causes the deaths of large numbers of people. In order to address this problem governments should ban smoking in public places. To what extent do you agree or disagree with this statement?\n\nMany people think that the best way to reduce deaths from smoking is to ban smoking in public places. 1 However (However / In addition), it is not as simple as that. There are several reasons why I do not consider this approach to be suitable.\n\n2 [2], banning activities often increases their popularity by making them seem more exciting. 3 [3], most smoking takes place in the privacy of people's homes, and would 4 [4] not be affected by the ban. 5 [5], a ban on smoking would make extra demands on the police.\n\n6 [6] the ideas behind banning smoking in public places are good, an alternative approach needs to be taken, in my opinion. Schools should lead the way in discussing the harmful effects of smoking not only on the smokers themselves but on others around them. 7 [7], parents need to support these efforts by encouraging their children to understand the negative aspects of smoking.\n\nIf we adopted these measures, I believe fewer people would take up smoking 8 [8]. To some extent these things are already happening. 9 [9], further efforts are needed.",
+    "passage": "It is generally accepted that smoking causes the deaths of large numbers of people. In order to address this problem governments should ban smoking in public places. To what extent do you agree or disagree with this statement?\n\nMany people think that the best way to reduce deaths from smoking is to ban smoking in public places. 1 [1], it is not as simple as that. There are several reasons why I do not consider this approach to be suitable.\n\n2 [2], banning activities often increases their popularity by making them seem more exciting. 3 [3], most smoking takes place in the privacy of people's homes, and would 4 [4] not be affected by the ban. 5 [5], a ban on smoking would make extra demands on the police.\n\n6 [6] the ideas behind banning smoking in public places are good, an alternative approach needs to be taken, in my opinion. Schools should lead the way in discussing the harmful effects of smoking not only on the smokers themselves but on others around them. 7 [7], parents need to support these efforts by encouraging their children to understand the negative aspects of smoking.\n\nIf we adopted these measures, I believe fewer people would take up smoking 8 [8]. To some extent these things are already happening. 9 [9], further efforts are needed.",
     "questions": [
+        {
+            "id": 1,
+            "options": {
+                "A": "However",
+                "B": "In addition"
+            },
+            "answer": "A"
+        },
         {
             "id": 2,
             "options": {

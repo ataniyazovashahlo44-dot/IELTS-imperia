@@ -74,50 +74,68 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
     const text = exercise.passage;
 
-    // gap_fill with [N] markers → embed inputs inline in passage
-    if (exercise.type === 'gap_fill' && hasInlineMarkers) {
-      const dialogLines = parseDialogue(text.replace(/\[\d+\]/g, '___'));
-      if (dialogLines) {
-        return <DialoguePassageWithInputs passage={text} questions={exercise.questions} getAnswer={getAnswer} recordAnswer={recordAnswer} />;
-      }
-
-      // Normal inline gap_fill
-      const parts: React.ReactNode[] = [];
-      let lastIndex = 0;
-      let partKey = 0;
-
-      exercise.questions.forEach(q => {
-        const marker = `[${q.id}]`;
-        const idx = text.indexOf(marker, lastIndex);
-        if (idx === -1) return;
-        if (idx > lastIndex) {
-          parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, idx)}</span>);
+    // [N] markers in passage — gap_fill embeds inputs, other types embed styled badges
+    if (hasInlineMarkers) {
+      if (exercise.type === 'gap_fill') {
+        const dialogLines = parseDialogue(text.replace(/\[\d+\]/g, '___'));
+        if (dialogLines) {
+          return <DialoguePassageWithInputs passage={text} questions={exercise.questions} getAnswer={getAnswer} recordAnswer={recordAnswer} />;
         }
-        const val = getAnswer(q.id);
-        parts.push(
-          <span key={`inp-${q.id}`} className="inline-flex items-baseline mx-1 gap-0.5">
-            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
-              {q.id}
-            </span>
+
+        // Normal inline gap_fill — replace [N] with input (no number badge; passage text already has the number)
+        const parts: React.ReactNode[] = [];
+        let lastIndex = 0;
+        let partKey = 0;
+
+        exercise.questions.forEach(q => {
+          const marker = `[${q.id}]`;
+          const idx = text.indexOf(marker, lastIndex);
+          if (idx === -1) return;
+          if (idx > lastIndex) {
+            parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, idx)}</span>);
+          }
+          const val = getAnswer(q.id);
+          parts.push(
             <input
+              key={`inp-${q.id}`}
               type="text"
               value={val}
               onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 font-serif px-2 w-72 text-[15px] focus:outline-none transition-all rounded-sm
-                ${val
-                  ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
-                  : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 text-gray-400'}
-                focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+              className={`border-b-2 bg-transparent font-serif px-1 mx-1 w-64 text-[15px] focus:outline-none transition-colors inline-block align-baseline
+                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                focus:border-orange-500`}
               placeholder=" "
             />
+          );
+          lastIndex = idx + marker.length;
+        });
+        parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+        return (
+          <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.4] text-[16px]">
+            {parts}
+          </div>
+        );
+      }
+
+      // Non-gap_fill (e.g. MCQ) with [N] markers — replace with styled orange badge, no input
+      const markerRe2 = /\[(\d+)\]/g;
+      const badgeParts: React.ReactNode[] = [];
+      let li2 = 0;
+      let bm: RegExpExecArray | null;
+      let bKey = 0;
+      while ((bm = markerRe2.exec(text)) !== null) {
+        if (bm.index > li2) badgeParts.push(<span key={`t${bKey++}`} className="font-serif">{text.slice(li2, bm.index)}</span>);
+        badgeParts.push(
+          <span key={`b${bm[1]}`} className="inline-flex items-center mx-0.5 px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/40 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[11px] font-black align-middle select-none">
+            {bm[1]}
           </span>
         );
-        lastIndex = idx + marker.length;
-      });
-      parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+        li2 = bm.index + bm[0].length;
+      }
+      if (li2 < text.length) badgeParts.push(<span key="end" className="font-serif">{text.slice(li2)}</span>);
       return (
-        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.4] text-[16px]">
-          {parts}
+        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[1.9] text-[16px] whitespace-pre-wrap">
+          {badgeParts}
         </div>
       );
     }
@@ -179,19 +197,17 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       const val = getAnswer(q.id);
                       return (
                         <span key={j}>
-                          <span className="inline-flex items-baseline gap-0.5 mx-1">
-                            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
+                          <span className="inline-flex items-center gap-1 mx-1">
+                            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">
                               {q.id}
                             </span>
                             <input
                               type="text"
                               value={val}
                               onChange={e => recordAnswer(q, e.target.value)}
-                              className={`border-b-2 font-serif px-2 w-56 text-[15px] focus:outline-none transition-all inline-block align-baseline rounded-sm
-                                ${val
-                                  ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
-                                  : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 text-gray-400'}
-                                focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+                              className={`border-b-2 bg-transparent font-serif px-1 w-72 text-[15px] focus:outline-none transition-colors inline-block
+                                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                                focus:border-orange-500`}
                               placeholder=" "
                             />
                           </span>
@@ -299,19 +315,17 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                         return (
                           <span key={i}>
                             {i > 0 && (
-                              <span className="inline-flex items-baseline gap-0.5 mx-1">
-                                <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
+                              <span className="inline-flex items-center gap-1 mx-1">
+                                <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">
                                   {blankCount > 1 ? `${q.id}${String.fromCharCode(96 + i)}` : q.id}
                                 </span>
                                 <input
                                   type="text"
                                   value={val}
                                   onChange={e => recordBlank(blankIdx, e.target.value)}
-                                  className={`border-b-2 font-serif px-2 text-[16px] focus:outline-none transition-all py-0.5 inline-block rounded-sm
-                                    ${val
-                                      ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100 font-medium w-64'
-                                      : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 w-56'}
-                                    focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+                                  className={`border-b-2 bg-transparent font-serif px-1 text-[16px] focus:outline-none transition-colors w-64
+                                    ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                                    focus:border-orange-500`}
                                   placeholder=" "
                                 />
                               </span>
@@ -322,8 +336,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       })}
                     </p>
                   ) : (
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">{q.id}</span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">{q.id}</span>
                       {cleanText && (
                         <span className="font-serif text-gray-800 dark:text-gray-200 text-[15px]">{cleanText}</span>
                       )}
@@ -331,11 +345,9 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                         type="text"
                         value={getAnswer(q.id)}
                         onChange={e => recordAnswer(q, e.target.value)}
-                        className={`border-b-2 font-serif px-2 flex-1 min-w-[220px] text-[16px] focus:outline-none transition-all py-0.5 rounded-sm
-                          ${getAnswer(q.id)
-                            ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
-                            : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60'}
-                          focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+                        className={`border-b-2 bg-transparent font-serif px-1 flex-1 min-w-[220px] text-[16px] focus:outline-none transition-colors
+                          ${getAnswer(q.id) ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                          focus:border-orange-500`}
                         placeholder="Your answer..."
                       />
                     </div>
@@ -512,8 +524,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       type="text"
                       value={val}
                       onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border-b-2 bg-transparent font-serif px-2 text-[15px] focus:outline-none transition-all flex-1 min-w-[320px] py-1
-                        ${val ? 'border-emerald-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600 text-gray-400'}
+                      className={`border-b-2 bg-transparent font-serif px-1 text-[15px] focus:outline-none transition-colors flex-1 min-w-[320px] py-1
+                        ${val ? 'border-emerald-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                         focus:border-emerald-500`}
                       placeholder="Write the correct form..."
                     />
@@ -550,8 +562,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       type="text"
                       value={val}
                       onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border-b-2 bg-transparent font-serif px-1 mx-1 text-[15px] focus:outline-none transition-all w-[500px] py-0.5 inline-block
-                        ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600 text-gray-400'}
+                      className={`border-b-2 bg-transparent font-serif px-1 mx-1 text-[15px] focus:outline-none transition-colors w-[500px] py-0.5 inline-block
+                        ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                         focus:border-orange-500`}
                       placeholder="..."
                     />
@@ -573,8 +585,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                             type="text"
                             value={val}
                             onChange={e => recordAnswer(q, e.target.value)}
-                            className={`border-b-2 bg-transparent font-serif px-1 text-[15px] focus:outline-none transition-all w-full py-0.5
-                              ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600'}
+                            className={`border-b-2 bg-transparent font-serif px-1 text-[15px] focus:outline-none transition-colors w-full py-0.5
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                               focus:border-orange-500`}
                             placeholder="Rewrite the sentence..."
                           />
@@ -740,15 +752,17 @@ function DialoguePassageWithInputs({ passage, questions, getAnswer, recordAnswer
       if (q) {
         const val = getAnswer(qId);
         parts.push(
-          <input
-            key={`i${qId}`}
-            type="text"
-            value={val}
-            onChange={e => recordAnswer(q, e.target.value)}
-            className={`border-b-2 bg-transparent font-serif px-1 mx-0.5 w-40 text-[15px] focus:outline-none transition-all inline-block
-              ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600 text-gray-400'}
-              focus:border-orange-500`}
-          />
+          <span key={`i${qId}`} className="inline-flex items-center gap-1 mx-1">
+            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">{qId}</span>
+            <input
+              type="text"
+              value={val}
+              onChange={e => recordAnswer(q, e.target.value)}
+              className={`border-b-2 bg-transparent font-serif px-1 w-48 text-[15px] focus:outline-none transition-colors inline-block
+                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                focus:border-orange-500`}
+            />
+          </span>
         );
       }
       li = m.index + m[0].length;
