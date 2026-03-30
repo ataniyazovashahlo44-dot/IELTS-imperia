@@ -82,19 +82,6 @@
         },
         {
             "id": 8,
-            "text": "I hope that I ___ sightseeing when I'm in New York next week on business, but I've got a busy schedule.",
-            "options": {
-                "A": "will be able to / will manage to",
-                "B": "will manage to / will be able to"
-            },
-            "answers": [
-                "A",
-                "B"
-            ],
-            "note": "Image shows both forms as individual options but usually they are separate A/B. I will use A and B separately."
-        },
-        {
-            "id": 8,
             "text": "I hope that I ___ some sightseeing when I'm in New York next week on business, but I've got a busy schedule.",
             "options": {
                 "A": "will be able to do",

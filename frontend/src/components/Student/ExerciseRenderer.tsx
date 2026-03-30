@@ -66,6 +66,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
   // ── Render passage (left panel) ─────────────────────────────────────────────
   const hasInlineMarkers = exercise.passage ? /\[\d+\]/.test(exercise.passage) : false;
+  const isDialogueWithBlanks = exercise.type === 'gap_fill' && !hasInlineMarkers &&
+    !!exercise.passage && exercise.passage.includes('___') && parseDialogue(exercise.passage) !== null;
 
   const renderPassage = () => {
     if (!exercise.passage) return null;
@@ -93,14 +95,19 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         }
         const val = getAnswer(q.id);
         parts.push(
-          <span key={`inp-${q.id}`} className="inline-flex items-baseline mx-0.5">
+          <span key={`inp-${q.id}`} className="inline-flex items-baseline mx-1 gap-0.5">
+            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
+              {q.id}
+            </span>
             <input
               type="text"
               value={val}
               onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 bg-transparent font-serif px-1 w-52 text-[15px] focus:outline-none transition-all
-                ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600'}
-                focus:border-orange-500`}
+              className={`border-b-2 font-serif px-2 w-72 text-[15px] focus:outline-none transition-all rounded-sm
+                ${val
+                  ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
+                  : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 text-gray-400'}
+                focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
               placeholder=" "
             />
           </span>
@@ -109,16 +116,97 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       });
       parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
       return (
-        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[1.9] text-[16px]">
+        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.4] text-[16px]">
           {parts}
         </div>
       );
     }
 
-    // No [N] markers (or non-gap_fill) — render as reference text only
+    // No [N] markers (or non-gap_fill) — render passage
     // Check for dialogue format
     const dialogLines = parseDialogue(text);
     if (dialogLines) {
+      // gap_fill with ___ blanks in dialogue → embed inputs inline
+      if (exercise.type === 'gap_fill' && text.includes('___')) {
+        const sortedQs = [...exercise.questions].sort((a, b) => a.id - b.id);
+        const lineBlankMaps: ClientQuestion[][] = (() => {
+          let idx = 0;
+          return dialogLines.map(line => {
+            const count = (line.text.match(/___/g) || []).length;
+            const qs: ClientQuestion[] = [];
+            for (let b = 0; b < count; b++) {
+              if (sortedQs[idx]) qs.push(sortedQs[idx]);
+              idx++;
+            }
+            return qs;
+          });
+        })();
+
+        // Render a text segment, styling (hint) patterns as orange badges
+        const renderWithHints = (str: string, keyPrefix: string) => {
+          const hintRe = /\(([^)]+)\)/g;
+          const nodes: React.ReactNode[] = [];
+          let li = 0;
+          let hm: RegExpExecArray | null;
+          while ((hm = hintRe.exec(str)) !== null) {
+            if (hm.index > li) nodes.push(<span key={`${keyPrefix}t${li}`}>{str.slice(li, hm.index)}</span>);
+            nodes.push(
+              <span key={`${keyPrefix}h${hm.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold whitespace-nowrap align-middle">
+                {hm[1]}
+              </span>
+            );
+            li = hm.index + hm[0].length;
+          }
+          if (li < str.length) nodes.push(<span key={`${keyPrefix}end`}>{str.slice(li)}</span>);
+          return nodes;
+        };
+
+        return (
+          <div className="space-y-3">
+            {dialogLines.map((line, i) => {
+              const lineQs = lineBlankMaps[i];
+              const parts = line.text.split('___');
+              return (
+                <div key={i} className="flex gap-3">
+                  <span className="text-xs font-black text-orange-500 dark:text-orange-400 uppercase tracking-wide flex-shrink-0 w-20 pt-0.5 text-right">
+                    {line.speaker}
+                  </span>
+                  <p className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[15px] flex-1">
+                    {parts.map((part, j) => {
+                      if (j === 0) return <React.Fragment key={j}>{renderWithHints(part, `${i}-${j}-`)}</React.Fragment>;
+                      const q = lineQs[j - 1];
+                      if (!q) return <React.Fragment key={j}>{renderWithHints(part, `${i}-${j}-`)}</React.Fragment>;
+                      const val = getAnswer(q.id);
+                      return (
+                        <span key={j}>
+                          <span className="inline-flex items-baseline gap-0.5 mx-1">
+                            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
+                              {q.id}
+                            </span>
+                            <input
+                              type="text"
+                              value={val}
+                              onChange={e => recordAnswer(q, e.target.value)}
+                              className={`border-b-2 font-serif px-2 w-56 text-[15px] focus:outline-none transition-all inline-block align-baseline rounded-sm
+                                ${val
+                                  ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
+                                  : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 text-gray-400'}
+                                focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+                              placeholder=" "
+                            />
+                          </span>
+                          {renderWithHints(part, `${i}-${j}-`)}
+                        </span>
+                      );
+                    })}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+
       return (
         <div className="space-y-3">
           {dialogLines.map((line, i) => (
@@ -133,6 +221,34 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
           ))}
         </div>
       );
+    }
+
+    // Render (N verb) hint markers as styled badges in gap_fill passages
+    if (exercise.type === 'gap_fill') {
+      const hintRe = /\((\d+)\s+([^)]+)\)/g;
+      const passageParts: React.ReactNode[] = [];
+      let li = 0;
+      let hm: RegExpExecArray | null;
+      let hasHints = false;
+      while ((hm = hintRe.exec(text)) !== null) {
+        hasHints = true;
+        if (hm.index > li) passageParts.push(<span key={`t${li}`}>{text.slice(li, hm.index)}</span>);
+        passageParts.push(
+          <span key={`h${hm.index}`} className="inline-flex items-center gap-1 mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold whitespace-nowrap align-middle">
+            <span className="text-[10px] font-black text-orange-400 dark:text-orange-500 leading-none">{hm[1]}</span>
+            <span>{hm[2]}</span>
+          </span>
+        );
+        li = hm.index + hm[0].length;
+      }
+      if (hasHints) {
+        if (li < text.length) passageParts.push(<span key="end">{text.slice(li)}</span>);
+        return (
+          <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[16px]">
+            {passageParts}
+          </div>
+        );
+      }
     }
 
     return (
@@ -174,47 +290,56 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
               };
 
               return (
-                <div key={q.id} className="flex items-start gap-3">
-                  <span className="text-sm font-serif font-bold text-gray-900 dark:text-gray-100 flex-shrink-0 mt-0.5 w-5">
-                    {q.id}.
-                  </span>
-                  <div className="flex-1">
-                    {blankCount >= 1 ? (
-                      <p className="text-[16px] font-serif text-gray-800 dark:text-gray-200 leading-relaxed inline">
-                        {parts.map((part, i) => {
-                          const val = i > 0 ? getBlank(i - 1) : '';
-                          return (
-                            <span key={i}>
-                              {i > 0 && (
+                <div key={q.id} className="py-1">
+                  {blankCount >= 1 ? (
+                    <p className="text-[16px] font-serif text-gray-800 dark:text-gray-200 leading-[2.2]">
+                      {parts.map((part, i) => {
+                        const blankIdx = i - 1;
+                        const val = i > 0 ? getBlank(blankIdx) : '';
+                        return (
+                          <span key={i}>
+                            {i > 0 && (
+                              <span className="inline-flex items-baseline gap-0.5 mx-1">
+                                <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 self-end mb-0.5 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">
+                                  {blankCount > 1 ? `${q.id}${String.fromCharCode(96 + i)}` : q.id}
+                                </span>
                                 <input
                                   type="text"
                                   value={val}
-                                  onChange={e => recordBlank(i - 1, e.target.value)}
-                                  className={`border-b-2 bg-transparent font-serif px-2 mx-1 text-[16px] focus:outline-none transition-all py-0.5 inline-block
-                                    ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100 font-medium w-52' : 'border-gray-300 dark:border-gray-600 w-44'}
-                                    focus:border-orange-500`}
+                                  onChange={e => recordBlank(blankIdx, e.target.value)}
+                                  className={`border-b-2 font-serif px-2 text-[16px] focus:outline-none transition-all py-0.5 inline-block rounded-sm
+                                    ${val
+                                      ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100 font-medium w-64'
+                                      : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60 w-56'}
+                                    focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
                                   placeholder=" "
                                 />
-                              )}
-                              {part}
-                            </span>
-                          );
-                        })}
-                      </p>
-                    ) : (
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          value={getAnswer(q.id)}
-                          onChange={e => recordAnswer(q, e.target.value)}
-                          className={`border-b-2 bg-transparent font-serif px-1 w-full text-[16px] focus:outline-none transition-all py-0.5
-                            ${getAnswer(q.id) ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600'}
-                            focus:border-orange-500`}
-                          placeholder="Your answer..."
-                        />
-                      </div>
-                    )}
-                  </div>
+                              </span>
+                            )}
+                            {part}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  ) : (
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded">{q.id}</span>
+                      {cleanText && (
+                        <span className="font-serif text-gray-800 dark:text-gray-200 text-[15px]">{cleanText}</span>
+                      )}
+                      <input
+                        type="text"
+                        value={getAnswer(q.id)}
+                        onChange={e => recordAnswer(q, e.target.value)}
+                        className={`border-b-2 font-serif px-2 flex-1 min-w-[220px] text-[16px] focus:outline-none transition-all py-0.5 rounded-sm
+                          ${getAnswer(q.id)
+                            ? 'border-orange-400 bg-orange-50/60 dark:bg-orange-900/20 text-gray-900 dark:text-gray-100'
+                            : 'border-gray-400 dark:border-gray-500 bg-gray-100/60 dark:bg-gray-800/60'}
+                          focus:border-orange-500 focus:bg-orange-50 dark:focus:bg-orange-900/20`}
+                        placeholder="Your answer..."
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -387,7 +512,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       type="text"
                       value={val}
                       onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border-b-2 bg-transparent font-serif px-2 text-[15px] focus:outline-none transition-all flex-1 min-w-[200px] py-1
+                      className={`border-b-2 bg-transparent font-serif px-2 text-[15px] focus:outline-none transition-all flex-1 min-w-[320px] py-1
                         ${val ? 'border-emerald-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600 text-gray-400'}
                         focus:border-emerald-500`}
                       placeholder="Write the correct form..."
@@ -425,7 +550,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       type="text"
                       value={val}
                       onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border-b-2 bg-transparent font-serif px-1 mx-1 text-[15px] focus:outline-none transition-all w-[300px] py-0.5 inline-block
+                      className={`border-b-2 bg-transparent font-serif px-1 mx-1 text-[15px] focus:outline-none transition-all w-[500px] py-0.5 inline-block
                         ${val ? 'border-orange-400 text-gray-900 dark:text-gray-100' : 'border-gray-300 dark:border-gray-600 text-gray-400'}
                         focus:border-orange-500`}
                       placeholder="..."
@@ -484,7 +609,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                 <div>
                   <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1.5">
                     {subjectLabel} · {exercise.type.replace('_', ' ').toUpperCase()}
-                    {exercise.type === 'gap_fill' && !hasInlineMarkers && (
+                    {exercise.type === 'gap_fill' && !hasInlineMarkers && !isDialogueWithBlanks && (
                       <span className="ml-2 text-[11px] normal-case font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded">
                         o'qing
                       </span>
