@@ -126,7 +126,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       while ((bm = markerRe2.exec(text)) !== null) {
         if (bm.index > li2) badgeParts.push(<span key={`t${bKey++}`} className="font-serif">{text.slice(li2, bm.index)}</span>);
         badgeParts.push(
-          <span key={`b${bm[1]}`} className="inline-flex items-center mx-0.5 px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/40 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[11px] font-black align-middle select-none">
+          <span key={`b${bm[1]}`} className="inline-flex items-center mx-0.5 px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-900/40 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[11px] font-black align-middle select-none">
             {bm[1]}
           </span>
         );
@@ -198,7 +198,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       return (
                         <span key={j}>
                           <span className="inline-flex items-center gap-1 mx-1">
-                            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">
+                            <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">
                               {q.id}
                             </span>
                             <input
@@ -316,7 +316,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                           <span key={i}>
                             {i > 0 && (
                               <span className="inline-flex items-center gap-1 mx-1">
-                                <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">
+                                <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">
                                   {blankCount > 1 ? `${q.id}${String.fromCharCode(96 + i)}` : q.id}
                                 </span>
                                 <input
@@ -337,7 +337,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                     </p>
                   ) : (
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">{q.id}</span>
+                      <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">{q.id}</span>
                       {cleanText && (
                         <span className="font-serif text-gray-800 dark:text-gray-200 text-[15px]">{cleanText}</span>
                       )}
@@ -753,7 +753,7 @@ function DialoguePassageWithInputs({ passage, questions, getAnswer, recordAnswer
         const val = getAnswer(qId);
         parts.push(
           <span key={`i${qId}`} className="inline-flex items-center gap-1 mx-1">
-            <span className="text-[10px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded shrink-0">{qId}</span>
+            <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">{qId}</span>
             <input
               type="text"
               value={val}

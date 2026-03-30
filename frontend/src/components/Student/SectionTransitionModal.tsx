@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { CheckSquare, AlignLeft, RefreshCw, ArrowLeftRight, Bookmark, BarChart2, ListChecks, PenLine } from 'lucide-react';
 import { CurrentSection } from '../../types';
 
 interface Props {
@@ -11,17 +12,17 @@ interface Props {
 const BREAK_SECONDS = 60;
 
 const VOCAB_TIPS = [
-  { icon: '📖', title: 'Gap fill', desc: 'Bo\'sh joyni to\'g\'ri so\'z bilan to\'ldiring.' },
-  { icon: '🔤', title: 'MCQ', desc: 'To\'rtta variantdan eng to\'g\'risini tanlang.' },
-  { icon: '✏️', title: 'Baholash', desc: 'Har to\'g\'ri javob — 1 ball. Noto\'g\'ri yoki bo\'sh — 0 ball.' },
-  { icon: '⏱️', title: 'Vaqt', desc: 'Savol boshiga o\'rtacha 1.5 daqiqa ajratilgan.' },
+  { Icon: ListChecks, title: 'MCQ', desc: 'Har savolda 4 ta variant beriladi. Eng to\'g\'risini tanlang.' },
+  { Icon: PenLine, title: 'Gap fill', desc: 'Bo\'sh joyni kontekstga mos keladigan so\'z bilan to\'ldiring.' },
+  { Icon: Bookmark, title: 'Belgilash', desc: 'Noaniq savollarni belgilab, keyinroq qaytib kelishingiz mumkin.' },
+  { Icon: BarChart2, title: 'Progress', desc: 'Pastdagi panelda qancha savolga javob berganingiz ko\'rinadi.' },
 ];
 
 const GRAMMAR_TIPS = [
-  { icon: '📝', title: 'Gap fill', desc: 'Fe\'l shaklini yoki mos so\'zni kiritiing.' },
-  { icon: '🔁', title: 'Error correction', desc: 'Noto\'g\'ri so\'zni topib, to\'g\'risini yozing. To\'g\'ri bo\'lsa ✓ yozing.' },
-  { icon: '↔️', title: 'Sentence transformation', desc: 'Jumlani berilgan so\'z bilan qayta yozing.' },
-  { icon: '✅', title: 'Baholash', desc: 'Har to\'g\'ri javob — 1 ball. Noto\'g\'ri yoki bo\'sh — 0 ball.' },
+  { Icon: AlignLeft, title: 'Gap fill', desc: 'Matndagi bo\'sh joylarga grammatik jihatdan to\'g\'ri shakl kiriting.' },
+  { Icon: RefreshCw, title: 'Error correction', desc: 'Noto\'g\'ri so\'zni to\'g\'rilang; to\'g\'ri bo\'lsa ✓ yozing.' },
+  { Icon: ArrowLeftRight, title: 'Sentence transformation', desc: 'Jumlani ma\'nosini o\'zgartirmay berilgan so\'z bilan qayta yozing.' },
+  { Icon: Bookmark, title: 'Belgilash', desc: 'Mashqlarni belgilab, keyinroq qaytib kelishingiz mumkin.' },
 ];
 
 export default function SectionTransitionModal({ section, sectionNumber, totalSections, onStart }: Props) {
@@ -128,7 +129,7 @@ export default function SectionTransitionModal({ section, sectionNumber, totalSe
             <div className="grid grid-cols-2 gap-0 divide-x divide-y divide-gray-100 dark:divide-gray-800">
               {tips.map((tip, i) => (
                 <div key={i} className="px-4 py-3 flex items-start gap-2.5">
-                  <span className="text-lg leading-none mt-0.5">{tip.icon}</span>
+                  <tip.Icon className={`w-4 h-4 mt-0.5 shrink-0 ${isVocab ? 'text-blue-500' : 'text-indigo-500'}`} strokeWidth={2} />
                   <div>
                     <p className="text-[12px] font-black text-gray-700 dark:text-gray-300 leading-tight">{tip.title}</p>
                     <p className="text-[11px] text-gray-400 dark:text-gray-500 leading-snug mt-0.5">{tip.desc}</p>
