@@ -205,7 +205,7 @@ export async function advanceSection(studentId: string, testSessionId: string, c
     orderBy: { sectionOrder: 'asc' },
   });
 
-  const nextSection = allSections.find(s => s.sectionOrder === activeSession.sectionOrder + 1);
+  const nextSection = allSections.find(s => s.sectionOrder > activeSession.sectionOrder);
 
   if (!nextSection) {
     // No more sections — session ended

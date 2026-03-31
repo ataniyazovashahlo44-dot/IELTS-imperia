@@ -88,51 +88,84 @@ function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }
 
   const renderContent = (str: string, lineQs: ClientQuestion[]) => {
     const hintRe = /\(([^)]+)\)/g;
-    const markerRe = /___|\[\d+\]/g;
-    const textParts = (str || '').split(markerRe);
+    const markerRe = /(?:(\d+)\s+)?(?:\[(\d+)\]|___)/g;
 
     let parts: React.ReactNode[] = [];
     let qPtr = 0;
+    let lastIndex = 0;
+    let partKey = 0;
+    let match;
 
-    textParts.forEach((txt, i) => {
-      // 1. Text with Hints
-      const hintNodes: React.ReactNode[] = [];
-      let li = 0;
-      let match;
-      hintRe.lastIndex = 0;
-      while ((match = hintRe.exec(txt)) !== null) {
-        if (match.index > li) hintNodes.push(<span key={`t${li}`}>{txt.slice(li, match.index)}</span>);
-        hintNodes.push(
-          <span key={`h${match.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold align-middle whitespace-nowrap">
-            {match[1]}
-          </span>
-        );
-        li = match.index + match[0].length;
-      }
-      if (li < txt.length) hintNodes.push(<span key="end">{txt.slice(li)}</span>);
-      parts.push(<span key={`seg-${i}`}>{hintNodes}</span>);
+    while ((match = markerRe.exec(str || '')) !== null) {
+      const matchIndex = match.index;
 
-      // 2. Input Field
-      if (i < textParts.length - 1) {
-        const q = lineQs[qPtr++];
-        if (q) {
-          const val = getAnswer(q.id);
-          parts.push(
-            <span key={`q-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
-              <QuestionBadge id={q.id} />
-              <input
-                type="text"
-                value={val}
-                onChange={e => recordAnswer(q, e.target.value)}
-                className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[15px] focus:outline-none transition-colors 
-                      ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                      focus:border-orange-500`}
-              />
+      // Add text before the marker
+      if (matchIndex > lastIndex) {
+        const txt = str.slice(lastIndex, matchIndex);
+        const hintNodes: React.ReactNode[] = [];
+        let li = 0;
+        let hMatch;
+        hintRe.lastIndex = 0;
+        while ((hMatch = hintRe.exec(txt)) !== null) {
+          if (hMatch.index > li) hintNodes.push(<span key={`t${li}`}>{txt.slice(li, hMatch.index)}</span>);
+          hintNodes.push(
+            <span key={`h${hMatch.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold align-middle whitespace-nowrap">
+              {hMatch[1]}
             </span>
           );
+          li = hMatch.index + hMatch[0].length;
         }
+        if (li < txt.length) hintNodes.push(<span key="end">{txt.slice(li)}</span>);
+        parts.push(<span key={`seg-${partKey++}`}>{hintNodes}</span>);
       }
-    });
+
+      const q = lineQs[qPtr++];
+      if (q) {
+        const precedingNum = match[1];
+        if (precedingNum && parseInt(precedingNum) !== q.id) {
+          parts.push(<span key={`pfx-${partKey++}`} className="font-serif">{precedingNum} </span>);
+        }
+
+        const val = getAnswer(q.id);
+        parts.push(
+          <span key={`q-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+            <QuestionBadge id={q.id} />
+            <input
+              type="text"
+              value={val}
+              onChange={e => recordAnswer(q, e.target.value)}
+              className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[15px] focus:outline-none transition-colors 
+                    ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                    focus:border-orange-500`}
+            />
+          </span>
+        );
+      } else {
+        parts.push(<span key={`m-${partKey++}`} className="text-gray-400">{match[0]}</span>);
+      }
+
+      lastIndex = matchIndex + match[0].length;
+    }
+
+    // Add remaining text after the last marker
+    if (lastIndex < str.length) {
+      const txt = str.slice(lastIndex);
+      const hintNodes: React.ReactNode[] = [];
+      let li = 0;
+      let hMatch;
+      hintRe.lastIndex = 0;
+      while ((hMatch = hintRe.exec(txt)) !== null) {
+        if (hMatch.index > li) hintNodes.push(<span key={`t${li}`}>{txt.slice(li, hMatch.index)}</span>);
+        hintNodes.push(
+          <span key={`h${hMatch.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold align-middle whitespace-nowrap">
+            {hMatch[1]}
+          </span>
+        );
+        li = hMatch.index + hMatch[0].length;
+      }
+      if (li < txt.length) hintNodes.push(<span key="end">{txt.slice(li)}</span>);
+      parts.push(<span key={`seg-${partKey++}`}>{hintNodes}</span>);
+    }
 
     return parts;
   };
@@ -194,11 +227,12 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       const parts: React.ReactNode[] = [];
       let lastIndex = 0;
       let partKey = 0;
-      const markerRegex = /(\d+)?\s*\[(\d+)\]/g;
+      const markerRegex = /(?:(\d+)\s+)?\[(\d+)\]/g;
       let match;
 
       while ((match = markerRegex.exec(text)) !== null) {
         const fullMatch = match[0];
+        const precedingNum = match[1];
         const qIdStr = match[2];
         const qId = parseInt(qIdStr);
         const matchIndex = match.index;
@@ -209,6 +243,9 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
         const q = (exercise.questions || []).find(qu => qu.id === qId);
         if (q) {
+          if (precedingNum && parseInt(precedingNum) !== qId) {
+            parts.push(<span key={`pfx-${partKey++}`} className="font-serif">{precedingNum} </span>);
+          }
           const val = getAnswer(qId);
           parts.push(
             <span key={`input-grp-${qId}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
@@ -252,7 +289,6 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'mcq':
         return (
           <div className="space-y-8">
-            <InstructionBox text={exercise.instruction} />
             {questions.map((q) => (
               <div key={q.id} className="bg-white dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div className="flex gap-4 mb-4">
@@ -262,12 +298,12 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                   </p>
                 </div>
                 <div className="grid grid-cols-1 gap-3 ml-12">
-                  {q.options?.map((option, optIdx) => {
-                    const isSelected = getAnswer(q.id) === option;
+                  {Object.entries(q.options || {}).map(([optKey, optValue]) => {
+                    const isSelected = getAnswer(q.id) === optKey;
                     return (
                       <button
-                        key={optIdx}
-                        onClick={() => recordAnswer(q, option)}
+                        key={optKey}
+                        onClick={() => recordAnswer(q, optKey)}
                         className={`group flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left
                           ${isSelected
                             ? 'border-orange-500 bg-orange-50 dark:bg-orange-950/20'
@@ -278,10 +314,10 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                             ? 'border-orange-500 bg-orange-500 text-white'
                             : 'border-gray-300 dark:border-gray-600 text-gray-400 group-hover:border-orange-300'}`}
                         >
-                          {String.fromCharCode(65 + optIdx)}
+                          {optKey}
                         </span>
                         <span className={`font-serif ${isSelected ? 'text-orange-900 dark:text-orange-100' : 'text-gray-700 dark:text-gray-300'}`}>
-                          {option}
+                          {optValue as string}
                         </span>
                       </button>
                     );
@@ -297,7 +333,6 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         if (hasInlineMarkers || isDialogue) return null;
         return (
           <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
             {questions.map(q => {
               const cleanText = q.text?.replace(/^\d+\.\s*/, '') || '';
               const parts = cleanText.split('___');
@@ -345,7 +380,6 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'error_correction':
         return (
           <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
             {questions.map(q => {
               const val = getAnswer(q.id);
               return (
@@ -380,7 +414,6 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'matching':
         return (
           <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
             {questions.map(q => (
               <div key={q.id} className="p-5 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800/50">
                 <div className="flex gap-4 mb-4">
@@ -390,7 +423,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 ml-11">
-                  {q.type === 'TFNG' ? (
+                  {exercise.type === 'tfng' ? (
                     ['TRUE', 'FALSE', 'NOT GIVEN'].map(opt => (
                       <button
                         key={opt}
@@ -404,22 +437,75 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       </button>
                     ))
                   ) : (
-                    q.options?.map(option => (
+                    Object.entries(exercise.options || q.options || {}).map(([optKey, optValue]) => (
                       <button
-                        key={option}
-                        onClick={() => recordAnswer(q, option)}
+                        key={optKey}
+                        onClick={() => recordAnswer(q, optKey)}
                         className={`px-4 py-2 rounded-lg border-2 text-sm font-bold transition-all
-                          ${getAnswer(q.id) === option
+                          ${getAnswer(q.id) === optKey
                             ? 'border-orange-500 bg-orange-500 text-white'
                             : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-400 hover:border-orange-200'}`}
                       >
-                        {option}
+                        {optKey}: {optValue as string}
                       </button>
                     ))
                   )}
                 </div>
               </div>
             ))}
+          </div>
+        );
+
+      case 'sentence_transformation':
+        return (
+          <div className="space-y-6">
+            {questions.map(q => {
+              const val = getAnswer(q.id);
+              const parts = (q.prompt || q.text || '').split('___');
+              return (
+                <div key={q.id} className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
+                  <div className="flex items-start gap-4">
+                    <QuestionBadge id={q.id} />
+                    <div className="flex-1 space-y-3">
+                      {q.stem && (
+                        <div className="bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                          <p className="font-serif italic text-gray-700 dark:text-gray-300 text-[17px]">
+                            {q.stem}
+                          </p>
+                        </div>
+                      )}
+
+                      {parts.length > 1 ? (
+                        <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed pt-2">
+                          {parts[0]}
+                          <input
+                            type="text"
+                            value={val}
+                            onChange={e => recordAnswer(q, e.target.value)}
+                            className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              focus:border-orange-500`}
+                          />
+                          {parts[1]}
+                        </p>
+                      ) : (
+                        <div className="space-y-2 pt-2">
+                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">{q.prompt || q.text}</p>
+                          <input
+                            type="text"
+                            value={val}
+                            onChange={e => recordAnswer(q, e.target.value)}
+                            className={`border-b-2 bg-transparent font-serif px-2 w-full max-w-xl focus:outline-none transition-colors
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              focus:border-orange-500`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         );
 
@@ -440,6 +526,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
             <div className="flex-1 flex overflow-hidden">
               <div className="w-1/2 border-r border-gray-100 dark:border-gray-800 overflow-y-auto custom-scrollbar bg-gray-50/30 dark:bg-gray-900/50 p-6 lg:p-10">
                 {headerBlock(exercise, isFlagged, onToggleFlag, subjectLabel)}
+                <InstructionBox text={exercise.instruction} />
                 {exercise.image && (
                   <div className="mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-lg">
                     <img src={`${uploadsURL}/${exercise.image}`} alt={exercise.title} className="w-full h-auto" />
@@ -456,6 +543,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
           ) : (
             <div className="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 max-w-4xl mx-auto w-full">
               {headerBlock(exercise, isFlagged, onToggleFlag, subjectLabel)}
+              <InstructionBox text={exercise.instruction} />
               {exercise.image && (
                 <div className="mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-lg">
                   <img src={`${uploadsURL}/${exercise.image}`} alt={exercise.title} className="w-full h-auto" />

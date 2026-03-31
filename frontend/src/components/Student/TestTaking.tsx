@@ -26,6 +26,7 @@ export default function TestTaking() {
   // Settings Modal State
   const [showSettings, setShowSettings] = useState(false);
   const [fontSize, setFontSize] = useState<'normal' | 'large'>('normal');
+  const [showSkipModal, setShowSkipModal] = useState(false);
 
   useAntiCheat(testSessionId, true);
 
@@ -50,11 +51,11 @@ export default function TestTaking() {
         try {
           sessionStorage.removeItem(SS_PIN);
           sessionStorage.removeItem(SS_ANSWERS);
-        } catch {}
+        } catch { }
         navigate('/student');
       })
       .finally(() => setRestoring(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, testSessionId]);
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function TestTaking() {
     setSubmitting(true);
     try {
       const ord = currentSection?.sectionOrder ?? 1;
-      const hasNext = sections.some(s => s.sectionOrder === ord + 1);
+      const hasNext = sections.some(s => s.sectionOrder > ord);
       if (hasNext) {
         const res = await studentApi.advanceSection(testSessionId, getAllAnswers());
         const nextData = res.data.data;
@@ -106,7 +107,7 @@ export default function TestTaking() {
         try {
           sessionStorage.removeItem(SS_PIN);
           sessionStorage.removeItem(SS_ANSWERS);
-        } catch {}
+        } catch { }
         // Mark test as completed so StudentPage exits full-screen mode before navigating
         completeTest();
         if (res?.data?.data?.id) {
@@ -123,7 +124,7 @@ export default function TestTaking() {
       const isSessionGone = statusCode === 404 ||
         (serverMsg && (serverMsg.includes('sessiya topilmadi') || serverMsg.includes('session') || serverMsg.includes('topilmadi')));
       if (isSessionGone) {
-        try { sessionStorage.removeItem(SS_PIN); sessionStorage.removeItem(SS_ANSWERS); } catch {}
+        try { sessionStorage.removeItem(SS_PIN); sessionStorage.removeItem(SS_ANSWERS); } catch { }
         navigate('/student/results', { replace: true });
         return;
       }
@@ -184,7 +185,7 @@ export default function TestTaking() {
   const answeredCount = allQuestionIds.filter(id => answers[id]).length;
   const totalCount = allQuestionIds.length;
 
-  const isLast = !sections.some(s => s.sectionOrder === (currentSection.sectionOrder) + 1);
+  const isLast = !sections.some(s => s.sectionOrder > currentSection.sectionOrder);
 
   const subjectBadge = currentSection.subject === 'GRAMMAR'
     ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300'
@@ -232,14 +233,14 @@ export default function TestTaking() {
             </button>
 
             <button
-              onClick={submitSection}
+              onClick={() => setShowSkipModal(true)}
               disabled={submitting}
               className="px-4 py-1.5 border border-orange-200 dark:border-orange-900 text-orange-600 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 rounded-lg text-sm font-bold hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-all flex items-center gap-1.5 disabled:opacity-50"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
-              {isLast ? 'Finish' : 'Skip'}
+              {isLast ? 'Tugatish' : 'Tashlab o\'tish'}
             </button>
 
             <Timer deadline={currentSection.deadline} onExpire={submitSection} />
@@ -276,24 +277,23 @@ export default function TestTaking() {
 
       {/* Bottom navigation — only for EXERCISE sections */}
       {!isPracticeTest && (
-      <div className="flex-shrink-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-200/80 dark:border-gray-800">
-        {/* Part pills row */}
-        <div className="px-3 pt-2.5 pb-1 overflow-x-auto no-scrollbar">
-          <div className="flex items-center gap-1.5 min-w-max mx-auto w-fit">
-            {exercises.map((ex, i) => {
-              const answered = exerciseAnsweredCounts[i];
-              const total = ex.questions.length;
-              const isCurrent = i === currentExerciseIdx;
-              const isComplete = answered === total && total > 0;
-              const isFlaggedPart = flaggedExercises.has(i);
+        <div className="flex-shrink-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-200/80 dark:border-gray-800">
+          {/* Part pills row */}
+          <div className="px-3 pt-2.5 pb-1 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1.5 min-w-max mx-auto w-fit">
+              {exercises.map((ex, i) => {
+                const answered = exerciseAnsweredCounts[i];
+                const total = ex.questions.length;
+                const isCurrent = i === currentExerciseIdx;
+                const isComplete = answered === total && total > 0;
+                const isFlaggedPart = flaggedExercises.has(i);
 
-              return (
-                <button
-                  key={ex.id}
-                  onClick={() => setCurrentExerciseIdx(i)}
-                  title={`${answered}/${total} answered${isFlaggedPart ? ' · Belgilangan' : ''}`}
-                  className={`relative flex-shrink-0 h-8 min-w-[52px] px-2.5 rounded-xl text-[11px] font-bold transition-all duration-150 flex items-center justify-center gap-1 ${
-                    isCurrent
+                return (
+                  <button
+                    key={ex.id}
+                    onClick={() => setCurrentExerciseIdx(i)}
+                    title={`${answered}/${total} answered${isFlaggedPart ? ' · Belgilangan' : ''}`}
+                    className={`relative flex-shrink-0 h-8 min-w-[52px] px-2.5 rounded-xl text-[11px] font-bold transition-all duration-150 flex items-center justify-center gap-1 ${isCurrent
                       ? 'bg-[#E31E24] text-white shadow-[0_2px_8px_rgba(227,30,36,0.4)] scale-105'
                       : isFlaggedPart && isComplete
                         ? 'bg-amber-400 text-white shadow-sm'
@@ -302,71 +302,71 @@ export default function TestTaking() {
                           : isComplete
                             ? 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
                             : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  {isFlaggedPart && !isCurrent && (
-                    <svg className="w-2.5 h-2.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2z" />
-                    </svg>
-                  )}
-                  <span>{i + 1}</span>
-                  {isComplete && !isCurrent && (
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white dark:border-gray-900" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Prev / progress / Next row */}
-        <div className="px-3 pb-3 pt-1 flex items-center gap-2">
-          <button
-            onClick={() => setCurrentExerciseIdx(i => Math.max(0, i - 1))}
-            disabled={currentExerciseIdx === 0}
-            className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 disabled:opacity-25 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all font-bold text-base"
-            aria-label="Previous"
-          >
-            ‹
-          </button>
-
-          {/* Progress bar */}
-          <div className="flex-1 flex flex-col gap-1">
-            <div className="flex justify-between items-center">
-              <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
-                {currentExerciseIdx + 1} / {exercises.length} part
-              </span>
-              <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
-                {exerciseAnsweredCounts.reduce((a, b) => a + b, 0)} / {exercises.reduce((a, ex) => a + ex.questions.length, 0)} answered
-              </span>
-            </div>
-            <div className="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#E31E24] rounded-full transition-all duration-300"
-                style={{ width: `${((currentExerciseIdx + 1) / exercises.length) * 100}%` }}
-              />
+                      }`}
+                  >
+                    {isFlaggedPart && !isCurrent && (
+                      <svg className="w-2.5 h-2.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2z" />
+                      </svg>
+                    )}
+                    <span>{i + 1}</span>
+                    {isComplete && !isCurrent && (
+                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white dark:border-gray-900" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {currentExerciseIdx < exercises.length - 1 ? (
+          {/* Prev / progress / Next row */}
+          <div className="px-3 pb-3 pt-1 flex items-center gap-2">
             <button
-              onClick={() => setCurrentExerciseIdx(i => Math.min(exercises.length - 1, i + 1))}
-              className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all font-bold text-base"
-              aria-label="Next"
+              onClick={() => setCurrentExerciseIdx(i => Math.max(0, i - 1))}
+              disabled={currentExerciseIdx === 0}
+              className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 disabled:opacity-25 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all font-bold text-base"
+              aria-label="Previous"
             >
-              ›
+              ‹
             </button>
-          ) : (
-            <button
-              onClick={submitSection}
-              disabled={submitting}
-              className="flex-shrink-0 h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-black shadow-[0_2px_10px_rgba(5,150,105,0.4)] transition-all whitespace-nowrap"
-            >
-              {submitting ? '...' : isLast ? 'Submit ✓' : 'Next →'}
-            </button>
-          )}
+
+            {/* Progress bar */}
+            <div className="flex-1 flex flex-col gap-1">
+              <div className="flex justify-between items-center">
+                <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
+                  {currentExerciseIdx + 1} / {exercises.length} part
+                </span>
+                <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
+                  {exerciseAnsweredCounts.reduce((a, b) => a + b, 0)} / {exercises.reduce((a, ex) => a + ex.questions.length, 0)} answered
+                </span>
+              </div>
+              <div className="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#E31E24] rounded-full transition-all duration-300"
+                  style={{ width: `${((currentExerciseIdx + 1) / exercises.length) * 100}%` }}
+                />
+              </div>
+            </div>
+
+            {currentExerciseIdx < exercises.length - 1 ? (
+              <button
+                onClick={() => setCurrentExerciseIdx(i => Math.min(exercises.length - 1, i + 1))}
+                className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all font-bold text-base"
+                aria-label="Next"
+              >
+                ›
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowSkipModal(true)}
+                disabled={submitting}
+                className="flex-shrink-0 h-10 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-black shadow-[0_2px_10px_rgba(5,150,105,0.4)] transition-all whitespace-nowrap"
+              >
+                {submitting ? '...' : isLast ? 'Tugatish ✓' : 'Keyingisi →'}
+              </button>
+            )}
+          </div>
         </div>
-      </div>
       )}
 
       {/* Section Transition Modal */}
@@ -459,6 +459,43 @@ export default function TestTaking() {
         </div>
       )}
 
+      {/* Skip / Finish Confirmation Modal */}
+      {showSkipModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 shadow-2xl backdrop-blur-sm px-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md overflow-hidden transform transition-all border border-gray-100 dark:border-gray-700 shadow-2xl">
+            <div className="p-6 text-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 dark:bg-red-500/20 text-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                Diqqat!
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-[15px]">
+                Siz ushbu bo'limni to'liq <b>{isLast ? 'tugatyapsiz' : 'o\'tkazib yuboryapsiz'}</b>! Bu bo'limga (qismga) qaytib kira olmaysiz. Barcha kerakli javoblarni belgilaganingizga ishonchingiz komilmi?
+              </p>
+            </div>
+            <div className="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 flex gap-3 flex-row-reverse border-t border-gray-100 dark:border-gray-700">
+              <button
+                onClick={() => {
+                  setShowSkipModal(false);
+                  submitSection();
+                }}
+                className="flex-1 py-2.5 rounded-xl font-bold text-white bg-red-600 hover:bg-red-500 transition-colors shadow-lg shadow-red-500/30"
+              >
+                Ha, {isLast ? 'Tugatish' : 'O\'tkazib yuborish'}
+              </button>
+              <button
+                onClick={() => setShowSkipModal(false)}
+                className="flex-1 py-2.5 rounded-xl font-bold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all"
+              >
+                Bekor qilish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
