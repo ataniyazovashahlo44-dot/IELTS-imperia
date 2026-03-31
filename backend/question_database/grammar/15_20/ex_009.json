@@ -6,8 +6,13 @@
     "title": "Third Conditionals: Research Evaluation",
     "instruction": "Fill in the gaps in the dialogue using the verbs in brackets in the correct form (Third Conditional).",
     "image": null,
-    "passage": "Tutor: Tell me what you intend to write in your evaluation of your research.\nStudent: Well, firstly, if I had (1 had) a larger number of questionnaires returned, I 2 [2] (get) more useful data.\nTutor: Is there anything you could have done to improve that?\nStudent: Well, I suppose I 3 [3] (receive) more completed questionnaires if I 4 [4] (make) the questions easier to answer, for example, 'yes/no' questions.\nTutor: Yes, I think you are right. People are too busy to answer complicated questions. Any other things you might change?\nStudent: Yes. I think I 5 [5] (be) more successful with my interviews as well if I 6 [6] (plan) the questions more thoroughly beforehand, although I'm not sure about that. If I 7 [7] (prepare) the questions in more detail, it 8 [8] (restrict) the interviewees too much. Oh, and another thing: if I 9 [9] (start) collecting data sooner, it 10 [10] (not/be) such a rush in the end.\nTutor: Good. I must admit that if you 11 [11] (not/leave) it all so late, I 12 [12] (be able to) support you more. If you 13 [13] (come) to see me before you sent out your questionnaires, I 14 [14] (help) you. It is a shame that your data was so disappointing because your research questions were very interesting.",
+    "passage": "Tutor: Tell me what you intend to write in your evaluation of your research.\nStudent: Well, firstly, if I [1] (have) a larger number of questionnaires returned, I [2] (get) more useful data.\nTutor: Is there anything you could have done to improve that?\nStudent: Well, I suppose I [3] (receive) more completed questionnaires if I [4] (make) the questions easier to answer, for example, 'yes/no' questions.\nTutor: Yes, I think you are right. People are too busy to answer complicated questions. Any other things you might change?\nStudent: Yes. I think I [5] (be) more successful with my interviews as well if I [6] (plan) the questions more thoroughly beforehand, although I'm not sure about that. If I [7] (prepare) the questions in more detail, it [8] (restrict) the interviewees too much. Oh, and another thing: if I [9] (start) collecting data sooner, it [10] (not/be) such a rush in the end.\nTutor: Good. I must admit that if you [11] (not/leave) it all so late, I [12] (be able to) support you more. If you [13] (come) to see me before you sent out your questionnaires, I [14] (help) you. It is a shame that your data was so disappointing because your research questions were very interesting.",
     "questions": [
+        {
+            "id": 1,
+            "text": "if I ___ (have) a larger number of questionnaires returned,",
+            "answer": "had had||'d had"
+        },
         {
             "id": 2,
             "text": "2. (get):",

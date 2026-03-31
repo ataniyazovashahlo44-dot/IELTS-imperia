@@ -74,50 +74,17 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
     const text = exercise.passage;
 
-    // [N] markers in passage — gap_fill embeds inputs, other types embed styled badges
+    // [N] markers in passage — gap_fill dialogue gets inline inputs; plain passage & other types get styled badges
     if (hasInlineMarkers) {
       if (exercise.type === 'gap_fill') {
         const dialogLines = parseDialogue(text.replace(/\[\d+\]/g, '___'));
         if (dialogLines) {
           return <DialoguePassageWithInputs passage={text} questions={exercise.questions} getAnswer={getAnswer} recordAnswer={recordAnswer} />;
         }
-
-        // Normal inline gap_fill — replace [N] with input (no number badge; passage text already has the number)
-        const parts: React.ReactNode[] = [];
-        let lastIndex = 0;
-        let partKey = 0;
-
-        exercise.questions.forEach(q => {
-          const marker = `[${q.id}]`;
-          const idx = text.indexOf(marker, lastIndex);
-          if (idx === -1) return;
-          if (idx > lastIndex) {
-            parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, idx)}</span>);
-          }
-          const val = getAnswer(q.id);
-          parts.push(
-            <input
-              key={`inp-${q.id}`}
-              type="text"
-              value={val}
-              onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 bg-transparent font-serif px-1 mx-1 w-64 text-[15px] focus:outline-none transition-colors inline-block align-baseline
-                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                focus:border-orange-500`}
-              placeholder=" "
-            />
-          );
-          lastIndex = idx + marker.length;
-        });
-        parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
-        return (
-          <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.4] text-[16px]">
-            {parts}
-          </div>
-        );
+        // Plain passage gap_fill: fall through to badge rendering — inputs are in the right panel
       }
 
-      // Non-gap_fill (e.g. MCQ) with [N] markers — replace with styled orange badge, no input
+      // [N] markers → styled orange badge (no input here; right panel handles answers)
       const markerRe2 = /\[(\d+)\]/g;
       const badgeParts: React.ReactNode[] = [];
       let li2 = 0;
@@ -239,9 +206,10 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       );
     }
 
-    // Render (N verb) hint markers as styled badges in gap_fill passages
+    // Render hint markers in gap_fill passages as subtle styled text
+    // Handles both (N verb) — numbered hint — and plain (verb) — unnumbered hint
     if (exercise.type === 'gap_fill') {
-      const hintRe = /\((\d+)\s+([^)]+)\)/g;
+      const hintRe = /\((\d+\s+)?([^)]+)\)/g;
       const passageParts: React.ReactNode[] = [];
       let li = 0;
       let hm: RegExpExecArray | null;
@@ -249,12 +217,22 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       while ((hm = hintRe.exec(text)) !== null) {
         hasHints = true;
         if (hm.index > li) passageParts.push(<span key={`t${li}`}>{text.slice(li, hm.index)}</span>);
-        passageParts.push(
-          <span key={`h${hm.index}`} className="inline-flex items-center gap-1 mx-0.5 align-middle whitespace-nowrap">
-            <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-none">{hm[1]}</span>
-            <span className="text-[13px] text-gray-400 dark:text-gray-500 italic">{hm[2]}</span>
-          </span>
-        );
+        const num = hm[1]?.trim();
+        const verb = hm[2];
+        if (num) {
+          // (N verb) — show number badge + verb
+          passageParts.push(
+            <span key={`h${hm.index}`} className="inline-flex items-center gap-1 mx-0.5 align-middle whitespace-nowrap">
+              <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-none">{num}</span>
+              <span className="text-[13px] text-gray-400 dark:text-gray-500 italic">{verb}</span>
+            </span>
+          );
+        } else {
+          // (verb) — subtle gray italic, slightly smaller
+          passageParts.push(
+            <span key={`h${hm.index}`} className="text-[13px] text-gray-400 dark:text-gray-500 italic mx-0.5">({verb})</span>
+          );
+        }
         li = hm.index + hm[0].length;
       }
       if (hasHints) {

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTest } from '../../context/TestContext';
 import { SS_PIN, SS_ANSWERS } from '../../context/TestContext';
@@ -16,7 +16,9 @@ export default function TestTaking() {
   const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection, initTest } = useTest();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
   const [restoring, setRestoring] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
   const [flaggedExercises, setFlaggedExercises] = useState<Set<number>>(new Set());
   const [pendingSection, setPendingSection] = useState<import('../../types').CurrentSection | null>(null);
@@ -83,7 +85,8 @@ export default function TestTaking() {
   }, [setAnswer]);
 
   const submitSection = useCallback(async () => {
-    if (!testSessionId || submitting) return;
+    if (!testSessionId || submittingRef.current) return;
+    submittingRef.current = true;
     setSubmitting(true);
     try {
       const ord = currentSection?.sectionOrder ?? 1;
@@ -109,20 +112,30 @@ export default function TestTaking() {
         } else {
           navigate('/student/results', { replace: true });
         }
-        goToNextSection(null);
+        // Do NOT call goToNextSection(null) here — it sets currentSection=null causing blank screen
+        // before React Router finishes navigating. Component unmounts naturally on navigate.
       }
     } catch (err: unknown) {
       console.error('Submit/Advance error:', err);
       const serverMsg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      const statusCode = (err as { response?: { status?: number } })?.response?.status;
       const isTimeout = (err as { code?: string })?.code === 'ECONNABORTED';
+      const isSessionGone = statusCode === 404 ||
+        (serverMsg && (serverMsg.includes('sessiya topilmadi') || serverMsg.includes('session') || serverMsg.includes('topilmadi')));
+      if (isSessionGone) {
+        try { sessionStorage.removeItem(SS_PIN); sessionStorage.removeItem(SS_ANSWERS); } catch {}
+        navigate('/student/results', { replace: true });
+        return;
+      }
       const msg = isTimeout
         ? 'Server vaqt tugadi. Qaytadan urinib ko\'ring.'
         : serverMsg || 'Xatolik yuz berdi. Iltimos, qaytadan urinib ko\'ring.';
-      alert(msg);
+      setSubmitError(msg);
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
-  }, [testSessionId, submitting, currentSection, sections, getAllAnswers, goToNextSection, navigate]);
+  }, [testSessionId, currentSection, sections, getAllAnswers, goToNextSection, navigate]);
 
   // ── Autosave to server every 10 seconds ────────────────────────────────────
   useEffect(() => {
@@ -192,7 +205,7 @@ export default function TestTaking() {
 
           {/* Logo */}
           <div className="flex items-center">
-            <Logo className="h-7" wrapDark />
+            <Logo className="h-10" wrapDark />
           </div>
 
           {/* Status badge */}
@@ -364,6 +377,21 @@ export default function TestTaking() {
           totalSections={sections.length}
           onStart={handleStartPendingSection}
         />
+      )}
+
+      {/* Submit Error Toast */}
+      {submitError && (
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[300] flex items-center gap-3 bg-red-600 text-white px-5 py-3 rounded-2xl shadow-2xl max-w-sm w-[90%]">
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+          <p className="text-sm font-semibold flex-1">{submitError}</p>
+          <button onClick={() => setSubmitError(null)} className="text-white/70 hover:text-white transition-colors flex-shrink-0">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       )}
 
       {/* Settings Modal */}
