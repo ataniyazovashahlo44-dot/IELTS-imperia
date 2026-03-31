@@ -10,834 +10,142 @@ interface Props {
   onToggleFlag?: () => void;
 }
 
-// ── Dialogue formatter ────────────────────────────────────────────────────────
-// Detects "1 A:", "2 B:", "Teacher:", "Student:", "A:", "B:" patterns
-// and splits the raw text into speaker turns for clean display.
-function isDialogue(text: string): boolean {
-  return /\b\d+\s+[A-Z]:\s|\b[A-Z][a-z]+:\s|(?<![A-Za-z])([A-Z]):\s/.test(text);
+// ── Shared Components ────────────────────────────────────────────────────────
+const QuestionBadge = ({ id }: { id: number | string }) => (
+  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white text-[11px] font-black select-none shrink-0 align-middle shadow-sm shadow-orange-500/20">
+    {id}
+  </span>
+);
+
+function InstructionBox({ text }: { text: string }) {
+  if (!text) return null;
+  return (
+    <div className="p-5 border-l-4 border-orange-500 bg-orange-50/30 dark:bg-orange-950/20 rounded-r-2xl mb-8">
+      <p className="text-[15px] font-serif italic text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+        {text}
+      </p>
+    </div>
+  );
 }
 
+// ── Dialogue Utils ────────────────────────────────────────────────────────────
 interface SpeakerLine {
-  speaker: string;   // e.g. "1 A", "B", "Teacher"
+  speaker: string;
   text: string;
 }
 
-function parseDialogue(raw: string): SpeakerLine[] | null {
-  if (!isDialogue(raw)) return null;
-
-  // Split on patterns like "1 A: ", "2 B: ", "A: ", "B: ", "Teacher: ", "Student: "
+function parseDialogue(raw: string | undefined | null): SpeakerLine[] | null {
+  if (!raw) return null;
   const re = /(\d+\s+[A-Z]:|[A-Z][a-z]{2,}:|[A-Z]:)\s/g;
+  const matches = raw.match(re);
+  if (!matches || matches.length < 2) return null;
 
   const lines: SpeakerLine[] = [];
   let lastIndex = 0;
   let lastSpeaker = '';
   let match: RegExpExecArray | null;
 
-  while ((match = re.exec(raw)) !== null) {
-    if (lastSpeaker && match.index > lastIndex) {
-      lines.push({ speaker: lastSpeaker, text: raw.slice(lastIndex, match.index).trim() });
+  try {
+    re.lastIndex = 0;
+    while ((match = re.exec(raw)) !== null) {
+      if (lastSpeaker && match.index > lastIndex) {
+        lines.push({ speaker: lastSpeaker, text: raw.slice(lastIndex, match.index).trim() });
+      }
+      lastSpeaker = match[1].replace(':', '').trim();
+      lastIndex = match.index + match[0].length;
     }
-    lastSpeaker = match[1].replace(':', '').trim();
-    lastIndex = match.index + match[0].length;
+    if (lastSpeaker && lastIndex < raw.length) {
+      lines.push({ speaker: lastSpeaker, text: raw.slice(lastIndex).trim() });
+    }
+  } catch (e) {
+    console.error("Dialogue parse error:", e);
+    return null;
   }
-
-  if (lastSpeaker && lastIndex < raw.length) {
-    lines.push({ speaker: lastSpeaker, text: raw.slice(lastIndex).trim() });
-  }
-
-  return lines.length > 1 ? lines : null;
+  return lines.length >= 2 ? lines : null;
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
-
-export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagged = false, onToggleFlag }: Props) {
-  const getAnswer = (qId: number) => answers[`${exercise.id}_${qId}`]?.selectedAnswer || '';
-
-  const recordAnswer = (q: ClientQuestion, value: string) => {
-    onAnswer({
-      questionId: `${exercise.id}_${q.id}`,
-      questionType: exercise.subject.toUpperCase() as 'GRAMMAR' | 'VOCABULARY',
-      selectedAnswer: value,
-      questionText: q.text,
-    });
-  };
-
-  const subjectLabel = exercise.subject.toUpperCase();
-
-  // ── Render passage (left panel) ─────────────────────────────────────────────
-  const hasInlineMarkers = exercise.passage ? /\[\d+\]/.test(exercise.passage) : false;
-  const isDialogueWithBlanks = exercise.type === 'gap_fill' && !hasInlineMarkers &&
-    !!exercise.passage && exercise.passage.includes('___') && parseDialogue(exercise.passage) !== null;
-
-  const renderPassage = () => {
-    if (!exercise.passage) return null;
-
-    const text = exercise.passage;
-
-    // [N] markers in passage — gap_fill dialogue gets inline inputs; plain passage & other types get styled badges
-    if (hasInlineMarkers) {
-      if (exercise.type === 'gap_fill') {
-        const dialogLines = parseDialogue(text.replace(/\[\d+\]/g, '___'));
-        if (dialogLines) {
-          return <DialoguePassageWithInputs passage={text} questions={exercise.questions} getAnswer={getAnswer} recordAnswer={recordAnswer} />;
-        }
-        // Plain passage gap_fill — replace [N] with inline input
-        const parts: React.ReactNode[] = [];
-        let lastIndex = 0;
-        let partKey = 0;
-
-        exercise.questions.forEach(q => {
-          const marker = `[${q.id}]`;
-          const idx = text.indexOf(marker, lastIndex);
-          if (idx === -1) return;
-          if (idx > lastIndex) {
-            parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, idx)}</span>);
-          }
-          const val = getAnswer(q.id);
-          parts.push(
-            <input
-              key={`inp-${q.id}`}
-              type="text"
-              value={val}
-              onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 bg-transparent font-serif px-1 mx-0.5 w-48 text-[15px] focus:outline-none transition-colors inline-block align-baseline
-                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                focus:border-orange-500`}
-              placeholder=" "
-            />
-          );
-          lastIndex = idx + marker.length;
-        });
-        parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
-        return (
-          <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.6] text-[16px]">
-            {parts}
-          </div>
-        );
-      }
-
-      // [N] markers → styled orange badge (no input here; right panel handles answers)
-      const markerRe2 = /\[(\d+)\]/g;
-      const badgeParts: React.ReactNode[] = [];
-      let li2 = 0;
-      let bm: RegExpExecArray | null;
-      let bKey = 0;
-      while ((bm = markerRe2.exec(text)) !== null) {
-        if (bm.index > li2) badgeParts.push(<span key={`t${bKey++}`} className="font-serif">{text.slice(li2, bm.index)}</span>);
-        badgeParts.push(
-          <span key={`b${bm[1]}`} className="inline-flex items-center mx-0.5 px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-900/40 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[11px] font-black align-middle select-none">
-            {bm[1]}
-          </span>
-        );
-        li2 = bm.index + bm[0].length;
-      }
-      if (li2 < text.length) badgeParts.push(<span key="end" className="font-serif">{text.slice(li2)}</span>);
-      return (
-        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[1.9] text-[16px] whitespace-pre-wrap">
-          {badgeParts}
-        </div>
-      );
-    }
-
-    // No [N] markers (or non-gap_fill) — render passage
-    // Check for dialogue format
-    const dialogLines = parseDialogue(text);
-    if (dialogLines) {
-      // gap_fill with ___ blanks in dialogue → embed inputs inline
-      if (exercise.type === 'gap_fill' && text.includes('___')) {
-        const sortedQs = [...exercise.questions].sort((a, b) => a.id - b.id);
-        const lineBlankMaps: ClientQuestion[][] = (() => {
-          let idx = 0;
-          return dialogLines.map(line => {
-            const count = (line.text.match(/___/g) || []).length;
-            const qs: ClientQuestion[] = [];
-            for (let b = 0; b < count; b++) {
-              if (sortedQs[idx]) qs.push(sortedQs[idx]);
-              idx++;
-            }
-            return qs;
-          });
-        })();
-
-        // Render a text segment, styling (hint) patterns as orange badges
-        const renderWithHints = (str: string, keyPrefix: string) => {
-          const hintRe = /\(([^)]+)\)/g;
-          const nodes: React.ReactNode[] = [];
-          let li = 0;
-          let hm: RegExpExecArray | null;
-          while ((hm = hintRe.exec(str)) !== null) {
-            if (hm.index > li) nodes.push(<span key={`${keyPrefix}t${li}`}>{str.slice(li, hm.index)}</span>);
-            nodes.push(
-              <span key={`${keyPrefix}h${hm.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold whitespace-nowrap align-middle">
-                {hm[1]}
-              </span>
-            );
-            li = hm.index + hm[0].length;
-          }
-          if (li < str.length) nodes.push(<span key={`${keyPrefix}end`}>{str.slice(li)}</span>);
-          return nodes;
-        };
-
-        return (
-          <div className="space-y-3">
-            {dialogLines.map((line, i) => {
-              const lineQs = lineBlankMaps[i];
-              const parts = line.text.split('___');
-              return (
-                <div key={i} className="flex gap-3">
-                  <span className="text-xs font-black text-orange-500 dark:text-orange-400 uppercase tracking-wide flex-shrink-0 w-20 pt-0.5 text-right">
-                    {line.speaker}
-                  </span>
-                  <p className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[15px] flex-1">
-                    {parts.map((part, j) => {
-                      if (j === 0) return <React.Fragment key={j}>{renderWithHints(part, `${i}-${j}-`)}</React.Fragment>;
-                      const q = lineQs[j - 1];
-                      if (!q) return <React.Fragment key={j}>{renderWithHints(part, `${i}-${j}-`)}</React.Fragment>;
-                      const val = getAnswer(q.id);
-                      return (
-                        <span key={j}>
-                          <span className="inline-flex items-center gap-1 mx-1">
-                            <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">
-                              {q.id}
-                            </span>
-                            <input
-                              type="text"
-                              value={val}
-                              onChange={e => recordAnswer(q, e.target.value)}
-                              className={`border-b-2 bg-transparent font-serif px-1 w-72 text-[15px] focus:outline-none transition-colors inline-block
-                                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                                focus:border-orange-500`}
-                              placeholder=" "
-                            />
-                          </span>
-                          {renderWithHints(part, `${i}-${j}-`)}
-                        </span>
-                      );
-                    })}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        );
-      }
-
-      return (
-        <div className="space-y-3">
-          {dialogLines.map((line, i) => (
-            <div key={i} className="flex gap-3">
-              <span className="text-xs font-black text-orange-500 dark:text-orange-400 uppercase tracking-wide flex-shrink-0 w-20 pt-0.5 text-right">
-                {line.speaker}
-              </span>
-              <p className="font-serif text-gray-800 dark:text-gray-200 leading-relaxed text-[16px] flex-1">
-                {line.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    // Render hint markers in gap_fill passages as subtle styled text
-    // Handles both (N verb) — numbered hint — and plain (verb) — unnumbered hint
-    if (exercise.type === 'gap_fill') {
-      const hintRe = /\((\d+\s+)?([^)]+)\)/g;
-      const passageParts: React.ReactNode[] = [];
-      let li = 0;
-      let hm: RegExpExecArray | null;
-      let hasHints = false;
-      while ((hm = hintRe.exec(text)) !== null) {
-        hasHints = true;
-        if (hm.index > li) passageParts.push(<span key={`t${li}`}>{text.slice(li, hm.index)}</span>);
-        const num = hm[1]?.trim();
-        const verb = hm[2];
-        if (num) {
-          // (N verb) — show number badge + verb
-          passageParts.push(
-            <span key={`h${hm.index}`} className="inline-flex items-center gap-1 mx-0.5 align-middle whitespace-nowrap">
-              <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-none">{num}</span>
-              <span className="text-[13px] text-gray-400 dark:text-gray-500 italic">{verb}</span>
-            </span>
-          );
-        } else {
-          // (verb) — subtle gray italic, slightly smaller
-          passageParts.push(
-            <span key={`h${hm.index}`} className="text-[13px] text-gray-400 dark:text-gray-500 italic mx-0.5">({verb})</span>
-          );
-        }
-        li = hm.index + hm[0].length;
-      }
-      if (hasHints) {
-        if (li < text.length) passageParts.push(<span key="end">{text.slice(li)}</span>);
-        return (
-          <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[16px]">
-            {passageParts}
-          </div>
-        );
-      }
-    }
-
-    return (
-      <div className="font-serif text-gray-800 dark:text-gray-200 leading-relaxed text-[16px] whitespace-pre-wrap">
-        {text}
-      </div>
-    );
-  };
-
-  // ── Render questions (right panel) ──────────────────────────────────────────
-  const renderQuestions = () => {
-    switch (exercise.type) {
-
-      // ── GAP FILL ─────────────────────────────────────────────────────────────
-      case 'gap_fill':
-        return (
-          <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
-            {exercise.questions.map(q => {
-              const cleanText = q.text.replace(new RegExp(`^${q.id}\\.\\s*`), '');
-              const parts = cleanText.split('___');
-              const blankCount = parts.length - 1;
-              // multi-blank: _b0, _b1, ... | single: original key
-              const getBlank = (b: number) =>
-                blankCount > 1
-                  ? answers[`${exercise.id}_${q.id}_b${b}`]?.selectedAnswer || ''
-                  : getAnswer(q.id);
-              const recordBlank = (b: number, value: string) => {
-                if (blankCount > 1) {
-                  onAnswer({
-                    questionId: `${exercise.id}_${q.id}_b${b}`,
-                    questionType: exercise.subject.toUpperCase() as 'GRAMMAR' | 'VOCABULARY',
-                    selectedAnswer: value,
-                    questionText: q.text,
-                  });
-                } else {
-                  recordAnswer(q, value);
-                }
-              };
-
-              return (
-                <div key={q.id} className="py-1">
-                  {blankCount >= 1 ? (
-                    <p className="text-[16px] font-serif text-gray-800 dark:text-gray-200 leading-[2.2]">
-                      {parts.map((part, i) => {
-                        const blankIdx = i - 1;
-                        const val = i > 0 ? getBlank(blankIdx) : '';
-                        return (
-                          <span key={i}>
-                            {i > 0 && (
-                              <span className="inline-flex items-center gap-1 mx-1">
-                                <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 leading-none select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">
-                                  {blankCount > 1 ? `${q.id}${String.fromCharCode(96 + i)}` : q.id}
-                                </span>
-                                <input
-                                  type="text"
-                                  value={val}
-                                  onChange={e => recordBlank(blankIdx, e.target.value)}
-                                  className={`border-b-2 bg-transparent font-serif px-1 text-[16px] focus:outline-none transition-colors w-64
-                                    ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                                    focus:border-orange-500`}
-                                  placeholder=" "
-                                />
-                              </span>
-                            )}
-                            {part}
-                          </span>
-                        );
-                      })}
-                    </p>
-                  ) : (
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">{q.id}</span>
-                      {cleanText && (
-                        <span className="font-serif text-gray-800 dark:text-gray-200 text-[15px]">{cleanText}</span>
-                      )}
-                      <input
-                        type="text"
-                        value={getAnswer(q.id)}
-                        onChange={e => recordAnswer(q, e.target.value)}
-                        className={`border-b-2 bg-transparent font-serif px-1 flex-1 min-w-[220px] text-[16px] focus:outline-none transition-colors
-                          ${getAnswer(q.id) ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                          focus:border-orange-500`}
-                        placeholder="Your answer..."
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      // ── MCQ ───────────────────────────────────────────────────────────────────
-      case 'mcq':
-        return (
-          <div className="space-y-8">
-            <InstructionBox text={exercise.instruction} />
-            {exercise.questions.map(q => {
-              const chosen = getAnswer(q.id);
-              const opts = q.options || {};
-              return (
-                <div key={q.id} className="space-y-4">
-                  <p className="text-[16px] font-serif font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
-                    <span className="mr-3 font-bold text-gray-500">{q.id}</span>
-                    {q.text}
-                  </p>
-                  <div className="space-y-3 pl-6">
-                    {Object.entries(opts).map(([key, value]) => {
-                      const sel = chosen === key;
-                      return (
-                        <label key={key} className="relative group flex items-center gap-4 cursor-pointer transition-all">
-                          <input
-                            type="radio"
-                            name={`${exercise.id}_${q.id}`}
-                            value={key}
-                            checked={sel}
-                            onChange={() => recordAnswer(q, key)}
-                            className="sr-only"
-                          />
-                          <span className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 text-sm font-bold transition-all
-                            ${sel ? 'bg-orange-500 border-orange-500 text-white shadow-md' : 'border-gray-200 dark:border-gray-700 text-gray-400 group-hover:border-gray-400'}`}>
-                            {key}
-                          </span>
-                          <span className={`text-[15px] font-serif transition-colors ${sel ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-600 dark:text-gray-400'}`}>
-                            {value}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      // ── TRUE / FALSE / NOT GIVEN ───────────────────────────────────────────
-      case 'tfng':
-        return (
-          <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
-            {exercise.questions.map(q => {
-              const chosen = getAnswer(q.id);
-              return (
-                <div key={q.id} className="space-y-3">
-                  <p className="text-[15px] font-serif text-gray-800 dark:text-gray-200 leading-snug">
-                    <span className="font-bold text-gray-500 mr-2">{q.id}</span>
-                    {q.text}
-                  </p>
-                  <div className="flex gap-2 pl-5">
-                    {(['TRUE', 'FALSE', 'NOT GIVEN'] as const).map(opt => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => recordAnswer(q, opt)}
-                        className={`px-3 py-1.5 rounded-lg border text-xs font-bold transition-all ${chosen === opt
-                          ? opt === 'TRUE'
-                            ? 'bg-emerald-500 border-emerald-500 text-white shadow-md'
-                            : opt === 'FALSE'
-                              ? 'bg-red-500 border-red-500 text-white shadow-md'
-                              : 'bg-orange-500 border-orange-500 text-white shadow-md'
-                          : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-500 hover:border-gray-400'
-                          }`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      // ── MATCHING ──────────────────────────────────────────────────────────────
-      case 'matching': {
-        const matchOptions = exercise.options || {};
-        return (
-          <div className="space-y-5">
-            <InstructionBox text={exercise.instruction} />
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-              <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
-                {exercise.rightLabel || 'Options'}
-              </p>
-              <div className="space-y-1.5">
-                {Object.entries(matchOptions).map(([key, value]) => (
-                  <div key={key} className="flex gap-2 text-sm font-serif">
-                    <span className="font-bold text-gray-900 dark:text-gray-100 flex-shrink-0">{key}.</span>
-                    <span className="text-gray-600 dark:text-gray-400">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-3">
-              <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                {exercise.leftLabel || 'Match each item'}
-              </p>
-              {exercise.questions.map(q => {
-                const chosen = getAnswer(q.id);
-                return (
-                  <div key={q.id} className="flex items-center gap-3">
-                    <span className="text-sm font-bold text-gray-900 dark:text-gray-100 flex-shrink-0 w-5">{q.id}.</span>
-                    <span className="text-[15px] font-serif text-gray-700 dark:text-gray-300 flex-1">{q.text}</span>
-                    <select
-                      value={chosen}
-                      onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border rounded-lg px-3 py-1.5 text-sm font-bold bg-white dark:bg-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer min-w-[80px]
-                        ${chosen ? 'border-indigo-400 dark:border-indigo-600 text-indigo-700 dark:text-indigo-300' : 'border-gray-200 dark:border-gray-700 text-gray-400'}`}
-                    >
-                      <option value="" disabled>--</option>
-                      {Object.keys(matchOptions).map(k => (
-                        <option key={k} value={k}>{k}</option>
-                      ))}
-                    </select>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      }
-
-      // ── ERROR CORRECTION ──────────────────────────────────────────────────────
-      case 'error_correction':
-        return (
-          <div className="space-y-6">
-            <InstructionBox text={exercise.instruction} />
-            {exercise.questions.map(q => {
-              const val = getAnswer(q.id);
-              return (
-                <div key={q.id} className="pb-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
-                  <div className="flex gap-3">
-                    <span className="text-[13px] font-black text-orange-500 bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full h-fit flex-shrink-0 mt-0.5">{q.id}</span>
-                    <div className="flex-1">
-                      <InlineErrorSentence q={q} val={val} onRecord={v => recordAnswer(q, v)} />
-                    </div>
-                  </div>
-                  <div className="mt-2 pl-10">
-                    <button
-                      type="button"
-                      onClick={() => recordAnswer(q, '✓')}
-                      className={`px-3 py-1 text-xs font-bold rounded-lg border transition-colors ${
-                        val === '✓'
-                          ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-400 text-emerald-700 dark:text-emerald-400'
-                          : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-500 hover:border-emerald-400 hover:text-emerald-600'
-                      }`}
-                    >
-                      {val === '✓' ? '✓ Correct' : 'No error ✓'}
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      // ── SENTENCE TRANSFORMATION ───────────────────────────────────────────────
-      case 'sentence_transformation':
-        return (
-          <div className="space-y-8">
-            <InstructionBox text={exercise.instruction} />
-            {exercise.questions.map(q => {
-              const val = getAnswer(q.id);
-              const stem = q.stem || q.text;
-              const prompt = q.prompt || '';
-
-              const promptParts = prompt.split('___');
-              const promptContent = promptParts.map((part, i) => (
-                <span key={i}>
-                  {part}
-                  {i < promptParts.length - 1 && (
-                    <input
-                      type="text"
-                      value={val}
-                      onChange={e => recordAnswer(q, e.target.value)}
-                      className={`border-b-2 bg-transparent font-serif px-1 mx-1 text-[15px] focus:outline-none transition-colors w-[500px] py-0.5 inline-block
-                        ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                        focus:border-orange-500`}
-                      placeholder="..."
-                    />
-                  )}
-                </span>
-              ));
-
-              return (
-                <div key={q.id} className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <span className="text-sm font-bold text-gray-500 flex-shrink-0 mt-0.5">{q.id}.</span>
-                    <div className="flex-1 space-y-3">
-                      <p className="text-[15px] font-serif text-gray-600 dark:text-gray-400 italic leading-relaxed">
-                        {stem}
-                      </p>
-                      <p className="text-[15px] font-serif text-gray-800 dark:text-gray-200 leading-relaxed">
-                        {prompt ? promptContent : (
-                          <input
-                            type="text"
-                            value={val}
-                            onChange={e => recordAnswer(q, e.target.value)}
-                            className={`border-b-2 bg-transparent font-serif px-1 text-[15px] focus:outline-none transition-colors w-full py-0.5
-                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                              focus:border-orange-500`}
-                            placeholder="Rewrite the sentence..."
-                          />
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      default:
-        return <p className="text-gray-500 text-sm">Unknown question type: {exercise.type}</p>;
-    }
-  };
-
-  const hasPassage = !!exercise.passage;
-  const hasImage = !!exercise.image;
-  const hasLeftPanel = hasPassage || hasImage;
-  const isTwoPanel = exercise.type === 'mcq' && hasLeftPanel;
-
-  // For single-column gap_fill with passage: don't render separate questions (inputs are inline in passage)
-  const passageHandlesAnswers = !isTwoPanel && hasPassage &&
-    (exercise.type === 'gap_fill' || isDialogueWithBlanks);
-
-  const headerBlock = (
-    <div className="flex items-start justify-between gap-3 mb-6">
-      <div>
-        <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1.5">
-          {subjectLabel} · {exercise.type.replace('_', ' ').toUpperCase()}
-        </p>
-        <h2 className="text-xl font-serif font-bold text-gray-900 dark:text-white">
-          {exercise.title}
-        </h2>
-      </div>
-      {onToggleFlag && (
-        <button
-          type="button"
-          onClick={onToggleFlag}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex-shrink-0 mt-1 ${
-            isFlagged
-              ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400'
-              : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:border-amber-300 hover:text-amber-500'
-          }`}
-        >
-          <svg className="w-3.5 h-3.5" fill={isFlagged ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-          </svg>
-          {isFlagged ? 'Belgilangan' : 'Belgilash'}
-        </button>
-      )}
-    </div>
-  );
-
-  if (isTwoPanel) {
-    // ── MCQ two-panel layout ──────────────────────────────────────────────────
-    return (
-      <div className="flex-1 h-full overflow-hidden bg-white dark:bg-gray-900">
-        <div className="flex h-full overflow-hidden">
-          <div className="w-1/2 overflow-y-auto p-12 pr-16 border-r border-gray-100 dark:border-gray-800 custom-scrollbar">
-            <div className="max-w-3xl ml-auto">
-              <div className="flex items-start justify-between gap-3 mb-6">
-                <div>
-                  <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1.5">
-                    {subjectLabel} · {exercise.type.replace('_', ' ').toUpperCase()}
-                  </p>
-                  <h2 className="text-xl font-serif font-bold text-gray-900 dark:text-white">{exercise.title}</h2>
-                </div>
-                {onToggleFlag && (
-                  <button type="button" onClick={onToggleFlag}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex-shrink-0 mt-1 ${isFlagged ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400' : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:border-amber-300 hover:text-amber-500'}`}>
-                    <svg className="w-3.5 h-3.5" fill={isFlagged ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" /></svg>
-                    {isFlagged ? 'Belgilangan' : 'Belgilash'}
-                  </button>
-                )}
-              </div>
-              {hasImage && (
-                <div className="mb-6">
-                  <img src={uploadsURL(exercise.image!)} alt="Exercise visual" className="w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-contain bg-white" style={{ maxHeight: '420px' }} />
-                </div>
-              )}
-              {hasPassage && <div className="selection:bg-orange-100 dark:selection:bg-orange-950/40">{renderPassage()}</div>}
-            </div>
-          </div>
-          <div className="w-1/2 overflow-y-auto p-12 pl-16 custom-scrollbar">
-            <div className="max-w-3xl">
-              {renderQuestions()}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Single-column layout (all non-MCQ types) ──────────────────────────────
-  return (
-    <div className="flex-1 h-full overflow-hidden bg-white dark:bg-gray-900">
-      <div className="h-full overflow-y-auto custom-scrollbar">
-        <div className="max-w-3xl mx-auto px-8 py-10">
-          {headerBlock}
-          {hasImage && (
-            <div className="mb-8">
-              <img src={uploadsURL(exercise.image!)} alt="Exercise visual" className="w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-contain bg-white" style={{ maxHeight: '400px' }} />
-            </div>
-          )}
-          {hasPassage && (
-            <div className="mb-8 selection:bg-orange-100 dark:selection:bg-orange-950/40">
-              {renderPassage()}
-            </div>
-          )}
-          {!passageHandlesAnswers && renderQuestions()}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Inline error correction sentence with clickable words ─────────────────────
-
-interface InlineErrorSentenceProps {
-  q: ClientQuestion;
-  val: string;
-  onRecord: (v: string) => void;
-}
-
-function InlineErrorSentence({ q, val, onRecord }: InlineErrorSentenceProps) {
-  const [editIdx, setEditIdx] = React.useState<number | null>(null);
-  const [tempVal, setTempVal] = React.useState('');
-
-  // Split into tokens keeping spaces
-  const tokens = q.text.split(/(\s+)/);
-
-  const commit = (idx: number, newVal: string) => {
-    const original = tokens[idx].replace(/[.,!?;:'"()[\]]/g, '');
-    if (newVal.trim() && newVal.trim() !== original) {
-      onRecord(newVal.trim());
-    }
-    setEditIdx(null);
-  };
-
-  return (
-    <div>
-      <p className="font-serif text-[16px] text-gray-800 dark:text-gray-200 leading-loose flex flex-wrap items-baseline">
-        {tokens.map((token, i) => {
-          if (/^\s+$/.test(token)) return <span key={i}>{token}</span>;
-          const isEditing = editIdx === i;
-          if (isEditing) {
-            return (
-              <input
-                key={i}
-                autoFocus
-                type="text"
-                value={tempVal}
-                onChange={e => setTempVal(e.target.value)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); commit(i, tempVal); }
-                  if (e.key === 'Escape') setEditIdx(null);
-                }}
-                onBlur={() => commit(i, tempVal)}
-                style={{ width: `${Math.max(tempVal.length + 2, 6)}ch` }}
-                className="border-b-2 border-orange-500 bg-transparent font-serif text-[16px] text-orange-700 dark:text-orange-300 focus:outline-none inline-block"
-              />
-            );
-          }
-          return (
-            <span
-              key={i}
-              onClick={() => { setEditIdx(i); setTempVal(token.replace(/[.,!?;:'"()[\]]$/, '')); }}
-              className="cursor-pointer hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400 rounded px-0.5 transition-all"
-            >
-              {token}
-            </span>
-          );
-        })}
-      </p>
-      {val && val !== '✓' && (
-        <p className="mt-1 text-[13px] font-semibold text-emerald-600 dark:text-emerald-400">
-          ✓ Correction: <span className="font-bold">{val}</span>
-        </p>
-      )}
-    </div>
-  );
-}
-
-// ── Dialogue passage with embedded inputs ─────────────────────────────────────
-// Used when a gap_fill passage is also a dialogue
-
-interface DialoguePassageWithInputsProps {
-  passage: string;
+// ── Contextual Components ─────────────────────────────────────────────────────
+function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }: {
+  lines: SpeakerLine[];
   questions: ClientQuestion[];
   getAnswer: (id: number) => string;
-  recordAnswer: (q: ClientQuestion, value: string) => void;
-}
+  recordAnswer: (q: ClientQuestion, v: string) => void;
+}) {
+  const sortedQs = [...(questions || [])].sort((a, b) => (a?.id || 0) - (b?.id || 0));
 
-function DialoguePassageWithInputs({ passage, questions, getAnswer, recordAnswer }: DialoguePassageWithInputsProps) {
-  // Split the full passage by speaker turns
-  const re = /(\d+\s+[A-Z]:|[A-Z][a-z]{2,}:|[A-Z]:)\s/g;
-  const segments: { speaker: string; raw: string }[] = [];
-  let lastIndex = 0;
-  let lastSpeaker = '';
-  let match: RegExpExecArray | null;
+  const lineBlankMaps: ClientQuestion[][] = (() => {
+    let qIdx = 0;
+    return lines.map(line => {
+      const markerCount = (line.text?.match(/___|\[\d+\]/g) || []).length;
+      const qs: ClientQuestion[] = [];
+      for (let b = 0; b < markerCount; b++) {
+        if (sortedQs[qIdx]) qs.push(sortedQs[qIdx]);
+        qIdx++;
+      }
+      return qs;
+    });
+  })();
 
-  while ((match = re.exec(passage)) !== null) {
-    if (lastSpeaker !== '' && match.index > lastIndex) {
-      segments.push({ speaker: lastSpeaker, raw: passage.slice(lastIndex, match.index).trimEnd() });
-    } else if (lastSpeaker === '' && match.index > 0) {
-      // text before first speaker — treat as intro
-      segments.push({ speaker: '', raw: passage.slice(0, match.index).trim() });
-    }
-    lastSpeaker = match[1].replace(':', '').trim();
-    lastIndex = match.index + match[0].length;
-  }
-  if (lastSpeaker !== '' && lastIndex <= passage.length) {
-    segments.push({ speaker: lastSpeaker, raw: passage.slice(lastIndex).trim() });
-  }
+  const renderContent = (str: string, lineQs: ClientQuestion[]) => {
+    const hintRe = /\(([^)]+)\)/g;
+    const markerRe = /___|\[\d+\]/g;
+    const textParts = (str || '').split(markerRe);
 
-  const qMap = new Map(questions.map(q => [q.id, q]));
+    let parts: React.ReactNode[] = [];
+    let qPtr = 0;
 
-  function renderSegmentText(raw: string) {
-    const parts: React.ReactNode[] = [];
-    const markerRe = /\[(\d+)\]/g;
-    let li = 0;
-    let m: RegExpExecArray | null;
-    while ((m = markerRe.exec(raw)) !== null) {
-      if (m.index > li) parts.push(<span key={`t${li}`}>{raw.slice(li, m.index)}</span>);
-      const qId = parseInt(m[1]);
-      const q = qMap.get(qId);
-      if (q) {
-        const val = getAnswer(qId);
-        parts.push(
-          <span key={`i${qId}`} className="inline-flex items-center gap-1 mx-1">
-            <span className="text-[11px] font-black text-orange-500 dark:text-orange-400 select-none bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded-full shrink-0">{qId}</span>
-            <input
-              type="text"
-              value={val}
-              onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 bg-transparent font-serif px-1 w-48 text-[15px] focus:outline-none transition-colors inline-block
-                ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                focus:border-orange-500`}
-            />
+    textParts.forEach((txt, i) => {
+      // 1. Text with Hints
+      const hintNodes: React.ReactNode[] = [];
+      let li = 0;
+      let match;
+      hintRe.lastIndex = 0;
+      while ((match = hintRe.exec(txt)) !== null) {
+        if (match.index > li) hintNodes.push(<span key={`t${li}`}>{txt.slice(li, match.index)}</span>);
+        hintNodes.push(
+          <span key={`h${match.index}`} className="inline-flex items-center mx-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-700 text-orange-600 dark:text-orange-400 text-[13px] font-semibold align-middle whitespace-nowrap">
+            {match[1]}
           </span>
         );
+        li = match.index + match[0].length;
       }
-      li = m.index + m[0].length;
-    }
-    if (li < raw.length) parts.push(<span key={`tend`}>{raw.slice(li)}</span>);
+      if (li < txt.length) hintNodes.push(<span key="end">{txt.slice(li)}</span>);
+      parts.push(<span key={`seg-${i}`}>{hintNodes}</span>);
+
+      // 2. Input Field
+      if (i < textParts.length - 1) {
+        const q = lineQs[qPtr++];
+        if (q) {
+          const val = getAnswer(q.id);
+          parts.push(
+            <span key={`q-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+              <QuestionBadge id={q.id} />
+              <input
+                type="text"
+                value={val}
+                onChange={e => recordAnswer(q, e.target.value)}
+                className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[15px] focus:outline-none transition-colors 
+                      ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                      focus:border-orange-500`}
+              />
+            </span>
+          );
+        }
+      }
+    });
+
     return parts;
-  }
+  };
 
   return (
-    <div className="space-y-4">
-      {segments.map((seg, i) => (
-        <div key={i} className={`flex gap-3 ${seg.speaker ? '' : 'mb-4'}`}>
-          {seg.speaker && (
-            <span className="text-xs font-black text-orange-500 dark:text-orange-400 uppercase tracking-wide flex-shrink-0 w-16 text-right pt-0.5">
-              {seg.speaker}:
-            </span>
-          )}
-          <p className={`font-serif text-gray-800 dark:text-gray-200 leading-relaxed text-[15px] flex-1 ${!seg.speaker ? 'text-gray-500 italic' : ''}`}>
-            {renderSegmentText(seg.raw)}
+    <div className="space-y-6">
+      {lines.map((line, i) => (
+        <div key={i} className="flex gap-4">
+          <span className="text-sm font-black text-orange-500 dark:text-orange-400 uppercase tracking-widest flex-shrink-0 w-20 pt-1 text-right">
+            {line.speaker}:
+          </span>
+          <p className="font-serif text-gray-800 dark:text-gray-200 leading-[2.6] text-[17px] flex-1">
+            {renderContent(line.text, lineBlankMaps[i])}
           </p>
         </div>
       ))}
@@ -845,13 +153,350 @@ function DialoguePassageWithInputs({ passage, questions, getAnswer, recordAnswer
   );
 }
 
-// ── Shared instruction box ────────────────────────────────────────────────────
-function InstructionBox({ text }: { text: string }) {
-  return (
-    <div className="p-4 border-l-4 border-orange-400 bg-orange-50/40 dark:bg-orange-950/20 mb-2">
-      <p className="text-sm font-serif italic text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+// ── Main Component ────────────────────────────────────────────────────────────
+export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagged = false, onToggleFlag }: Props) {
+  if (!exercise) return null;
+
+  const getAnswer = (qId: number) => answers[`${exercise.id}_${qId}`]?.selectedAnswer || '';
+  const recordAnswer = (q: ClientQuestion, value: string) => {
+    if (!q) return;
+    onAnswer({
+      questionId: `${exercise.id}_${q.id}`,
+      questionType: (exercise.subject?.toUpperCase() as any) || 'GRAMMAR',
+      selectedAnswer: value,
+      questionText: q.text,
+    });
+  };
+
+  const subjectLabel = exercise.subject?.toUpperCase() || 'GRAMMAR';
+  const hasInlineMarkers = !!exercise.passage && /\[\d+\]/.test(exercise.passage);
+  const dialogueLines = parseDialogue(exercise.passage);
+  const isDialogue = !!dialogueLines;
+
+  const renderPassage = () => {
+    if (!exercise.passage) return null;
+    const text = exercise.passage;
+
+    // A. Dialogue
+    if (isDialogue && exercise.type === 'gap_fill') {
+      return (
+        <DialoguePassageWithInputs
+          lines={dialogueLines!}
+          questions={exercise.questions || []}
+          getAnswer={getAnswer}
+          recordAnswer={recordAnswer}
+        />
+      );
+    }
+
+    // B. Inline Markers ([1], [2], ...)
+    if (hasInlineMarkers && exercise.type === 'gap_fill') {
+      const parts: React.ReactNode[] = [];
+      let lastIndex = 0;
+      let partKey = 0;
+      const markerRegex = /(\d+)?\s*\[(\d+)\]/g;
+      let match;
+
+      while ((match = markerRegex.exec(text)) !== null) {
+        const fullMatch = match[0];
+        const qIdStr = match[2];
+        const qId = parseInt(qIdStr);
+        const matchIndex = match.index;
+
+        if (matchIndex > lastIndex) {
+          parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, matchIndex)}</span>);
+        }
+
+        const q = (exercise.questions || []).find(qu => qu.id === qId);
+        if (q) {
+          const val = getAnswer(qId);
+          parts.push(
+            <span key={`input-grp-${qId}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+              <QuestionBadge id={qId} />
+              <input
+                type="text"
+                value={val}
+                onChange={e => recordAnswer(q, e.target.value)}
+                className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[16px] focus:outline-none transition-colors 
+                  ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                  focus:border-orange-500`}
+                placeholder=" "
+              />
+            </span>
+          );
+        } else {
+          parts.push(<span key={`m-${partKey++}`} className="text-gray-400">{fullMatch}</span>);
+        }
+        lastIndex = matchIndex + fullMatch.length;
+      }
+      parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+
+      return (
+        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
+          {parts}
+        </div>
+      );
+    }
+
+    // C. Static Text
+    return (
+      <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[17px] whitespace-pre-wrap">
         {text}
-      </p>
+      </div>
+    );
+  };
+
+  const renderQuestions = () => {
+    const questions = exercise.questions || [];
+    switch (exercise.type) {
+      case 'mcq':
+        return (
+          <div className="space-y-8">
+            <InstructionBox text={exercise.instruction} />
+            {questions.map((q) => (
+              <div key={q.id} className="bg-white dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div className="flex gap-4 mb-4">
+                  <QuestionBadge id={q.id} />
+                  <p className="text-gray-800 dark:text-gray-200 font-serif text-lg leading-relaxed pt-0.5">
+                    {q.text}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-3 ml-12">
+                  {q.options?.map((option, optIdx) => {
+                    const isSelected = getAnswer(q.id) === option;
+                    return (
+                      <button
+                        key={optIdx}
+                        onClick={() => recordAnswer(q, option)}
+                        className={`group flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left
+                          ${isSelected
+                            ? 'border-orange-500 bg-orange-50 dark:bg-orange-950/20'
+                            : 'border-gray-100 dark:border-gray-700 hover:border-orange-200 dark:hover:border-orange-800 bg-gray-50/50 dark:bg-gray-900/30'}`}
+                      >
+                        <span className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold
+                          ${isSelected
+                            ? 'border-orange-500 bg-orange-500 text-white'
+                            : 'border-gray-300 dark:border-gray-600 text-gray-400 group-hover:border-orange-300'}`}
+                        >
+                          {String.fromCharCode(65 + optIdx)}
+                        </span>
+                        <span className={`font-serif ${isSelected ? 'text-orange-900 dark:text-orange-100' : 'text-gray-700 dark:text-gray-300'}`}>
+                          {option}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+      case 'gap_fill':
+        // If passage handled it, don't show questions again
+        if (hasInlineMarkers || isDialogue) return null;
+        return (
+          <div className="space-y-6">
+            <InstructionBox text={exercise.instruction} />
+            {questions.map(q => {
+              const cleanText = q.text?.replace(/^\d+\.\s*/, '') || '';
+              const parts = cleanText.split('___');
+              const val = getAnswer(q.id);
+              return (
+                <div key={q.id} className="py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
+                  <div className="flex items-start gap-4">
+                    <QuestionBadge id={q.id} />
+                    <div className="flex-1">
+                      {parts.length > 1 ? (
+                        <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
+                          {parts[0]}
+                          <input
+                            type="text"
+                            value={val}
+                            onChange={e => recordAnswer(q, e.target.value)}
+                            className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              focus:border-orange-500`}
+                          />
+                          {parts[1]}
+                        </p>
+                      ) : (
+                        <div className="space-y-2">
+                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">{cleanText}</p>
+                          <input
+                            type="text"
+                            value={val}
+                            onChange={e => recordAnswer(q, e.target.value)}
+                            className={`border-b-2 bg-transparent font-serif px-2 w-full max-w-xl focus:outline-none transition-colors
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              focus:border-orange-500`}
+                            placeholder="Type your answer here..."
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+
+      case 'error_correction':
+        return (
+          <div className="space-y-6">
+            <InstructionBox text={exercise.instruction} />
+            {questions.map(q => {
+              const val = getAnswer(q.id);
+              return (
+                <div key={q.id} className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
+                  <div className="flex items-start gap-4">
+                    <QuestionBadge id={q.id} />
+                    <div className="flex-1 space-y-4">
+                      <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
+                        {q.text}
+                      </p>
+                      <div className="flex items-center gap-4 bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                        <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider w-24">Correction:</span>
+                        <input
+                          type="text"
+                          value={val}
+                          onChange={e => recordAnswer(q, e.target.value)}
+                          className={`flex-1 border-b-2 bg-transparent font-serif px-2 focus:outline-none transition-colors
+                            ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                            focus:border-orange-500`}
+                          placeholder="Tick (✓) or write correct form..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+
+      case 'tfng':
+      case 'matching':
+        return (
+          <div className="space-y-6">
+            <InstructionBox text={exercise.instruction} />
+            {questions.map(q => (
+              <div key={q.id} className="p-5 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800/50">
+                <div className="flex gap-4 mb-4">
+                  <QuestionBadge id={q.id} />
+                  <p className="text-gray-800 dark:text-gray-200 font-serif text-lg">
+                    {q.text}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 ml-11">
+                  {q.type === 'TFNG' ? (
+                    ['TRUE', 'FALSE', 'NOT GIVEN'].map(opt => (
+                      <button
+                        key={opt}
+                        onClick={() => recordAnswer(q, opt)}
+                        className={`px-4 py-2 rounded-lg border-2 text-sm font-bold transition-all
+                          ${getAnswer(q.id) === opt
+                            ? 'border-orange-500 bg-orange-500 text-white'
+                            : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-400 hover:border-orange-200'}`}
+                      >
+                        {opt}
+                      </button>
+                    ))
+                  ) : (
+                    q.options?.map(option => (
+                      <button
+                        key={option}
+                        onClick={() => recordAnswer(q, option)}
+                        className={`px-4 py-2 rounded-lg border-2 text-sm font-bold transition-all
+                          ${getAnswer(q.id) === option
+                            ? 'border-orange-500 bg-orange-500 text-white'
+                            : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-400 hover:border-orange-200'}`}
+                      >
+                        {option}
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+      default:
+        return <p className="text-gray-500 text-sm italic">Type "{exercise.type}" support is pending.</p>;
+    }
+  };
+
+  const hasLeftPanel = (!!exercise.passage || !!exercise.image);
+  const isTwoPanel = (exercise.type === 'mcq' || exercise.type === 'tfng' || exercise.type === 'matching') && hasLeftPanel;
+  const passageHandlesAnswers = exercise.type === 'gap_fill' && !!exercise.passage && (hasInlineMarkers || isDialogue);
+
+  return (
+    <div className="h-full flex flex-col animate-in fade-in duration-500 bg-[#FDFDFD] dark:bg-gray-950 overflow-hidden">
+      <div className="flex-1 flex flex-col bg-white dark:bg-gray-900 shadow-2xl border-x border-gray-100 dark:border-gray-800 overflow-hidden relative">
+        <div className="flex-1 flex flex-col overflow-hidden relative">
+          {isTwoPanel ? (
+            <div className="flex-1 flex overflow-hidden">
+              <div className="w-1/2 border-r border-gray-100 dark:border-gray-800 overflow-y-auto custom-scrollbar bg-gray-50/30 dark:bg-gray-900/50 p-6 lg:p-10">
+                {headerBlock(exercise, isFlagged, onToggleFlag, subjectLabel)}
+                {exercise.image && (
+                  <div className="mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-lg">
+                    <img src={`${uploadsURL}/${exercise.image}`} alt={exercise.title} className="w-full h-auto" />
+                  </div>
+                )}
+                <div className="prose dark:prose-invert max-w-none">
+                  {renderPassage()}
+                </div>
+              </div>
+              <div className="w-1/2 overflow-y-auto custom-scrollbar p-6 lg:p-10 bg-white dark:bg-gray-900">
+                {renderQuestions()}
+              </div>
+            </div>
+          ) : (
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 max-w-4xl mx-auto w-full">
+              {headerBlock(exercise, isFlagged, onToggleFlag, subjectLabel)}
+              {exercise.image && (
+                <div className="mb-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-lg">
+                  <img src={`${uploadsURL}/${exercise.image}`} alt={exercise.title} className="w-full h-auto" />
+                </div>
+              )}
+              <div className="space-y-12">
+                {renderPassage()}
+                {(!passageHandlesAnswers) && renderQuestions()}
+                <div className="h-24" />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function headerBlock(ex: ClientExercise, isFlagged: boolean, onToggleFlag: any, label: string) {
+  return (
+    <div className="flex items-start justify-between gap-3 mb-8">
+      <div>
+        <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-2">
+          {label} · {(ex.type || '').toUpperCase().replace('_', ' ')}
+        </p>
+        <h2 className="text-2xl font-serif font-black text-gray-900 dark:text-white leading-tight">
+          {ex.title}
+        </h2>
+      </div>
+      {onToggleFlag && (
+        <button
+          onClick={onToggleFlag}
+          className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 transition-all font-bold text-xs
+            ${isFlagged
+              ? 'border-orange-500 bg-orange-500 text-white'
+              : 'border-gray-100 dark:border-gray-700 text-gray-400 hover:border-gray-200 dark:hover:border-gray-600'}`}
+        >
+          <span className="w-2 h-2 rounded-full bg-current" />
+          {isFlagged ? 'Belgilangan' : 'Belgilash'}
+        </button>
+      )}
     </div>
   );
 }

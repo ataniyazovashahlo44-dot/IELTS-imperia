@@ -5,7 +5,7 @@
   "type": "gap_fill",
   "title": "Exercise — Past Simple / Past Perfect Simple / Past Perfect Continuous",
   "instruction": "Fill in the gaps with a verb from the box in the past simple, past perfect simple or past perfect continuous tense. Use each verb once.\n\nVerb box: be | buy | decide | develop | discuss | feel | like | make | phone | run | start | stay | take | visit | wait | work",
-  "passage": "1 She 'd been working as a waitress for five years when he met her.\n2 The lecture had started by the time they got there.\n3 In the supermarket he bought all the ingredients he needed and then went home to make her birthday cake.\n4 Holly did very well in her exam, which was a shock because she 'd never taken an exam before.\n5 They went on a big tour of Britain. First they stayed in London for a few days. Then they visited Cambridge, York, and Edinburgh, and then Bath. They 'd been to Bath before, but they 'd liked it so much that they 'd decided to go back again.\n6 Scientists announced the launch of the new drug last week. They 'd been developing it for five years.\n7 By the time I got to the meeting they 'd already discussed the important issues and they 'd made the big decisions without me. I 'd phoned from my mobile to tell them the train was late and I felt annoyed that they hadn't waited for me.\n8 I looked terrible when I saw Joe last night because I 'd been running for over an hour and I was exhausted.",
+  "passage": "1 She [1] as a waitress for five years when he met her.\n2 The lecture [2] by the time they got there.\n3 In the supermarket he [3] all the ingredients he needed and then went home to make her birthday cake.\n4 Holly did very well in her exam, which was a shock because she [4] an exam before.\n5 They went on a big tour of Britain. First they [5] in London for a few days. Then they [6] Cambridge, York, and Edinburgh, and then Bath. They [7] to Bath before, but they [8] it so much that they [9] to go back again.\n6 Scientists announced the launch of the new drug last week. They [10] it for five years.\n7 By the time I got to the meeting they [11] the important issues and they [12] the big decisions without me. I [13] from my mobile to tell them the train was late and I [14] annoyed that they [15] for me.\n8 I looked terrible when I saw Joe last night because I [16] for over an hour and I was exhausted.",
   "questions": [
     {
       "id": 1,
@@ -45,7 +45,10 @@
     {
       "id": 8,
       "text": "...but they ___ it so much that they decided to go back again.",
-      "answers": ["'d liked", "liked"]
+      "answers": [
+        "'d liked",
+        "liked"
+      ]
     },
     {
       "id": 9,
