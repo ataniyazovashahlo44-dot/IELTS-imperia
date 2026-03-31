@@ -27,6 +27,10 @@ export default function AdminPage() {
             <Route path="settings" element={<AdminSettings />} />
             <Route path="*" element={<Navigate to="/admin" replace />} />
           </Routes>
+          <div className="mt-8 pt-4 pb-2 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 dark:text-gray-500">
+            <p>© {new Date().getFullYear()} IELTS Imperia Mock Testing System</p>
+            <p className="mt-1 sm:mt-0">Built and driven by <span className="font-bold text-orange-500 dark:text-orange-400 tracking-wider">TriCorp agency</span></p>
+          </div>
         </main>
       </div>
     </div>

@@ -11,6 +11,12 @@ import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.setHeader('X-Powered-By', 'TriCorp agency');
+  res.setHeader('X-Developer', 'TriCorp developers (hello!)');
+  next();
+});
+
 app.use(helmet({ contentSecurityPolicy: false }));
 
 const allowedOrigins = ENV.CLIENT_URL.split(',').map(u => u.trim());

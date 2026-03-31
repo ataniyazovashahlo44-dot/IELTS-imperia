@@ -275,6 +275,71 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       );
     }
 
+    // D. MCQ passage — mask answers with inline inputs
+    if (exercise.type === 'mcq') {
+      const questions = [...(exercise.questions || [])].sort((a, b) => a.id - b.id);
+      let sections: Array<{ type: 'text', content: string } | { type: 'input', q: ClientQuestion }> = [{ type: 'text', content: text }];
+
+      for (const q of questions) {
+        // Get before/after surrounding the blank from q.text
+        const parts = (q.text || '').split('___');
+        if (parts.length < 2) continue;
+        const before = parts[0].replace(/^\.\.\./, '').trim();
+        const after = parts[parts.length - 1].replace(/\.$/, '').replace(/,$/, '').trim();
+
+        // Find any option value currently visible in passage and replace it
+        const allOptionValues = Object.values(q.options || {}) as string[];
+
+        const newSections: typeof sections = [];
+        for (const sec of sections) {
+          if (sec.type !== 'text') { newSections.push(sec); continue; }
+          let replaced = false;
+          for (const optVal of allOptionValues) {
+            // Build a regex that finds the answer surrounded by its context
+            const before3 = before.slice(-30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+            const after3 = after.slice(0, 30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+            const escapedOpt = optVal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const pat = before3
+              ? new RegExp(`(${before3}\\s*)${escapedOpt}(\\s*${after3 || ''})`)
+              : new RegExp(`${escapedOpt}(\\s*${after3})`);
+            const m = sec.content.match(pat);
+            if (m && m.index !== undefined) {
+              const startIdx = m.index + (before3 ? m[1].length : 0);
+              const endIdx = startIdx + optVal.length;
+              const before_text = sec.content.slice(0, startIdx);
+              const after_text = sec.content.slice(endIdx);
+              newSections.push({ type: 'text', content: before_text });
+              newSections.push({ type: 'input', q });
+              newSections.push({ type: 'text', content: after_text });
+              replaced = true;
+              break;
+            }
+          }
+          if (!replaced) newSections.push(sec);
+        }
+        sections = newSections;
+      }
+
+      return (
+        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
+          {sections.map((sec, i) => {
+            if (sec.type === 'text') return <span key={`t-${i}`}>{sec.content}</span>;
+            const q = sec.q;
+            const val = getAnswer(q.id);
+            return (
+              <span key={`inp-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+                <QuestionBadge id={q.id} />
+                <span className={`border-b-2 font-serif px-1 min-w-[120px] inline-block text-[15px] text-center
+                  ${val ? 'border-orange-500 text-orange-700 dark:text-orange-300 font-semibold' : 'border-gray-400 dark:border-gray-500 text-transparent select-none'}`}>
+                  {val || '　　　　　　'}
+                </span>
+              </span>
+            );
+          })}
+        </div>
+      );
+    }
+
     // C. Static Text
     return (
       <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[17px] whitespace-pre-wrap">
@@ -390,17 +455,31 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                       <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
                         {q.text}
                       </p>
-                      <div className="flex items-center gap-4 bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
-                        <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider w-24">Correction:</span>
+                      <div className="flex items-center gap-3 bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                        <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider w-24 flex-shrink-0">Correction:</span>
                         <input
                           type="text"
                           value={val}
                           onChange={e => recordAnswer(q, e.target.value)}
                           className={`flex-1 border-b-2 bg-transparent font-serif px-2 focus:outline-none transition-colors
-                            ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                            focus:border-orange-500`}
-                          placeholder="Tick (✓) or write correct form..."
+                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              focus:border-orange-500`}
+                          placeholder="To'g'ri shaklni yozing..."
                         />
+                        <button
+                          type="button"
+                          onClick={() => recordAnswer(q, val === '✓' ? '' : '✓')}
+                          title="Bu gap to'g'ri (✓)"
+                          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold border-2 transition-all select-none ${val === '✓'
+                            ? 'bg-emerald-500 border-emerald-500 text-white shadow-md shadow-emerald-500/30 scale-105'
+                            : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400'
+                            }`}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Correct
+                        </button>
                       </div>
                     </div>
                   </div>

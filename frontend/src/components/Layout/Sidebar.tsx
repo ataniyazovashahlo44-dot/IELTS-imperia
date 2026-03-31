@@ -72,8 +72,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </svg>
             Chiqish
           </button>
-          <div className="px-3 py-1">
+          <div className="px-3 py-1 flex flex-col gap-1">
             <p className="text-[10px] text-gray-400 dark:text-gray-700 font-bold uppercase tracking-widest">v1.0.0 · IELTS Imperia</p>
+            <p className="text-[9px] text-gray-300 dark:text-gray-800 font-bold uppercase tracking-widest">by TriCorp agency</p>
           </div>
         </div>
       </aside>
