@@ -1,0 +1,61 @@
+{
+    "id": "vocabulary_5_10_002",
+    "subject": "vocabulary",
+    "variantGroup": "5_10",
+    "type": "error_correction",
+    "title": "Correct the mistakes",
+    "instruction": "Correct the mistakes in these sentences.",
+    "passage": "",
+    "questions": [
+        {
+            "id": 1,
+            "text": "The chart talks us how many students were studying in the college in 1990.",
+            "errorWord": "talks",
+            "answers": [
+                "shows",
+                "tells"
+            ]
+        },
+        {
+            "id": 2,
+            "text": "I can't understand what he is speaking. He's almost incoherent.",
+            "errorWord": "speaking",
+            "answers": [
+                "saying"
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Today I'm going to tell about my last holiday in America.",
+            "errorWord": "tell about",
+            "answers": [
+                "talk about",
+                "tell you about"
+            ]
+        },
+        {
+            "id": 4,
+            "text": "I can talk three languages fluently, but Italian is my mother tongue.",
+            "errorWord": "talk",
+            "answers": [
+                "speak"
+            ]
+        },
+        {
+            "id": 5,
+            "text": "I learned English from a textbook, so I don't really understand it when it is said.",
+            "errorWord": "said",
+            "answers": [
+                "spoken"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "The table says the percentage of people moving into urban areas between 1960 and 1990.",
+            "errorWord": "says",
+            "answers": [
+                "shows"
+            ]
+        }
+    ]
+}

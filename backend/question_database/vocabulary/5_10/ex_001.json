@@ -1,0 +1,51 @@
+{
+    "id": "vocabulary_5_10_001",
+    "subject": "vocabulary",
+    "variantGroup": "5_10",
+    "type": "gap_fill",
+    "title": "IDIOMS",
+    "instruction": "Use a dictionary to check the meaning of the phrases in the box. Then complete sentences 1–8 with the correct phrase.\n\nPhrases: There is something to be said for | You can say that again! | having said that | have a say | When all is said and done | Needless to say | That is to say | to say the least",
+    "passage": "",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Bill: Hello, Sam, what a surprise meeting you here!\nSam: ___",
+            "answer": "You can say that again!"
+        },
+        {
+            "id": 2,
+            "text": "Nuclear power has its problems. However, ___, many people believe it is the energy source of the future.",
+            "answer": "having said that"
+        },
+        {
+            "id": 3,
+            "text": "___ switching to solar energy, although it is still too expensive for many people.",
+            "answer": "There is something to be said for"
+        },
+        {
+            "id": 4,
+            "text": "Life without a constant supply of water can be difficult, ___.",
+            "answer": "to say the least"
+        },
+        {
+            "id": 5,
+            "text": "___, there is little we can do to save the environment without the full support of industry and the government.",
+            "answer": "When all is said and done"
+        },
+        {
+            "id": 6,
+            "text": "The tanker spilled 5,000 megalitres of oil into the ocean. ___, this had a devastating effect on marine life in the area.",
+            "answer": "Needless to say"
+        },
+        {
+            "id": 7,
+            "text": "There is a clear link between humans and environmental problems. ___, wherever humans live, they damage the environment in some way.",
+            "answer": "That is to say"
+        },
+        {
+            "id": 8,
+            "text": "I think it's important for everyone to ___ in how the government is elected.",
+            "answer": "have a say"
+        }
+    ]
+}

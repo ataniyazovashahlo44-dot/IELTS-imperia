@@ -1,0 +1,51 @@
+{
+    "id": "vocabulary_5_10_003",
+    "subject": "vocabulary",
+    "variantGroup": "5_10",
+    "type": "gap_fill",
+    "title": "Essay Completion",
+    "instruction": "Complete the essay below with suitable words from the box.\n\nPhrases: affects | effect | eco-tourism | remote | transport | trend | tourism | tourists",
+    "passage": "What are the advantages and disadvantages of tourism?\n\nSince the aeroplane became a common form of [1] people have become more adventurous in their choice of holiday destination and expect to be able to fly to even the most [2] parts of the world. But what [3] do tourists have on their surrounding environment?\n\nThe arrival of a group of [4] in a small community can mean the end of peace and quiet as they indulge in one long party. When on holiday, away from parents, young people can sometimes change their normal standards of behaviour. Fuelled by alcohol and too much sun they can do damage to themselves as well as the community around them. This invasion [5] the local people in many ways, disrupting their normal routine and increasing their working hours.\n\nHowever, [6] can also be of benefit to a small community, bringing jobs and a source of income that may not have existed before. This may mean that younger people are encouraged to stay in the community rather than seeking work in the city. There is also a growing [7] towards different types of holidays. Nowadays we hear a great deal about the popularity of [8], which I think indicates that people are more aware of the environment and wish to protect it rather than harm it.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "transport"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "remote"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "effect"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "tourists"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "affects"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "tourism"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "trend"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answer": "eco-tourism"
+        }
+    ]
+}
