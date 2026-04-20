@@ -15,13 +15,13 @@
         },
         {
             "id": 2,
-            "text": "We don't want words. We want action. (Emphasize: action)",
-            "answer": "We don't want words. What we want is action."
+            "text": "We do not want words. We want action. (Emphasize: action)",
+            "answer": "We do not want words. What we want is action."
         },
         {
             "id": 3,
-            "text": "I really like reading novels. I don't enjoy watching TV. (Emphasize: watching TV)",
-            "answer": "I really like reading novels. What I don't enjoy is watching TV."
+            "text": "I really like reading novels. I do not enjoy watching TV. (Emphasize: watching TV)",
+            "answer": "I really like reading novels. What I do not enjoy is watching TV."
         },
         {
             "id": 4,
