@@ -4,9 +4,9 @@
     "variantGroup": "20_25",
     "type": "gap_fill",
     "title": "Linking Expressions: Gap Fill",
-    "instruction": "Fill in the gaps with the linking expressions in the box: as a result, because, but, firstly, for example, however, moreover, similarly.",
+    "instruction": "Fill in the gaps with the linking expressions in the box.",
     "image": null,
-    "passage": "Box: as a result, because, but, firstly, for example, however, moreover, similarly.",
+    "passage": "Box: [ as a result,  because,  but,  firstly,  for example,  however,  moreover,  similarly. ]",
     "questions": [
         {
             "id": 1,
