@@ -2,7 +2,7 @@
     "id": "grammar_10_15_009",
     "subject": "grammar",
     "variantGroup": "10_15",
-    "type": "gap_fill",
+    "type": "error_correction",
     "title": "Error Correction: Modal Verbs in Writing",
     "instruction": "Read the extract from an Academic Writing Task 2. Decide if the underlined phrases ([1], [2], etc. in the text) are correct or not. Type '✓' if they are right and type the correct version if they are wrong.",
     "image": null,

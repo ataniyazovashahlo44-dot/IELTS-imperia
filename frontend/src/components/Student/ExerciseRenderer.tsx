@@ -222,7 +222,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       );
     }
 
-    // B. Inline Markers ([1], [2], ...)
+    // B. Inline Markers ([1], [2], ...) for Gap Fill
     if (hasInlineMarkers && exercise.type === 'gap_fill') {
       const parts: React.ReactNode[] = [];
       let lastIndex = 0;
@@ -263,6 +263,47 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
           );
         } else {
           parts.push(<span key={`m-${partKey++}`} className="text-gray-400">{fullMatch}</span>);
+        }
+        lastIndex = matchIndex + fullMatch.length;
+      }
+      parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+
+      return (
+        <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
+          {parts}
+        </div>
+      );
+    }
+
+    // C. Error Correction markers in passage
+    if (hasInlineMarkers && exercise.type === 'error_correction') {
+      const parts: React.ReactNode[] = [];
+      let lastIndex = 0;
+      let partKey = 0;
+      const markerRegex = /(?:(\d+)\s+)?\[(\d+)\]/g;
+      let match;
+
+      while ((match = markerRegex.exec(text)) !== null) {
+        const fullMatch = match[0];
+        const qIdStr = match[2];
+        const qId = parseInt(qIdStr);
+        const matchIndex = match.index;
+
+        if (matchIndex > lastIndex) {
+          parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, matchIndex)}</span>);
+        }
+
+        const q = (exercise.questions || []).find(qu => qu.id === qId);
+        if (q) {
+          const cleanText = q.text?.replace(/^\d+\.\s*/, '') || '';
+          parts.push(
+            <span key={`err-grp-${qId}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
+              <QuestionBadge id={qId} />
+              <u className="font-serif font-bold text-gray-900 dark:text-gray-100 decoration-orange-400 decoration-2 underline-offset-4 cursor-default">
+                {cleanText}
+              </u>
+            </span>
+          );
         }
         lastIndex = matchIndex + fullMatch.length;
       }
