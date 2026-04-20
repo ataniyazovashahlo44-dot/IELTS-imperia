@@ -1,0 +1,63 @@
+{
+    "id": "vocabulary_20_25_001",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "matching",
+    "title": "Dictionary Terms",
+    "instruction": "The words in column A are all related to dictionaries. Match the words to the correct meaning in column B.",
+    "passage": null,
+    "leftLabel": "Column A (Words)",
+    "rightLabel": "Column B (Meanings)",
+    "options": {
+        "A": "a large amount of written material organised to show how language works",
+        "B": "written in only one language",
+        "C": "a word that means the same",
+        "D": "a dictionary containing synonyms and antonyms",
+        "E": "the sound and pronunciation of words",
+        "F": "written in two different languages for translation purposes",
+        "G": "the origin of words",
+        "H": "a word that means the opposite"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "monolingual",
+            "answer": "B"
+        },
+        {
+            "id": 2,
+            "text": "bilingual",
+            "answer": "F"
+        },
+        {
+            "id": 3,
+            "text": "corpus",
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "synonym",
+            "answer": "C"
+        },
+        {
+            "id": 5,
+            "text": "antonym",
+            "answer": "H"
+        },
+        {
+            "id": 6,
+            "text": "thesaurus",
+            "answer": "D"
+        },
+        {
+            "id": 7,
+            "text": "phonology",
+            "answer": "E"
+        },
+        {
+            "id": 8,
+            "text": "etymology",
+            "answer": "G"
+        }
+    ]
+}

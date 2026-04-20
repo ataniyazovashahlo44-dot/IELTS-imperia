@@ -1,0 +1,66 @@
+{
+    "id": "vocabulary_10_15_004",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Big city life",
+    "instruction": "Complete the text with suitable adjectives from the box. More than one adjective may be possible.\n\nAdjectives: adequate | basic | booming | catastrophic | decent | enormous | pressing | staggering",
+    "passage": "Megacities\n\nThe world's population is [1], no more so than in its cities. Today, there are 21 megacities, each containing more than 10 million inhabitants, three-quarters of them in developing nations. By 2020, there are expected to be at least 27 megacities. Such a [2] rate of urbanisation brings its own problems, especially in developing nations, where the majority of the megacities will be found.\n\nEmployment and educational opportunities are the main attraction of urban centres. But hopes for a better life are often dashed as overpopulation puts an [3] strain on the infrastructure of the cities and their ability to provide [4] necessities such as clean water and a place to live.\n\nMany rural migrants fail to find [5] work, and therefore cannot afford [6] housing. In some megacities up to 50 per cent of the residents live in slums. This problem is [7], with the United Nations predicting that half the world's population will be living in cities by next year. If the infrastructure within those cities does not grow at the same rate the result will be [8].",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answers": [
+                "booming",
+                "enormous",
+                "staggering"
+            ]
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "staggering"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "enormous"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "basic"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answers": [
+                "adequate",
+                "decent"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answers": [
+                "decent",
+                "basic",
+                "adequate"
+            ]
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answers": [
+                "pressing",
+                "enormous",
+                "catastrophic"
+            ]
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answer": "catastrophic"
+        }
+    ]
+}

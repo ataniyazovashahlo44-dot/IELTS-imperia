@@ -1,0 +1,61 @@
+{
+    "id": "vocabulary_15_20_001",
+    "subject": "vocabulary",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "The Future of Energy",
+    "instruction": "Read the text and then answer the questions below.",
+    "passage": "The future of energy\n\nCO₂ plays a critical role in maintaining the balance in the Earth's atmosphere and the air that we breathe. It is also a waste product of the fossil fuels that almost every person on the planet uses for transport and other energy requirements. Because we create CO₂ every time we drive a car, cook a meal or turn on a light, and because the gas lasts around a century in the atmosphere, the proportion of CO₂ in the atmosphere is rapidly increasing.\n\nThe best evidence indicates that we need to reduce carbon dioxide emissions by 70 per cent by 2050. If you own a four-wheel-drive car and replace it with a hybrid car – a car that is powered by a combination of electricity and petrol – or a smaller standard-fuel car, you can achieve a reduction of that magnitude in a day rather than half a century. Unfortunately, our past history of change is considerably slower than this. Samuel Bowser first invented the petrol pump in 1885 but it wasn't until 1988 that all new cars manufactured in the UK were required to use unleaded petrol only.\n\nNot only do fossil fuels pose an environmental hazard but there is also a pressing need to find an alternative energy source that is renewable. Opinions as to how much oil remains vary considerably. Some say that the Earth has produced only 18 per cent of its potential yield of oil; others say supplies may run out as early as 2015. Many countries are exploring alternative energy sources such as solar energy or wind power, which uses large turbines to capture the energy of the wind.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "How do you write CO₂ in full?",
+            "answer": "carbon dioxide"
+        },
+        {
+            "id": 2,
+            "text": "What do we call fuels such as coal and oil?",
+            "answer": "fossil fuels"
+        },
+        {
+            "id": 3,
+            "text": "What are two names for the substance that comes out of the exhaust of a car?",
+            "answers": [
+                "exhaust fumes",
+                "emissions",
+                "exhaust fumes and emissions",
+                "emissions and exhaust fumes",
+                "exhaust fumes, emissions",
+                "emissions, exhaust fumes"
+            ]
+        },
+        {
+            "id": 4,
+            "text": "What do we call fuels that can be produced at any time?",
+            "answer": "renewable"
+        },
+        {
+            "id": 5,
+            "text": "Name two types of alternative energy.",
+            "answers": [
+                "solar power, wind power",
+                "wind power, solar power",
+                "solar energy, wind power",
+                "wind power, solar energy",
+                "solar energy and wind power",
+                "wind power and solar energy",
+                "solar power and wind power",
+                "wind power and solar power"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "What is a turbine most similar to?\nA a large engine\nB a windmill\nC a car",
+            "answers": [
+                "B",
+                "a windmill",
+                "windmill"
+            ]
+        }
+    ]
+}

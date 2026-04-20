@@ -1,0 +1,71 @@
+{
+    "id": "vocabulary_10_15_002",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Text Completion",
+    "instruction": "Complete the text with suitable words from the box.\n\nPhrases: ageing | challenges | compounded | declining | elderly | factors | implications | migrating | population | present | rates | trends",
+    "passage": "Statistics show that in many countries the population will decline in the next 50 years. The population of these countries will also age rapidly. What effect will this have on those countries?\n\nIf current [1] continue, then in some countries the [2] is expected to dwindle within the next 50 years. This problem is [3] by the fact that not only is the number of inhabitants diminishing, but they are also growing older. This [4] population will bring its own [5]. At [6] there are sufficient younger people to earn money and pay taxes to support the [7]. However, within 50 years this will not be the case. There are several possible [8] contributing to this problem. First, birth [9] in these countries are clearly falling. Second, there could be an increase in the number of people [10] away from these areas. The ageing and [11] population is expected to have important [12] for the labour force and the quality of everyday life.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "trends"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "population"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "compounded"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "ageing"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "challenges"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "present"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "elderly"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answer": "factors"
+        },
+        {
+            "id": 9,
+            "text": "9",
+            "answer": "rates"
+        },
+        {
+            "id": 10,
+            "text": "10",
+            "answer": "migrating"
+        },
+        {
+            "id": 11,
+            "text": "11",
+            "answer": "declining"
+        },
+        {
+            "id": 12,
+            "text": "12",
+            "answer": "implications"
+        }
+    ]
+}

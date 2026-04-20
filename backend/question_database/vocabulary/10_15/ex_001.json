@@ -1,0 +1,63 @@
+{
+    "id": "vocabulary_10_15_001",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "matching",
+    "title": "Verbs and Definitions",
+    "instruction": "Match the verbs (1–8) in column A with the definitions (A–H) in column B.",
+    "passage": null,
+    "leftLabel": "Column A",
+    "rightLabel": "Column B",
+    "options": {
+        "A": "build something on a piece of land",
+        "B": "build again",
+        "C": "repair and make new again",
+        "D": "knock down",
+        "E": "live in or use a space",
+        "F": "judge a building not to be safe",
+        "G": "keep in good condition",
+        "H": "invent"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "condemn",
+            "answer": "F"
+        },
+        {
+            "id": 2,
+            "text": "demolish",
+            "answer": "D"
+        },
+        {
+            "id": 3,
+            "text": "develop",
+            "answer": "A"
+        },
+        {
+            "id": 4,
+            "text": "devise",
+            "answer": "H"
+        },
+        {
+            "id": 5,
+            "text": "maintain",
+            "answer": "G"
+        },
+        {
+            "id": 6,
+            "text": "occupy",
+            "answer": "E"
+        },
+        {
+            "id": 7,
+            "text": "reconstruct",
+            "answer": "B"
+        },
+        {
+            "id": 8,
+            "text": "renovate",
+            "answer": "C"
+        }
+    ]
+}

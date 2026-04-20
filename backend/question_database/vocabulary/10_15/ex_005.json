@@ -1,0 +1,79 @@
+{
+    "id": "vocabulary_10_15_005",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Climate change and pollution",
+    "instruction": "Complete the text with words from the box.\n\nWords: acid | biodiversity | contaminated | deforestation | ecosystems | emissions | environmental | erosion | exhaust | drought | fertilisers | greenhouse | waste",
+    "passage": "The advances made by humans have made us the dominant species on our planet. However, several eminent scientists are concerned that we have become too successful, that our way of life is putting an unprecedented strain on the Earth's [1] and threatening our future as a species. We are confronting [2] problems that are more taxing than ever before, some of them seemingly insoluble. Many of the Earth's crises are chronic and inexorably linked. Pollution is an obvious example of this affecting our air, water and soil.\n\nThe air is polluted by [3] produced by cars and industry. Through [4] rain and [5] gases these same [6] fumes can have a devastating impact on our climate. Climate change is arguably the greatest environmental challenge facing our planet with increased storms, floods, [7] and species losses predicted. This will inevitably have a negative impact on [8] and thus our ecosystem.\n\nThe soil is [9] by factories and power stations which can leave heavy metals in the soil. Other human activities such as the overdevelopment of land and the clearing of trees also take their toll on the quality of our soil; [10] has been shown to cause soil [11]. Certain farming practices can also pollute the land though the use of chemical pesticides and [12]. This contamination in turn affects our rivers and waterways and damages life there. The chemicals enter our food chain, moving from fish to mammals to us. Our crops are also grown on land that is far from pristine. Affected species include the polar bear, so not even the Arctic is immune.\n\nReducing [13] and clearing up pollution costs money. Yet it is our quest for wealth that generates so much of the refuse. There is an urgent need to find a way of life that is less damaging to the Earth. This is not easy, but it is vital, because pollution is pervasive and often life-threatening.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "ecosystems"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "environmental"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "emissions"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "acid"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "greenhouse"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "exhaust"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "drought"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answer": "biodiversity"
+        },
+        {
+            "id": 9,
+            "text": "9",
+            "answer": "contaminated"
+        },
+        {
+            "id": 10,
+            "text": "10",
+            "answer": "deforestation"
+        },
+        {
+            "id": 11,
+            "text": "11",
+            "answer": "erosion"
+        },
+        {
+            "id": 12,
+            "text": "12",
+            "answers": [
+                "fertilizers",
+                "fertilisers"
+            ]
+        },
+        {
+            "id": 13,
+            "text": "13",
+            "answer": "waste"
+        }
+    ]
+}

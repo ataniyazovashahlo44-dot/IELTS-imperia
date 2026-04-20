@@ -1,0 +1,67 @@
+{
+    "id": "vocabulary_15_20_002",
+    "subject": "vocabulary",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Alternative fuels",
+    "instruction": "Complete the text with words from the box.\n\nWords: alternative | converting | eco-friendly | emit | engine | fuel | fumes | greenhouse gases | plant | solar",
+    "passage": "Fueling our cars\n\nOur love of the fuel-burning car with its poisonous exhaust [1] has had a devastating effect both on our environment and on oil supplies. It is unlikely we will abandon our cars in large enough numbers to resolve this problem, so there is a pressing need to find an [2] fuel. Many car companies are exploring [3] energy sources. Hybrid cars were first developed in 1997 and these are likely to become more commonplace in the future. Hydrogen vehicles that use [4] panels to extract hydrogen from water are also likely to be readily available in the near future. These vehicles [5] only water vapour and so do not contribute to [6]. However, critics say that building a network of fuelling stations and [7] existing petrol stations to hydrogen will prove too costly and will limit this vehicle's potential. Nevertheless, countries such as the US, Germany, Japan and Iceland already have ambitious hydrogen plans.\n\nOthers believe that biofuels are the future. These fuels are based on [8] oils and so can be grown. The concept of using vegetable oil as a [9] dates back to 1895 when Dr Rudolf Diesel developed the first diesel [10] to run on vegetable oil. He demonstrated his engine at the World Exhibition in Paris in 1900 and described an experiment using peanut oil as fuel in his engine. In 1912, Diesel said, 'The use of vegetable oils for engine fuels may seem insignificant today. But such oils may become in the course of time as important as petroleum and the coal tar products of the present time.'",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "fumes"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answers": [
+                "alternative",
+                "eco-friendly"
+            ]
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answers": [
+                "eco-friendly",
+                "alternative"
+            ]
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "solar"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "emit"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "greenhouse gases"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "converting"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answer": "plant"
+        },
+        {
+            "id": 9,
+            "text": "9",
+            "answer": "fuel"
+        },
+        {
+            "id": 10,
+            "text": "10",
+            "answer": "engine"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "id": "vocabulary_10_15_003",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Hyphenated Words",
+    "instruction": "Use a hyphen to combine one of the words in box A with one of the words in box B. Then complete the sentences.\n\nBox A: double | long | short | one\nBox B: edged | sighted | sided | term",
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "We need a ___ plan for our transport systems that will take into account future growth.",
+            "answer": "long-term"
+        },
+        {
+            "id": 2,
+            "text": "A warning sign was put at the site of the accident as a ___ measure until a new wall was built.",
+            "answer": "short-term"
+        },
+        {
+            "id": 3,
+            "text": "This argument appears to be a little ___. I'd like to hear the other side as well.",
+            "answer": "one-sided"
+        },
+        {
+            "id": 4,
+            "text": "The management agreed to employ five more members of staff, which in hindsight was a very ___ decision because within a few weeks we were still understaffed.",
+            "answer": "short-sighted"
+        },
+        {
+            "id": 5,
+            "text": "Globalisation is a ___ sword. It promotes multiculturalism while it erodes the local culture.",
+            "answer": "double-edged"
+        }
+    ]
+}

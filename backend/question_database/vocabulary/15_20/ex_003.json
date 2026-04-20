@@ -1,0 +1,54 @@
+{
+    "id": "vocabulary_15_20_003",
+    "subject": "vocabulary",
+    "variantGroup": "15_20",
+    "type": "gap_fill",
+    "title": "Media and Publications",
+    "instruction": "Read the following information about the same story and complete the text with words from the box.\n\nWords: biased | controversial | exposés | front page | publications | press | safeguards | sources",
+    "passage": "In response to the study, Martin Dexter from the Associated Press said: \"This study seems to be rather a harsh attack on the [1] and I can't agree with its conclusions. You need to remember that we have a broad range of media sources available to us nowadays. There is an enormous amount of alternative media that provide a healthy balance to the mainstream. If people want to be informed, they are unlikely to turn to tabloid newspapers to do so. Instead, they can access a wide range of journals, magazines and smaller [2]. They can also search the Web for the most up-to-date information from any part of the world. On the negative side, there is a problem with editor verification with some stories reported on the internet because [3] can be unreliable. The [4] in place for traditional media just don't exist there at the moment.\"\n\n\"I'll admit that stories about [5] issues are less likely to be seen by the tabloids as [6] news. But I would be more concerned about content which is politically [7] or motivated. I believe there are many publishers and broadcasters that do still have a strong tradition of [8] and investigative journalism. If there is an emphasis on entertainment rather than more serious issues, then this is being driven by consumer demand. Perhaps ultimately we only get the media we deserve.\"",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "press"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "publications"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "sources"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answer": "safeguards"
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "controversial"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "front page"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "biased"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answers": [
+                "exposés",
+                "exposes"
+            ]
+        }
+    ]
+}

@@ -4,7 +4,7 @@
     "variantGroup": "5_10",
     "type": "error_correction",
     "title": "Correct the mistakes",
-    "instruction": "Correct the mistakes in these sentences.",
+    "instruction": "Correct the mistakes in these sentences. write the correct word in the space provided. Don't write the whole sentence.",
     "passage": "",
     "questions": [
         {

@@ -1,0 +1,61 @@
+{
+    "id": "vocabulary_20_25_002",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Prepositions",
+    "instruction": "Complete the sentences with the correct prepositions from the box.\n\nPrepositions: about | for | in | on | to | with | of",
+    "passage": "1. The president refused to comment [1] the problem.\n2. I found out about the hotel [2] the Internet.\n3. I would like to apply [3] the position of head chef.\n4. The students were allowed [4] participate [5] the basketball tournament.\n5. I was completely satisfied [6] the service at your hotel.\n6. My mother is concerned [7] the amount [8] money I spend each week.\n7. The cost [9] living has increased by 5 per cent this year.\n8. There are several reasons [10] this increase.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answer": "on"
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "on"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "for"
+        },
+        {
+            "id": 4,
+            "text": "4a",
+            "answer": "to"
+        },
+        {
+            "id": 5,
+            "text": "4b",
+            "answer": "in"
+        },
+        {
+            "id": 6,
+            "text": "5",
+            "answer": "with"
+        },
+        {
+            "id": 7,
+            "text": "6a",
+            "answer": "about"
+        },
+        {
+            "id": 8,
+            "text": "6b",
+            "answer": "of"
+        },
+        {
+            "id": 9,
+            "text": "7",
+            "answer": "of"
+        },
+        {
+            "id": 10,
+            "text": "8",
+            "answer": "for"
+        }
+    ]
+}

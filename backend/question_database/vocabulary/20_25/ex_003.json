@@ -1,0 +1,83 @@
+{
+    "id": "vocabulary_20_25_003",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "mcq",
+    "title": "Choose the Correct Adverb",
+    "instruction": "Choose the correct adverb in each sentence.",
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "I was ___ satisfied with my test result.",
+            "options": {
+                "A": "completely",
+                "B": "utterly"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 2,
+            "text": "It is highly ___ that the president will resign today.",
+            "options": {
+                "A": "likely",
+                "B": "possible"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 3,
+            "text": "The machine was ___ useless.",
+            "options": {
+                "A": "slightly",
+                "B": "utterly"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 4,
+            "text": "I am ___ concerned about your behaviour.",
+            "options": {
+                "A": "extremely",
+                "B": "totally"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 5,
+            "text": "It was ___ cold in the winter.",
+            "options": {
+                "A": "bitterly",
+                "B": "completely"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 6,
+            "text": "I was ___ freezing by the time we arrived.",
+            "options": {
+                "A": "absolutely",
+                "B": "totally"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 7,
+            "text": "The oil spill had a ___ impact on the surrounding environment.",
+            "options": {
+                "A": "big",
+                "B": "heavy"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 8,
+            "text": "It is ___ impossible to predict the future with any certainty.",
+            "options": {
+                "A": "absolutely",
+                "B": "very"
+            },
+            "answer": "A"
+        }
+    ]
+}
