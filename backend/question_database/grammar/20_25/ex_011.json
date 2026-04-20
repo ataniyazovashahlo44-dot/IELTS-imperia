@@ -6,11 +6,11 @@
     "title": "Replacing Phrases with Adverbs",
     "instruction": "Replace the underlined part of each sentence with an adverb from the box (actually, apparently, evidently, frankly, on the whole, possibly, surprisingly, unfortunately) that has a similar meaning.",
     "image": null,
-    "passage": "Example: I've heard that he is a teacher. -> Apparently",
+    "passage": "Example: I have heard that he is a teacher. -> Apparently",
     "questions": [
         {
             "id": 1,
-            "text": "To be honest I don't really like this kind of literature.",
+            "text": "To be honest I do not really like this kind of literature.",
             "answer": "Frankly"
         },
         {
@@ -20,7 +20,7 @@
         },
         {
             "id": 3,
-            "text": "I'm not happy about it but I can't come to your party because I'm working.",
+            "text": "I am not happy about it but I cannot come to your party because I am working.",
             "answer": "Unfortunately"
         },
         {

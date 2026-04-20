@@ -1,0 +1,83 @@
+{
+    "id": "vocabulary_20_25_005",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Improving an Essay with Linking Words",
+    "instruction": "Improve the essay by inserting the correct linking words and phrases. There may be more than one possible answer.\n\nWords: however | firstly | in other words | furthermore | also | such as | alternatively | now | nevertheless | in addition | because | similarly",
+    "passage": "It is true that many students struggle to produce high-quality essays. [1], I don't agree that there is little you can do to improve your essays or to make the task less difficult. \n\n[2], let us examine what an essay needs in order to be considered 'good'. To begin with, a good essay must answer the question fully. [3], it must address each of the points raised in the essay title. [4], it must present these points in an organised and logical way. A good writer will [5] avoid using the same words and phrases. This can be easily achieved by using techniques [6] paraphrasing. [7], you can use synonyms of words rather than repeating the same ones. [8], all of the ideas presented in your essay must be relevant and supported by examples. \n\n[9], let us consider what students can do in order to improve their essay-writing skills. Clearly, a good knowledge of the language is required to be able to write an essay that has few errors and communicates well. [10], writing a good essay requires more than good language skills [11] people often find it difficult to write essays even in their own language. As with any skill, the best way to learn is from our mistakes. To learn how to ride a bike you need to get on one and fall off a few times. [12], students can improve their essay writing through making and correcting mistakes and through constant practice.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "1",
+            "answers": [
+                "However",
+                "Nevertheless"
+            ]
+        },
+        {
+            "id": 2,
+            "text": "2",
+            "answer": "Firstly"
+        },
+        {
+            "id": 3,
+            "text": "3",
+            "answer": "In other words"
+        },
+        {
+            "id": 4,
+            "text": "4",
+            "answers": [
+                "Furthermore",
+                "In addition"
+            ]
+        },
+        {
+            "id": 5,
+            "text": "5",
+            "answer": "also"
+        },
+        {
+            "id": 6,
+            "text": "6",
+            "answer": "such as"
+        },
+        {
+            "id": 7,
+            "text": "7",
+            "answer": "Alternatively"
+        },
+        {
+            "id": 8,
+            "text": "8",
+            "answers": [
+                "Furthermore",
+                "In addition"
+            ]
+        },
+        {
+            "id": 9,
+            "text": "9",
+            "answer": "Now"
+        },
+        {
+            "id": 10,
+            "text": "10",
+            "answers": [
+                "Nevertheless",
+                "However"
+            ]
+        },
+        {
+            "id": 11,
+            "text": "11",
+            "answer": "because"
+        },
+        {
+            "id": 12,
+            "text": "12",
+            "answer": "similarly"
+        }
+    ]
+}
