@@ -594,7 +594,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
   };
 
   const hasLeftPanel = (!!exercise.passage || !!exercise.image);
-  const isTwoPanel = (exercise.type === 'mcq' || exercise.type === 'tfng' || exercise.type === 'matching' || (exercise.type === 'gap_fill' && !hasInlineMarkers && !isDialogue)) && hasLeftPanel;
+  const isTwoPanel = (exercise.type === 'mcq' || exercise.type === 'tfng' || exercise.type === 'matching' || exercise.type === 'error_correction' || exercise.type === 'sentence_transformation' || (exercise.type === 'gap_fill' && !hasInlineMarkers && !isDialogue)) && hasLeftPanel;
   const passageHandlesAnswers = exercise.type === 'gap_fill' && !!exercise.passage && (hasInlineMarkers || isDialogue);
 
   return (
