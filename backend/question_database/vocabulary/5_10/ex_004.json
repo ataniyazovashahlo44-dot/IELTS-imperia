@@ -1,0 +1,51 @@
+{
+    "id": "vocabulary_5_10_004",
+    "subject": "vocabulary",
+    "variantGroup": "5_10",
+    "type": "gap_fill",
+    "title": "Space Travel",
+    "instruction": "Complete the text below with suitable words from the box.\n\n[ astronauts | atmosphere | commercial | explorers | launch | outer | simulator | weightlessness ]",
+    "passage": "If you have ever dreamed of travelling in space then our [1] space travel programme will make that dream a reality. Of course, passengers will need to prepare for this experience. However, unlike the months of training that [2] undergo, our passengers will be ready for [3] within two days. To prepare for a truly out-of-this-world experience, passengers will spend two days in our special training facility. There the passengers will be able to experience zero gravity in a special [4]; this will allow the passengers to acclimatise. During the flight itself a rocket will propel the spacecraft into suborbital space in excess of 100,000 m above the Earth's [5] . This will allow the passengers to experience [6] . Our space [7] will be able to float around the cabin and view the Earth and [8] space for approximately ten minutes prior to re-entry and landing.",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Gap 1",
+            "answer": "commercial"
+        },
+        {
+            "id": 2,
+            "text": "Gap 2",
+            "answer": "astronauts"
+        },
+        {
+            "id": 3,
+            "text": "Gap 3",
+            "answer": "launch"
+        },
+        {
+            "id": 4,
+            "text": "Gap 4",
+            "answer": "simulator"
+        },
+        {
+            "id": 5,
+            "text": "Gap 5",
+            "answer": "atmosphere"
+        },
+        {
+            "id": 6,
+            "text": "Gap 6",
+            "answer": "weightlessness"
+        },
+        {
+            "id": 7,
+            "text": "Gap 7",
+            "answer": "explorers"
+        },
+        {
+            "id": 8,
+            "text": "Gap 8",
+            "answer": "outer"
+        }
+    ]
+}

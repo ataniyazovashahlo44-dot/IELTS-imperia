@@ -1,0 +1,77 @@
+{
+    "id": "vocabulary_20_25_007",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Collocations",
+    "instruction": "Learn important collocations. Correct the collocation errors in the sentences and type the FULL corrected sentence in the gap. Please write your answers entirely in lowercase letters without any abbreviations.",
+    "passage": "1. After a careful analysis from the situation we decided to cancel the trip.\n[1]\n2. Regular exercise can be to benefit for people with asthma.\n[2]\n3. These results are consistent to the ones we obtained last month.\n[3]\n4. We need to create for a new design.\n[4]\n5. I am looking up the definition from this word.\n[5]\n6. We should use products that are environmentally good.\n[6]",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Gap 1",
+            "answer": "after a careful analysis of the situation we decided to cancel the trip.",
+            "answers": [
+                "after a careful analysis of the situation we decided to cancel the trip.",
+                "After a careful analysis of the situation we decided to cancel the trip.",
+                "after a careful analysis of the situation we decided to cancel the trip",
+                "After a careful analysis of the situation we decided to cancel the trip"
+            ]
+        },
+        {
+            "id": 2,
+            "text": "Gap 2",
+            "answer": "regular exercise can be of benefit to people with asthma.",
+            "answers": [
+                "regular exercise can be of benefit to people with asthma.",
+                "Regular exercise can be of benefit to people with asthma.",
+                "regular exercise can be of benefit to people with asthma",
+                "Regular exercise can be of benefit to people with asthma"
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Gap 3",
+            "answer": "these results are consistent with the ones we obtained last month.",
+            "answers": [
+                "these results are consistent with the ones we obtained last month.",
+                "These results are consistent with the ones we obtained last month.",
+                "these results are consistent with the ones we obtained last month",
+                "These results are consistent with the ones we obtained last month"
+            ]
+        },
+        {
+            "id": 4,
+            "text": "Gap 4",
+            "answer": "we need to create a new design.",
+            "answers": [
+                "we need to create a new design.",
+                "We need to create a new design.",
+                "we need to create a new design",
+                "We need to create a new design"
+            ]
+        },
+        {
+            "id": 5,
+            "text": "Gap 5",
+            "answer": "i am looking up the definition of this word.",
+            "answers": [
+                "i am looking up the definition of this word.",
+                "I am looking up the definition of this word.",
+                "i am looking up the definition of this word",
+                "I am looking up the definition of this word"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Gap 6",
+            "answer": "we should use products that are environmentally friendly.",
+            "answers": [
+                "we should use products that are environmentally friendly.",
+                "We should use products that are environmentally friendly.",
+                "we should use products that are environmentally friendly",
+                "We should use products that are environmentally friendly"
+            ]
+        }
+    ]
+}

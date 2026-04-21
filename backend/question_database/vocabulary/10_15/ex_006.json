@@ -1,0 +1,51 @@
+{
+    "id": "vocabulary_10_15_006",
+    "subject": "vocabulary",
+    "variantGroup": "10_15",
+    "type": "gap_fill",
+    "title": "Negative Prefixes",
+    "instruction": "Complete the sentences using the negative form of the words in brackets.",
+    "passage": "1. It is [1] (realistic) to expect everyone to change their buying habits overnight.\n2. When it comes to protecting the environment, cost should be [2] (relevant).\n3. It is [3] (reasonable) for rich countries to expect developing countries to reduce carbon emissions immediately.\n4. People who dump chemical waste into our waterways are very [4] (responsible).\n5. The oil spill has caused [5] (repairable) damage to several marine species.\n6. Scientists believe that the damage to this area is [6] (reversible).\n7. These species are [7] (replaceable). Once they are lost our ecosystem will be changed.\n8. It is a mistake to think that increased consumerism and environmental damage are [8] (related).",
+    "questions": [
+        {
+            "id": 1,
+            "text": "Gap 1",
+            "answer": "unrealistic"
+        },
+        {
+            "id": 2,
+            "text": "Gap 2",
+            "answer": "irrelevant"
+        },
+        {
+            "id": 3,
+            "text": "Gap 3",
+            "answer": "unreasonable"
+        },
+        {
+            "id": 4,
+            "text": "Gap 4",
+            "answer": "irresponsible"
+        },
+        {
+            "id": 5,
+            "text": "Gap 5",
+            "answer": "irreparable"
+        },
+        {
+            "id": 6,
+            "text": "Gap 6",
+            "answer": "irreversible"
+        },
+        {
+            "id": 7,
+            "text": "Gap 7",
+            "answer": "irreplaceable"
+        },
+        {
+            "id": 8,
+            "text": "Gap 8",
+            "answer": "unrelated"
+        }
+    ]
+}

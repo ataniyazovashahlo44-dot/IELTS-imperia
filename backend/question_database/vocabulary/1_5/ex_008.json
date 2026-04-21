@@ -1,0 +1,115 @@
+{
+    "id": "vocabulary_1_5_008",
+    "subject": "vocabulary",
+    "variantGroup": "1_5",
+    "type": "gap_fill",
+    "title": "Word Building",
+    "instruction": "WORD BUILDING: Complete the missing forms of the words. Provide the Noun, Verb, or Adjective form as requested. Provide opposites (opp.) where indicated.",
+    "passage": "1. allergy (Noun) -> Adjective: [1]\n2. benefit (Noun) -> Verb: [2], Adjective: [3]\n3. harm (Noun) -> Verb: [4], Adjective: [5], opp. Adjective: [6]\n4. health (Noun) -> Adjective: [7], opp. Adjective: [8]\n5. infection (Noun) -> Verb: [9], opp. Verb: [10], Adjective: [11]\n6. nutrition (Noun) -> Verb: [12], Adjective: [13]\n7. obese (Adjective) -> Noun: [14]\n8. prevent (Verb) -> Noun: [15], Adjective: [16]\n9. recommended (Adjective) -> Noun: [17], Verb: [18]\n10. variety (Noun) -> Verb: [19], Adjective: [20]",
+    "questions": [
+        {
+            "id": 1,
+            "text": "allergy Adjective",
+            "answer": "allergic"
+        },
+        {
+            "id": 2,
+            "text": "benefit Verb",
+            "answer": "benefit"
+        },
+        {
+            "id": 3,
+            "text": "benefit Adjective",
+            "answer": "beneficial"
+        },
+        {
+            "id": 4,
+            "text": "harm Verb",
+            "answer": "harm"
+        },
+        {
+            "id": 5,
+            "text": "harm Adjective",
+            "answer": "harmful"
+        },
+        {
+            "id": 6,
+            "text": "harm opp. Adjective",
+            "answer": "harmless"
+        },
+        {
+            "id": 7,
+            "text": "health Adjective",
+            "answer": "healthy"
+        },
+        {
+            "id": 8,
+            "text": "health opp. Adjective",
+            "answer": "unhealthy"
+        },
+        {
+            "id": 9,
+            "text": "infection Verb",
+            "answer": "infect"
+        },
+        {
+            "id": 10,
+            "text": "infection opp. Verb",
+            "answer": "disinfect"
+        },
+        {
+            "id": 11,
+            "text": "infection Adjective",
+            "answer": "infectious"
+        },
+        {
+            "id": 12,
+            "text": "nutrition Verb",
+            "answer": "nourish"
+        },
+        {
+            "id": 13,
+            "text": "nutrition Adjective",
+            "answer": "nutritious"
+        },
+        {
+            "id": 14,
+            "text": "obese Noun",
+            "answer": "obesity"
+        },
+        {
+            "id": 15,
+            "text": "prevent Noun",
+            "answer": "prevention"
+        },
+        {
+            "id": 16,
+            "text": "prevent Adjective",
+            "answer": "preventable"
+        },
+        {
+            "id": 17,
+            "text": "recommended Noun",
+            "answer": "recommendation"
+        },
+        {
+            "id": 18,
+            "text": "recommended Verb",
+            "answer": "recommend"
+        },
+        {
+            "id": 19,
+            "text": "variety Verb",
+            "answer": "vary"
+        },
+        {
+            "id": 20,
+            "text": "variety Adjective",
+            "answer": "various",
+            "answers": [
+                "various",
+                "varied"
+            ]
+        }
+    ]
+}

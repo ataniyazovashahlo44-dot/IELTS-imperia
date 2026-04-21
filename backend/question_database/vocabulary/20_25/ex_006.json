@@ -1,0 +1,73 @@
+{
+    "id": "vocabulary_20_25_006",
+    "subject": "vocabulary",
+    "variantGroup": "20_25",
+    "type": "gap_fill",
+    "title": "Spelling Rules 2",
+    "instruction": "Use spelling rules to help you edit your work. Add an appropriate prefix (dis, im, in or un) to these words.",
+    "passage": "1. suitable [1]\n2. appropriate [2]\n3. similar [3]\n4. noticed [4]\n5. interested [5]\n6. patient [6]\n7. ability [7]\n8. organised [8]\n9. polite [9]\n10. employment [10]",
+    "questions": [
+        {
+            "id": 1,
+            "text": "suitable",
+            "answer": "unsuitable"
+        },
+        {
+            "id": 2,
+            "text": "appropriate",
+            "answer": "inappropriate"
+        },
+        {
+            "id": 3,
+            "text": "similar",
+            "answer": "dissimilar"
+        },
+        {
+            "id": 4,
+            "text": "noticed",
+            "answer": "unnoticed"
+        },
+        {
+            "id": 5,
+            "text": "interested",
+            "answer": "disinterested",
+            "answers": [
+                "disinterested",
+                "uninterested"
+            ]
+        },
+        {
+            "id": 6,
+            "text": "patient",
+            "answer": "impatient"
+        },
+        {
+            "id": 7,
+            "text": "ability",
+            "answer": "disability",
+            "answers": [
+                "disability",
+                "inability"
+            ]
+        },
+        {
+            "id": 8,
+            "text": "organised",
+            "answer": "disorganised",
+            "answers": [
+                "disorganised",
+                "unorganised"
+            ]
+        },
+        {
+            "id": 9,
+            "text": "polite",
+            "answer": "impolite"
+        },
+        {
+            "id": 10,
+            "text": "employment",
+            "answer": "unemployment"
+        }
+    ]
+}

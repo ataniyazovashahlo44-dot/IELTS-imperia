@@ -3,124 +3,59 @@
     "subject": "vocabulary",
     "variantGroup": "20_25",
     "type": "gap_fill",
-    "title": "Describing a Process: Chewing Gum Production",
-    "instruction": "Complete the description of the diagram with the correct form of the words in the box. You will need to use some of the words more than once.\n\nWords: add | container | first | finally | heat | ingredients | liquid | machine | mixture | next | pass | pieces | place | shapes | show | then | travel",
-    "passage": "The diagram [1] how chewing gum is produced. [2] the [3] of gum are put into a [4] and [5] until they form a single mass. This is [6] strained until all of the [7] has been eliminated. [8], the gum is [9] into another [10] and the desired flavourings, sweeteners and softeners are [11]. This [12] is blended until all of the [13] are mixed together. The gum then [14] to a different [15] which uses rollers to flatten out the gum. [16], the thin sheets of gum are cut into rectangular [17] and broken into separate [18]. [19], the gum [20] along a conveyor belt where it is enclosed in packaging ready for distribution.",
+    "title": "Spelling Rules 1",
+    "instruction": "Use spelling rules to help you edit your work. Change these words by adding the endings in brackets.",
+    "passage": "1. surprise [1] (ing)\n2. true [2] (ly)\n3. advance [3] (ment)\n4. happy [4] (est)\n5. worry [5] (ed)\n6. worry [6] (ing)\n7. unplug [7] (ed)\n8. stop [8] (ed)\n9. slope [9] (ed)\n10. change [10] (able)",
     "questions": [
         {
             "id": 1,
-            "text": "1",
-            "answer": "shows"
+            "text": "surprise (ing)",
+            "answer": "surprising"
         },
         {
             "id": 2,
-            "text": "2",
-            "answer": "First"
+            "text": "true (ly)",
+            "answer": "truly"
         },
         {
             "id": 3,
-            "text": "3",
-            "answer": "pieces"
+            "text": "advance (ment)",
+            "answer": "advancement"
         },
         {
             "id": 4,
-            "text": "4",
-            "answer": "container"
+            "text": "happy (est)",
+            "answer": "happiest"
         },
         {
             "id": 5,
-            "text": "5",
-            "answer": "heated"
+            "text": "worry (ed)",
+            "answer": "worried"
         },
         {
             "id": 6,
-            "text": "6",
-            "answer": "then"
+            "text": "worry (ing)",
+            "answer": "worrying"
         },
         {
             "id": 7,
-            "text": "7",
-            "answer": "liquid"
+            "text": "unplug (ed)",
+            "answer": "unplugged"
         },
         {
             "id": 8,
-            "text": "8",
-            "answers": [
-                "Next",
-                "Then"
-            ]
+            "text": "stop (ed)",
+            "answer": "stopped"
         },
         {
             "id": 9,
-            "text": "9",
-            "answer": "placed"
+            "text": "slope (ed)",
+            "answer": "sloped"
         },
         {
             "id": 10,
-            "text": "10",
-            "answer": "container"
-        },
-        {
-            "id": 11,
-            "text": "11",
-            "answer": "added"
-        },
-        {
-            "id": 12,
-            "text": "12",
-            "answer": "mixture"
-        },
-        {
-            "id": 13,
-            "text": "13",
-            "answer": "ingredients"
-        },
-        {
-            "id": 14,
-            "text": "14",
-            "answers": [
-                "passes",
-                "travels"
-            ]
-        },
-        {
-            "id": 15,
-            "text": "15",
-            "answer": "machine"
-        },
-        {
-            "id": 16,
-            "text": "16",
-            "answers": [
-                "Next",
-                "Then"
-            ]
-        },
-        {
-            "id": 17,
-            "text": "17",
-            "answers": [
-                "shapes",
-                "pieces"
-            ]
-        },
-        {
-            "id": 18,
-            "text": "18",
-            "answer": "pieces"
-        },
-        {
-            "id": 19,
-            "text": "19",
-            "answer": "Finally"
-        },
-        {
-            "id": 20,
-            "text": "20",
-            "answers": [
-                "travels",
-                "passes"
-            ]
+            "text": "change (able)",
+            "answer": "changeable"
         }
     ]
 }

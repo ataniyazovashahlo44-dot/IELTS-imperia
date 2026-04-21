@@ -1,0 +1,51 @@
+{
+    "id": "vocabulary_15_20_005",
+    "subject": "vocabulary",
+    "variantGroup": "15_20",
+    "type": "matching",
+    "title": "People in Law",
+    "instruction": "Match the people with the things they do.",
+    "passage": null,
+    "leftLabel": "List of people",
+    "rightLabel": "List of things they do",
+    "options": {
+        "A": "... tries to prove the accused is guilty.",
+        "B": "... gives evidence against the accused.",
+        "C": "... the person who is on trial.",
+        "D": "... decides whether the accused is innocent or guilty.",
+        "E": "... tries to prove the accused is innocent.",
+        "F": "... decides how a criminal should be punished."
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "The accused",
+            "answer": "C"
+        },
+        {
+            "id": 2,
+            "text": "The judge",
+            "answer": "F"
+        },
+        {
+            "id": 3,
+            "text": "The jury",
+            "answer": "D"
+        },
+        {
+            "id": 4,
+            "text": "The prosecutor",
+            "answer": "A"
+        },
+        {
+            "id": 5,
+            "text": "The lawyer",
+            "answer": "E"
+        },
+        {
+            "id": 6,
+            "text": "The victim",
+            "answer": "B"
+        }
+    ]
+}

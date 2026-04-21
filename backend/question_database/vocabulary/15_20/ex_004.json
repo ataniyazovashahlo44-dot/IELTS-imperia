@@ -1,0 +1,109 @@
+{
+    "id": "vocabulary_15_20_004",
+    "subject": "vocabulary",
+    "variantGroup": "15_20",
+    "type": "mcq",
+    "title": "Odd One Out",
+    "instruction": "Which is the odd one out? Choose the correct word for each group.",
+    "passage": null,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "curb",
+                "B": "limit",
+                "C": "promote",
+                "D": "restrict"
+            },
+            "answer": "C"
+        },
+        {
+            "id": 2,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "electricity",
+                "B": "nuclear energy",
+                "C": "solar energy",
+                "D": "wind power"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 3,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "economical",
+                "B": "effective",
+                "C": "efficient",
+                "D": "emission"
+            },
+            "answer": "D"
+        },
+        {
+            "id": 4,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "carbon",
+                "B": "fuel",
+                "C": "gas",
+                "D": "petrol"
+            },
+            "answer": "A"
+        },
+        {
+            "id": 5,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "emit",
+                "B": "discharge",
+                "C": "release",
+                "D": "retain"
+            },
+            "answer": "D"
+        },
+        {
+            "id": 6,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "renewable",
+                "B": "disposable",
+                "C": "rechargeable"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 7,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "diminish",
+                "B": "dwindle",
+                "C": "deplete",
+                "D": "drastic"
+            },
+            "answer": "D"
+        },
+        {
+            "id": 8,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "consume",
+                "B": "extend",
+                "C": "exhaust",
+                "D": "expend"
+            },
+            "answer": "B"
+        },
+        {
+            "id": 9,
+            "text": "Which is the odd one out?",
+            "options": {
+                "A": "conserve",
+                "B": "preserve",
+                "C": "reserve",
+                "D": "save"
+            },
+            "answer": "C"
+        }
+    ]
+}
