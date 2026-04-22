@@ -36,7 +36,7 @@ interface SpeakerLine {
 
 function parseDialogue(raw: string | undefined | null): SpeakerLine[] | null {
   if (!raw) return null;
-  const re = /(\d+\s+[A-Z]:|[A-Z][a-z]{2,}:|[A-Z]:)\s/g;
+  const re = /^\s*(\d+\s+[A-Z]:|[A-Z][a-z]{2,}:|[A-Z]:)\s/gm;
   const matches = raw.match(re);
   if (!matches || matches.length < 2) return null;
 
