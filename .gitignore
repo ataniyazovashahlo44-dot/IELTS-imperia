@@ -20,3 +20,10 @@ npm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Build artifacts & Large files
+*.exe
+*.zip
+IELTS_Imperia_Desktop.zip
+IELTS Imperia-win32-x64/
+installer_output/

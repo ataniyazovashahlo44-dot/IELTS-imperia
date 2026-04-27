@@ -450,16 +450,21 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                     <div className="flex-1">
                       {parts.length > 1 ? (
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
-                          {parts[0]}
-                          <input
-                            type="text"
-                            value={val}
-                            onChange={e => recordAnswer(q, e.target.value)}
-                            className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
-                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                              focus:border-orange-500`}
-                          />
-                          {parts[1]}
+                          {parts.map((p, pIdx) => (
+                            <React.Fragment key={pIdx}>
+                              {p}
+                              {pIdx < parts.length - 1 && (
+                                <input
+                                  type="text"
+                                  value={val}
+                                  onChange={e => recordAnswer(q, e.target.value)}
+                                  className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                                    ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                                    focus:border-orange-500`}
+                                />
+                              )}
+                            </React.Fragment>
+                          ))}
                         </p>
                       ) : (
                         <div className="space-y-2">

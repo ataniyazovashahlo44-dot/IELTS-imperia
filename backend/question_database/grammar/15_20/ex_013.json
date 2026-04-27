@@ -4,7 +4,7 @@
     "variantGroup": "15_20",
     "type": "error_correction",
     "title": "Prepositions: Mistake correction",
-    "instruction": "Find the wrong preposition in each sentence, underline it (identify) and write the correction. Type '✓' if the sentence is correct.",
+    "instruction": "Find the wrong preposition in each sentence, underline it (identify) and write the correction. Type '✓' if the sentence is correct. Don't  write the whole sentence, just the correction.",
     "image": null,
     "passage": null,
     "questions": [
