@@ -7,16 +7,21 @@ import { studentApi } from '../../services/api';
 import { connectSocket } from '../../services/socketClient';
 import Timer from '../Common/Timer';
 import Logo from '../Common/Logo';
+import FullscreenGuard from './FullscreenGuard';
 import SectionTransitionModal from './SectionTransitionModal';
 import ExerciseRenderer from './ExerciseRenderer';
 import PracticeTestRenderer from './PracticeTestRenderer';
+import TestRulesModal from './TestRulesModal';
+import ExpulsionOverlay from './ExpulsionOverlay';
 import { ClientExercise, ClientPracticeQuestion, SubmitAnswer } from '../../types';
 
 export default function TestTaking() {
-  const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection, completeTest, initTest } = useTest();
+  const { phase, testSessionId, currentSection, title, sections, setAnswer, answers, getAllAnswers, goToNextSection, completeTest, initTest, reset } = useTest();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
+  const expelledRef = useRef(false);
+  const [isExpelled, setIsExpelled] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
@@ -28,7 +33,22 @@ export default function TestTaking() {
   const [fontSize, setFontSize] = useState<'normal' | 'large'>('normal');
   const [showSkipModal, setShowSkipModal] = useState(false);
 
-  useAntiCheat(testSessionId, true);
+  const [rulesAccepted, setRulesAccepted] = useState(false);
+
+  const { fatalStrike, isFullscreenExit } = useAntiCheat(testSessionId, phase === 'in-section' && rulesAccepted && !isExpelled);
+
+  const handleAcceptRules = () => {
+    setRulesAccepted(true);
+    enterFullscreen();
+  };
+
+  const enterFullscreen = () => {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    }
+  };
 
   // ── Auto-rejoin on refresh ──────────────────────────────────────────────────
   useEffect(() => {
@@ -138,6 +158,31 @@ export default function TestTaking() {
     }
   }, [testSessionId, currentSection, sections, getAllAnswers, goToNextSection, completeTest, navigate]);
 
+  // Handle immediate expulsion (Zero-Tolerance)
+  const handleExpulsion = useCallback(async () => {
+    if (expelledRef.current || !testSessionId) return;
+    expelledRef.current = true;
+    setIsExpelled(true);
+
+    try {
+      // 1. Submit everything to backend as is (marking it as finished/expelled)
+      await studentApi.submitTest(testSessionId, getAllAnswers());
+    } catch (e) {
+      console.warn('Expulsion submission failed:', e);
+    } finally {
+      // 2. Clear all local session data
+      reset();
+      // 3. Stay on this page — the ExpulsionOverlay will block everything
+    }
+  }, [testSessionId, getAllAnswers, reset]);
+
+  // Handle immediate expulsion (Fatal violations only: Tab switch, App switch)
+  useEffect(() => {
+    if (rulesAccepted && fatalStrike >= 1 && !isExpelled) {
+      handleExpulsion();
+    }
+  }, [fatalStrike, rulesAccepted, isExpelled, handleExpulsion]);
+
   // ── Autosave to server every 10 seconds ────────────────────────────────────
   useEffect(() => {
     if (!testSessionId || phase !== 'in-section') return;
@@ -199,6 +244,19 @@ export default function TestTaking() {
 
   return (
     <div className="h-screen flex flex-col bg-[#FDFDFD] dark:bg-gray-950 transition-colors font-sans overflow-hidden">
+      {isExpelled && <ExpulsionOverlay />}
+
+      {!rulesAccepted && (
+        <TestRulesModal
+          title={title}
+          onAccept={handleAcceptRules}
+        />
+      )}
+
+      <FullscreenGuard
+        isEnabled={(phase === 'in-section' && rulesAccepted && !isExpelled) || isFullscreenExit}
+        onEnterFullscreen={enterFullscreen}
+      />
 
       {/* Header */}
       <div className="flex-shrink-0 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 px-6 py-4 z-50">

@@ -53,6 +53,20 @@ export function initSocket(httpServer: HttpServer): Server {
           timestamp: new Date(),
         });
       });
+
+      socket.on('security_violation', (data: { testSessionId: string, violationType: string, strikeCount: number, isFatal?: boolean }) => {
+        console.warn(`[Socket] Security Violation from ${user.username} (Fatal: ${data.isFatal}): ${data.violationType}`);
+        io.to('admin_room').emit('student_violation', {
+          studentId: user.userId,
+          username: user.username,
+          testSessionId: data.testSessionId,
+          violationType: data.violationType,
+          strikeCount: data.strikeCount,
+          isFatal: data.isFatal,
+          timestamp: new Date(),
+        });
+        console.log(`[Socket] Broadcasted student_violation to admin_room`);
+      });
     }
 
     socket.on('disconnect', () => {

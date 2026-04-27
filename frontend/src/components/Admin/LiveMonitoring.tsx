@@ -6,7 +6,7 @@ import Loading from '../Common/Loading';
 
 interface Alert {
   id: string;
-  type: 'tab_switch' | 'join' | 'submit' | 'disconnect';
+  type: 'tab_switch' | 'join' | 'submit' | 'disconnect' | 'expelled';
   message: string;
   timestamp: string;
 }
@@ -31,6 +31,37 @@ export default function LiveMonitoring() {
     socket.on('student_joined', (data: { username: string; testSessionId: string }) => {
       addAlert({ type: 'join', message: `${data.username} joined test`, timestamp: new Date().toISOString() });
       adminApi.getLiveSessions().then(res => setSessions(res.data.data));
+    });
+
+    socket.on('student_violation', (data: { username: string; violationType: string; strikeCount: number; isFatal?: boolean }) => {
+      const typeMap: Record<string, string> = {
+        'tab-switch': 'Tab almashdi',
+        'focus-loss': 'Fokus yo\'qoldi',
+        'fullscreen-exit': 'To\'liq ekrandan chiqdi',
+      };
+      const label = typeMap[data.violationType] || data.violationType;
+      const isExpelled = !!data.isFatal; // Only fatal violations expel
+
+      addAlert({
+        type: isExpelled ? 'expelled' : 'tab_switch',
+        message: isExpelled
+          ? `🚨 CHETLATILDI: ${data.username} (${label})`
+          : `⚠️ OGOHLANTIRISH: ${data.username} (${label})`,
+        timestamp: new Date().toISOString(),
+      });
+
+      // Also show a direct browser alert if it's fatal to ensure admin noticed
+      if (isExpelled) {
+        console.warn(`CRITICAL: Student ${data.username} was expelled!`);
+        alert(`🚨 CHETLATILDI: ${data.username} (${label})`);
+      }
+
+      setSessions(prev =>
+        prev.map(s => s.student.username === data.username
+          ? { ...s, tabSwitchCount: data.strikeCount, isExpelled: isExpelled || (s as any).isExpelled }
+          : s
+        )
+      );
     });
 
     socket.on('tab_switch_detected', (data: { username: string; tabSwitchCount: number }) => {
@@ -71,6 +102,7 @@ export default function LiveMonitoring() {
   if (loading) return <Loading />;
 
   const alertColors: Record<Alert['type'], string> = {
+    expelled: 'bg-red-600 dark:bg-red-600 border-red-700 text-white font-black animate-bounce',
     tab_switch: 'bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-900/50 text-red-800 dark:text-red-300',
     join: 'bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-900/50 text-green-800 dark:text-green-300',
     submit: 'bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50 text-blue-800 dark:text-blue-300',
@@ -105,12 +137,16 @@ export default function LiveMonitoring() {
                     <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Section: {s.currentSubject}</p>
                   </div>
                   <div className="text-right">
-                    {s.tabSwitchCount > 0 ? (
+                    {(s as any).isExpelled ? (
+                      <span className="px-2 py-1 bg-red-600 text-white rounded-lg text-[10px] font-black uppercase tracking-tighter animate-pulse shadow-lg shadow-red-500/50">
+                        Chetlatildi
+                      </span>
+                    ) : s.tabSwitchCount > 0 ? (
                       <span className="px-2 py-1 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-lg text-xs font-bold">
                         ⚠️ {s.tabSwitchCount} switches
                       </span>
                     ) : (
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-lg text-xs">Clean</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-lg text-xs">Toza</span>
                     )}
                   </div>
                 </div>
