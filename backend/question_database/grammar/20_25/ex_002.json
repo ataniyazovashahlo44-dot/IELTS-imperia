@@ -4,9 +4,9 @@
     "variantGroup": "20_25",
     "type": "matching",
     "title": "Cohesion: Referencing in an Essay",
-    "instruction": "Match the sentence beginnings (1-7) to the endings (a-g) from an essay about camera invention to create coherent sentences.",
+    "instruction": "Match the sentence beginnings (1-7) to the endings (a-g) from an essay about camera invention to create coherent sentences. \n \n Prompt: 'The camera has changed the way we look at the world and the way that we celebrate special occasions.' To what extent do you agree with this statement?",
     "image": null,
-    "passage": "Prompt: 'The camera has changed the way we look at the world and the way that we celebrate special occasions.' To what extent do you agree with this statement?",
+    "passage": "",
     "leftLabel": "Sentence beginnings",
     "rightLabel": "Options",
     "options": {

@@ -4,9 +4,9 @@
     "variantGroup": "20_25",
     "type": "gap_fill",
     "title": "Word Formation: Noun Forms",
-    "instruction": "Write possible noun forms for the following verbs. Separate multiple answers with a semicolon (;).",
+    "instruction": "Write possible noun forms for the following verbs. Separate multiple answers with a semicolon (;). \n \n Example: to research -> research; researcher",
     "image": null,
-    "passage": "Example: to research -> research; researcher",
+    "passage": "",
     "questions": [
         {
             "id": 1,
