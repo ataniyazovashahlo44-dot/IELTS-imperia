@@ -5,7 +5,7 @@
     "type": "gap_fill",
     "title": "Spelling Rules 1",
     "instruction": "Use spelling rules to help you edit your work. Change these words by adding the endings in brackets.",
-    "passage": "1. surprise [1] (ing)\n2. true [2] (ly)\n3. advance [3] (ment)\n4. happy [4] (est)\n5. worry [5] (ed)\n6. worry [6] (ing)\n7. unplug [7] (ed)\n8. stop [8] (ed)\n9. slope [9] (ed)\n10. change [10] (able)",
+    "passage": "surprise [1] (ing)\ntrue [2] (ly)\nadvance [3] (ment)\nhappy [4] (est)\nworry [5] (ed)\nworry [6] (ing)\nunplug [7] (ed)\nstop [8] (ed)\nslope [9] (ed)\nchange [10] (able)",
     "questions": [
         {
             "id": 1,

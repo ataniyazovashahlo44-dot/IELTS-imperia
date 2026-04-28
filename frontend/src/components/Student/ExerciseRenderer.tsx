@@ -17,12 +17,27 @@ const QuestionBadge = ({ id }: { id: number | string }) => (
   </span>
 );
 
+function RichText({ text, className }: { text: string; className?: string }) {
+  if (!text) return null;
+  const parts = text.split(/(<u>.*?<\/u>)/g);
+  return (
+    <span className={className}>
+      {parts.map((p, i) => {
+        if (p.startsWith('<u>') && p.endsWith('</u>')) {
+          return <u key={i} className="decoration-orange-400/50 decoration-2 underline-offset-4">{p.slice(3, -4)}</u>;
+        }
+        return p;
+      })}
+    </span>
+  );
+}
+
 function InstructionBox({ text }: { text: string }) {
   if (!text) return null;
   return (
     <div className="p-5 border-l-4 border-orange-500 bg-orange-50/30 dark:bg-orange-950/20 rounded-r-2xl mb-8">
       <p className="text-[15px] font-serif italic text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
-        {text}
+        <RichText text={text} />
       </p>
     </div>
   );
@@ -318,61 +333,87 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
     // D. MCQ passage — mask answers with inline inputs
     if (exercise.type === 'mcq') {
+      const text = exercise.passage || '';
       const questions = [...(exercise.questions || [])].sort((a, b) => a.id - b.id);
-      let sections: Array<{ type: 'text', content: string } | { type: 'input', q: ClientQuestion }> = [{ type: 'text', content: text }];
 
-      for (const q of questions) {
-        // Get before/after surrounding the blank from q.text
-        const parts = (q.text || '').split('___');
-        if (parts.length < 2) continue;
-        const before = parts[0].replace(/^\.\.\./, '').trim();
-        const after = parts[parts.length - 1].replace(/\.$/, '').replace(/,$/, '').trim();
+      const markerRegex = /(?:(\d+)\s+)?\[(\d+)\]|\((\d+)\)/g;
+      const hasMarkers = markerRegex.test(text);
 
-        // Find any option value currently visible in passage and replace it
-        const allOptionValues = Object.values(q.options || {}) as string[];
+      let sections: Array<{ type: 'text', content: string } | { type: 'input', q: ClientQuestion }> = [];
 
-        const newSections: typeof sections = [];
-        for (const sec of sections) {
-          if (sec.type !== 'text') { newSections.push(sec); continue; }
-          let replaced = false;
-          for (const optVal of allOptionValues) {
-            // Build a regex that finds the answer surrounded by its context
-            const before3 = before.slice(-30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
-            const after3 = after.slice(0, 30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
-            const escapedOpt = optVal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const pat = before3
-              ? new RegExp(`(${before3}\\s*)${escapedOpt}(\\s*${after3 || ''})`)
-              : new RegExp(`${escapedOpt}(\\s*${after3})`);
-            const m = sec.content.match(pat);
-            if (m && m.index !== undefined) {
-              const startIdx = m.index + (before3 ? m[1].length : 0);
-              const endIdx = startIdx + optVal.length;
-              const before_text = sec.content.slice(0, startIdx);
-              const after_text = sec.content.slice(endIdx);
-              newSections.push({ type: 'text', content: before_text });
-              newSections.push({ type: 'input', q });
-              newSections.push({ type: 'text', content: after_text });
-              replaced = true;
-              break;
-            }
+      if (hasMarkers) {
+        let lastIndex = 0;
+        let match;
+        markerRegex.lastIndex = 0;
+        while ((match = markerRegex.exec(text)) !== null) {
+          const mIdx = match.index;
+          const mId = parseInt(match[2] || match[3]);
+          const q = questions.find(qu => qu.id === mId);
+
+          if (mIdx > lastIndex) {
+            sections.push({ type: 'text', content: text.slice(lastIndex, mIdx) });
           }
-          if (!replaced) newSections.push(sec);
+
+          if (q) {
+            sections.push({ type: 'input', q });
+          } else {
+            sections.push({ type: 'text', content: match[0] });
+          }
+          lastIndex = markerRegex.lastIndex;
         }
-        sections = newSections;
+        if (lastIndex < text.length) {
+          sections.push({ type: 'text', content: text.slice(lastIndex) });
+        }
+      } else {
+        // Fallback: Masking logic
+        sections = [{ type: 'text', content: text }];
+        for (const q of questions) {
+          const parts = (q.text || '').split('___');
+          if (parts.length < 2) continue;
+          const before = parts[0].replace(/^\.\.\./, '').trim();
+          const after = parts[parts.length - 1].replace(/\.$/, '').replace(/,$/, '').trim();
+          const allOptionValues = Object.values(q.options || {}) as string[];
+
+          const newSections: typeof sections = [];
+          for (const sec of sections) {
+            if (sec.type !== 'text') { newSections.push(sec); continue; }
+            let replaced = false;
+            for (const optVal of allOptionValues) {
+              const before3 = before.slice(-30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+              const after3 = after.slice(0, 30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+              const escapedOpt = optVal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const pat = before3
+                ? new RegExp(`(${before3}\\s*)${escapedOpt}(\\s*${after3 || ''})`)
+                : new RegExp(`${escapedOpt}(\\s*${after3})`);
+              const m = sec.content.match(pat);
+              if (m && m.index !== undefined) {
+                const startIdx = m.index + (before3 ? m[1].length : 0);
+                const endIdx = startIdx + optVal.length;
+                newSections.push({ type: 'text', content: sec.content.slice(0, startIdx) });
+                newSections.push({ type: 'input', q });
+                newSections.push({ type: 'text', content: sec.content.slice(endIdx) });
+                replaced = true;
+                break;
+              }
+            }
+            if (!replaced) newSections.push(sec);
+          }
+          sections = newSections;
+        }
       }
 
       return (
         <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
           {sections.map((sec, i) => {
-            if (sec.type === 'text') return <span key={`t-${i}`}>{sec.content}</span>;
-            const q = sec.q;
-            const val = getAnswer(q.id);
+            if (sec.type === 'text') return <RichText key={`rt-${i}`} text={sec.content} />;
+            const val = getAnswer(sec.q.id);
+            const displayVal = val && sec.q.options ? (sec.q.options as any)[val] : '';
             return (
-              <span key={`inp-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
-                <QuestionBadge id={q.id} />
-                <span className={`border-b-2 font-serif px-1 min-w-[120px] inline-block text-[15px] text-center
-                  ${val ? 'border-orange-500 text-orange-700 dark:text-orange-300 font-semibold' : 'border-gray-400 dark:border-gray-500 text-transparent select-none'}`}>
-                  {val || '　　　　　　'}
+              <span key={`inp-${sec.q.id}`} className="inline-flex items-baseline gap-2 mx-1 relative top-[2px] cursor-default group">
+                <QuestionBadge id={sec.q.id} />
+                <span className={`border-b-2 font-serif px-2 min-w-[140px] inline-block text-[16px] text-center transition-all
+                  ${val ? 'border-orange-500 text-orange-700 dark:text-orange-300 font-bold bg-orange-50/50 dark:bg-orange-950/20 rounded-t-lg' : 'border-gray-300 dark:border-gray-600 text-transparent select-none'}`}>
+                  {displayVal || '　　　　　　'}
                 </span>
               </span>
             );
@@ -384,7 +425,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
     // C. Static Text
     return (
       <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.2] text-[17px] whitespace-pre-wrap">
-        {text}
+        <RichText text={text} />
       </div>
     );
   };
@@ -400,7 +441,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                 <div className="flex gap-4 mb-4">
                   <QuestionBadge id={q.id} />
                   <p className="text-gray-800 dark:text-gray-200 font-serif text-lg leading-relaxed pt-0.5">
-                    {q.text}
+                    <RichText text={q.text || ''} />
                   </p>
                 </div>
                 <div className="grid grid-cols-1 gap-3 ml-12">
@@ -452,7 +493,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
                           {parts.map((p, pIdx) => (
                             <React.Fragment key={pIdx}>
-                              {p}
+                              <RichText text={p} />
                               {pIdx < parts.length - 1 && (
                                 <input
                                   type="text"
@@ -468,7 +509,9 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                         </p>
                       ) : (
                         <div className="space-y-2">
-                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">{cleanText}</p>
+                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">
+                            <RichText text={cleanText} />
+                          </p>
                           <input
                             type="text"
                             value={val}
@@ -499,7 +542,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                     <QuestionBadge id={q.id} />
                     <div className="flex-1 space-y-4">
                       <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
-                        {q.text}
+                        <RichText text={q.text || ''} />
                       </p>
                       <div className="flex items-center gap-3 bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
                         <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider w-24 flex-shrink-0">Correction:</span>
@@ -544,7 +587,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                 <div className="flex gap-4 mb-4">
                   <QuestionBadge id={q.id} />
                   <p className="text-gray-800 dark:text-gray-200 font-serif text-lg">
-                    {q.text}
+                    <RichText text={q.text || ''} />
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 ml-11">
@@ -602,7 +645,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
                       {parts.length > 1 ? (
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed pt-2">
-                          {parts[0]}
+                          <RichText text={parts[0]} />
                           <input
                             type="text"
                             value={val}
@@ -611,11 +654,13 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                               ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                               focus:border-orange-500`}
                           />
-                          {parts[1]}
+                          <RichText text={parts[1]} />
                         </p>
                       ) : (
                         <div className="space-y-2 pt-2">
-                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">{q.prompt || q.text}</p>
+                          <p className="font-serif text-gray-800 dark:text-gray-200 text-lg">
+                            <RichText text={q.prompt || q.text || ''} />
+                          </p>
                           <input
                             type="text"
                             value={val}

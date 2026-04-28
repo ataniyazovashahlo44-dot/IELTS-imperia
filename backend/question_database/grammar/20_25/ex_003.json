@@ -6,77 +6,65 @@
     "title": "Voice: Active or Passive?",
     "instruction": "There are 12 mistakes with active or passive verbs in this conversation. Find and correct them.",
     "image": null,
-    "passage": "Teacher:  (1) People are said that the increase in travel will lead to a loss of different cultures around the world. Do you agree?\nStudent: Well, yes, I suppose that is a possibility. I'm sure the way of life of many people around the world  (2) has changed by contact with tourists. But the change  (3) might have been happened anyway, I suppose.\nTeacher: Yes, maybe. So, do you think we should try to stop the disappearance of native cultures?\nStudent: Oh, yes. I think it will be very sad if we lose different cultures. They enrich our world, don't they? But it is also argued that many people from poor countries  (4) have given opportunities that they wouldn't have had if there wasn't any tourism. Their cultures may have changed, but they  (5) have been benefited from improvements in education and health as well as their standard of living.\nTeacher: So do you think that improvements like this inevitably bring about a loss of culture, as some people  (6) have been suggested?\nStudent: I suppose I do think that, yes. As we  (7) are continued to be provided with better and better education and we have more and more contact with the world outside our own countries, we  (8) are being become more and more the same!\nTeacher: Can you give some examples of what you mean?\nStudent: Well, in my country we now have American restaurants and we watch American movies on TV. American culture  (9) feels to be too dominant by many people in my country. And English words  (10) have been come into my language too.\nTeacher: Oh, that's interesting. And do you think that there will one day be only one language in the world?\nStudent: Well, the way we live  (11) has affected in a big way by things like the Internet, email and cheap travel. All countries are using English for these things, and so we all know a little bit of English already. But I am not sure  (12) it will use by all countries instead of their own language. That seems unlikely to me.",
+    "passage": "Teacher: [1] <u>People are said</u> that the increase in travel will lead to a loss of different cultures around the world. Do you agree?\nStudent: Well, yes, I suppose that is a possibility. I'm sure the way of life of many people around the world [2] <u>has changed</u> by contact with tourists. But the change [3] <u>might have been happened</u> anyway, I suppose.\nTeacher: Yes, maybe. So, do you think we should try to stop the disappearance of native cultures?\nStudent: Oh, yes. I think it will be very sad if we lose different cultures. They enrich our world, don't they? But it is also argued that many people from poor countries [4] <u>have given</u> opportunities that they wouldn't have had if there wasn't any tourism. Their cultures may have changed, but they [5] <u>have been benefited</u> from improvements in education and health as well as their standard of living.\nTeacher: So do you think that improvements like this inevitably bring about a loss of culture, as some people [6] <u>have been suggested</u>?\nStudent: I suppose I do think that, yes. As we [7] <u>are continued</u> to be provided with better and better education and we have more and more contact with the world outside our own countries, we [8] <u>are being become</u> more and more the same!\nTeacher: Can you give some examples of what you mean?\nStudent: Well, in my country we now have American restaurants and we watch American movies on TV. American culture [9] <u>feels</u> to be too dominant by many people in my country. And English words [10] <u>have been come</u> into my language too.\nTeacher: Oh, that's interesting. And do you think that there will one day be only one language in the world?\nStudent: Well, the way we live [11] <u>has affected</u> in a big way by things like the Internet, email and cheap travel. All countries are using English for these things, and so we all know a little bit of English already. But I am not sure [12] <u>it will use</u> by all countries instead of their own language. That seems unlikely to me.",
     "questions": [
         {
             "id": 1,
-            "text": "People are said:",
+            "text": "People are said",
             "errorWord": "are said",
             "answer": "say"
         },
         {
             "id": 2,
-            "text": "has changed by contact:",
+            "text": "has changed",
             "errorWord": "has changed",
             "answer": "has been changed"
         },
         {
             "id": 3,
-            "text": "might have been happened:",
+            "text": "might have been happened",
             "errorWord": "might have been happened",
             "answer": "might have happened"
         },
         {
             "id": 4,
-            "text": "have given opportunities:",
+            "text": "have given",
             "errorWord": "have given",
             "answer": "have been given"
         },
         {
             "id": 5,
-            "text": "have been benefited from:",
+            "text": "have been benefited",
             "errorWord": "have been benefited",
             "answer": "have benefited"
         },
         {
             "id": 6,
-            "text": "have been suggested:",
+            "text": "have been suggested",
             "errorWord": "have been suggested",
             "answer": "have suggested"
         },
         {
             "id": 7,
-            "text": "are continued:",
+            "text": "are continued",
             "errorWord": "are continued",
             "answer": "continue"
         },
         {
             "id": 8,
-            "text": "are being become:",
+            "text": "are being become",
             "errorWord": "are being become",
             "answer": "are becoming"
         },
         {
-            "id": 9,
-            "text": "feels to be too dominant by:",
-            "errorWord": "feels",
-            "answer": "is felt"
-        },
-        {
-            "id": 10,
-            "text": "have been come:",
-            "errorWord": "have been come",
-            "answer": "have come"
-        },
-        {
             "id": 11,
-            "text": "has affected in a big way by:",
+            "text": "has affected",
             "errorWord": "has affected",
             "answer": "has been affected"
         },
         {
             "id": 12,
-            "text": "it will use by all countries:",
+            "text": "it will use",
             "errorWord": "will use",
             "answer": "will be used"
         }

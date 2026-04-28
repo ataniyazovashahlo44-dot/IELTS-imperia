@@ -10,47 +10,47 @@
     "questions": [
         {
             "id": 1,
-            "text": "1. to study:",
+            "text": "to study:",
             "answer": "study; studies; student"
         },
         {
             "id": 2,
-            "text": "2. to find:",
+            "text": "to find:",
             "answer": "findings; find"
         },
         {
             "id": 3,
-            "text": "3. to respond:",
+            "text": "to respond:",
             "answer": "response; respondent"
         },
         {
             "id": 4,
-            "text": "4. to measure:",
+            "text": "to measure:",
             "answer": "measurement; measure"
         },
         {
             "id": 5,
-            "text": "5. to earn:",
+            "text": "to earn:",
             "answer": "earnings; earner"
         },
         {
             "id": 6,
-            "text": "6. to advertise:",
+            "text": "to advertise:",
             "answer": "advertisement; advertiser; advertising"
         },
         {
             "id": 7,
-            "text": "7. to examine:",
+            "text": "to examine:",
             "answer": "examination; examiner"
         },
         {
             "id": 8,
-            "text": "8. to suggest:",
+            "text": "to suggest:",
             "answer": "suggestion"
         },
         {
             "id": 9,
-            "text": "9. to create:",
+            "text": "to create:",
             "answer": "creation; creator; creativity"
         }
     ]

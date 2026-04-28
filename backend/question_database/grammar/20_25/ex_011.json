@@ -10,37 +10,37 @@
     "questions": [
         {
             "id": 1,
-            "text": "To be honest I do not really like this kind of literature.",
+            "text": "<u>To be honest</u> I do not really like this kind of literature.",
             "answer": "Frankly"
         },
         {
             "id": 2,
-            "text": "I found it unexpected that the survey revealed that university students today spend longer on their work than in the past.",
+            "text": "<u>I found it unexpected that</u> the survey revealed that university students today spend longer on their work than in the past.",
             "answer": "Surprisingly"
         },
         {
             "id": 3,
-            "text": "I am not happy about it but I cannot come to your party because I am working.",
+            "text": "<u>I am not happy about it but</u> I cannot come to your party because I am working.",
             "answer": "Unfortunately"
         },
         {
             "id": 4,
-            "text": "To sum it up, it seems that people prefer to spend festivals with their families or friends rather than alone.",
+            "text": "<u>To sum it up</u>, it seems that people prefer to spend festivals with their families or friends rather than alone.",
             "answer": "On the whole"
         },
         {
             "id": 5,
-            "text": "From what I have read in the journal, it seems that scientists believe the new drug will work.",
+            "text": "<u>From what I have read in the journal</u>, it seems that scientists believe the new drug will work.",
             "answer": "Evidently"
         },
         {
             "id": 6,
-            "text": "I am not absolutely certain about this but if we reduce the amount we consume, we will become healthier.",
+            "text": "<u>I am not absolutely certain about this but</u> if we reduce the amount we consume, we will become healthier.",
             "answer": "Possibly"
         },
         {
             "id": 7,
-            "text": "As a matter of fact I think this is the best piece of work you've done so far.",
+            "text": "<u>As a matter of fact</u> I think this is the best piece of work you've done so far.",
             "answer": "Actually"
         }
     ]

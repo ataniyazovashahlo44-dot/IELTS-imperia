@@ -10,7 +10,7 @@
     "questions": [
         {
             "id": 1,
-            "text": "1. I'm very worried about the plans to build a new shopping centre here. ___ my friend they want to knock down some of the houses.",
+            "text": "I'm very worried about the plans to build a new shopping centre here. ___ my friend they want to knock down some of the houses.",
             "options": {
                 "A": "According to",
                 "B": "Apparently"
@@ -19,7 +19,7 @@
         },
         {
             "id": 2,
-            "text": "2. ___, I believe that we will live longer in the future.",
+            "text": "___, I believe that we will live longer in the future.",
             "options": {
                 "A": "Apparently,",
                 "B": "Personally,"
@@ -28,7 +28,7 @@
         },
         {
             "id": 3,
-            "text": "3. Joshua is working this weekend so ___ he will have some time off at a later date.",
+            "text": "Joshua is working this weekend so ___ he will have some time off at a later date.",
             "options": {
                 "A": "presumably",
                 "B": "actually"
@@ -37,7 +37,7 @@
         },
         {
             "id": 4,
-            "text": "4. We cannot say for sure but ___ an advertising campaign would encourage people to recycle their waste more.",
+            "text": "We cannot say for sure but ___ an advertising campaign would encourage people to recycle their waste more.",
             "options": {
                 "A": "definitely",
                 "B": "perhaps"
@@ -46,7 +46,7 @@
         },
         {
             "id": 5,
-            "text": "5. ___, we can see that the experiments done by the early scientists have had a great effect on our lives today.",
+            "text": "___, we can see that the experiments done by the early scientists have had a great effect on our lives today.",
             "options": {
                 "A": "Overall,",
                 "B": "Luckily,"
@@ -55,7 +55,7 @@
         },
         {
             "id": 6,
-            "text": "6. We should ___ all reflect on the way we live our lives and try to be more environmentally aware.",
+            "text": "We should ___ all reflect on the way we live our lives and try to be more environmentally aware.",
             "options": {
                 "A": "probably",
                 "B": "personally"
@@ -64,7 +64,7 @@
         },
         {
             "id": 7,
-            "text": "7. ___, John agreed to come when I invited him - I hadn't expected that!",
+            "text": "___, John agreed to come when I invited him - I hadn't expected that!",
             "options": {
                 "A": "Certainly,",
                 "B": "Surprisingly,"
@@ -73,7 +73,7 @@
         },
         {
             "id": 8,
-            "text": "8. ___ the number of students leaving university without completing their degrees is rising.",
+            "text": "___ the number of students leaving university without completing their degrees is rising.",
             "options": {
                 "A": "In my opinion",
                 "B": "Unfortunately"

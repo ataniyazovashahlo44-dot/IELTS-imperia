@@ -10,37 +10,37 @@
     "questions": [
         {
             "id": 1,
-            "text": "1. Regular exercise increases the blood flow to your heart and keeps your heart healthy. ___, it provides you with a general sense of well-being.",
+            "text": "Regular exercise increases the blood flow to your heart and keeps your heart healthy. ___, it provides you with a general sense of well-being.",
             "answer": "Moreover"
         },
         {
             "id": 2,
-            "text": "2. In times of recession people stop spending, which can have serious consequences for the economy. ___, poor sales can lead to closures of some businesses.",
+            "text": "In times of recession people stop spending, which can have serious consequences for the economy. ___, poor sales can lead to closures of some businesses.",
             "answer": "For example"
         },
         {
             "id": 3,
-            "text": "3. In this talk I will outline several possible reasons for melting polar ice caps. ___, it could be because of climate change. Another reason could be ...",
+            "text": "In this talk I will outline several possible reasons for melting polar ice caps. ___, it could be because of climate change. Another reason could be ...",
             "answer": "Firstly"
         },
         {
             "id": 4,
-            "text": "4. These days many famous musicians are getting involved in political causes. ___, famous actors are often seen on television promoting some charity or other.",
+            "text": "These days many famous musicians are getting involved in political causes. ___, famous actors are often seen on television promoting some charity or other.",
             "answer": "Similarly"
         },
         {
             "id": 5,
-            "text": "5. Pets can have a calming effect on their owners. ___, having a pet can increase stress due to the demands made on the owner to look after the pet properly.",
+            "text": "Pets can have a calming effect on their owners. ___, having a pet can increase stress due to the demands made on the owner to look after the pet properly.",
             "answer": "However"
         },
         {
             "id": 6,
-            "text": "6. Some people believe that we have too many public holidays, ___ I believe they are a good idea ___ it is important to find time to celebrate traditions.",
+            "text": "Some people believe that we have too many public holidays, ___ I believe they are a good idea ___ it is important to find time to celebrate traditions.",
             "answer": "but; because"
         },
         {
             "id": 7,
-            "text": "7. In my city there are too many cars on the road and there are always traffic jams. ___, it is difficult for people to judge how long their journeys will take.",
+            "text": "In my city there are too many cars on the road and there are always traffic jams. ___, it is difficult for people to judge how long their journeys will take.",
             "answer": "As a result"
         }
     ]
