@@ -10,6 +10,7 @@ import studentRoutes from './routes/studentRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
+console.log('[Express] Initializing middleware and routes...');
 
 app.use((req, res, next) => {
   res.setHeader('X-Powered-By', 'TriCorp agency');

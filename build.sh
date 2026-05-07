@@ -1,5 +1,6 @@
 #!/bin/bash
-# Build script for IELTS Platform
+# Robust Build script for IELTS Platform
+set -e
 
 echo "Starting Build Process..."
 
