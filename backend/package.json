@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "prisma generate && tsc",
-    "start": "npx prisma migrate resolve --applied 20260328071040_add_answers_to_active_session && npx prisma migrate resolve --applied 20260329130417_add_practice_test_section_type && prisma migrate deploy && node dist/server.js",
+    "start": "prisma migrate deploy && node dist/server.js",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",

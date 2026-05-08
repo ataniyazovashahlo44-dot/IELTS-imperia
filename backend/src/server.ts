@@ -27,6 +27,8 @@ async function main() {
   }
 }
 
+main();
+
 process.on('SIGTERM', async () => {
   await prisma.$disconnect();
   server.close(() => process.exit(0));
