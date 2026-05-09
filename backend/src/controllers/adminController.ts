@@ -45,15 +45,22 @@ export async function handleCreateTest(req: AuthRequest, res: Response): Promise
           return;
         }
       } else {
-        const available = countAvailableExercises(s.subject, s.variantGroups);
-        if (s.numberOfExercises > available) {
-          res.status(400).json({
-            success: false,
-            message: `Only ${available} ${s.subject.toLowerCase()} exercises available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
-          });
-          return;
+        // In BY_QUESTION mode: all available exercises are used as the pool,
+        // numberOfExercises is auto-set to 50 by the frontend and does NOT
+        // represent a hard limit — skip the pool-size check.
+        const selectionMode = (s as unknown as { selectionMode?: string }).selectionMode || 'BY_EXERCISE';
+        if (selectionMode !== 'BY_QUESTION') {
+          const available = countAvailableExercises(s.subject, s.variantGroups);
+          if (s.numberOfExercises > available) {
+            res.status(400).json({
+              success: false,
+              message: `Only ${available} ${s.subject.toLowerCase()} exercises available in selected groups [${s.variantGroups.join(', ')}], requested ${s.numberOfExercises}`,
+            });
+            return;
+          }
         }
       }
+
     }
 
     const test = await createTest(req.user!.userId, title, maxAttempts, sections as SectionConfig[]);
