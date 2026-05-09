@@ -80,6 +80,8 @@ export interface ClientExercise {
 export interface SectionConfig {
   subject: SectionSubject;
   sectionType: SectionType;
+  selectionMode?: 'BY_EXERCISE' | 'BY_QUESTION';
+  targetQuestionCount?: number;
   variantGroups: string[];
   numberOfExercises: number;
   timeAllocated: number;

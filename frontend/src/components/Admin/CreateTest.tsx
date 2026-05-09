@@ -5,6 +5,8 @@ import { VARIANT_GROUPS, VARIANT_GROUP_LABELS, VariantGroup } from '../../types'
 interface SectionForm {
   subject: 'GRAMMAR' | 'VOCABULARY';
   sectionType: 'EXERCISE' | 'PRACTICE_TEST';
+  selectionMode: 'BY_EXERCISE' | 'BY_QUESTION';
+  targetQuestionCount: number;
   variantGroups: string[];
   numberOfExercises: number;
   timeAllocated: number;
@@ -17,7 +19,7 @@ export default function CreateTest({ onSuccess }: Props) {
   const [title, setTitle] = useState('');
   const [maxAttempts, setMaxAttempts] = useState(1);
   const [sections, setSections] = useState<SectionForm[]>([
-    { subject: 'GRAMMAR', sectionType: 'EXERCISE', variantGroups: ['1_5'], numberOfExercises: 3, timeAllocated: 20, sectionOrder: 1 },
+    { subject: 'GRAMMAR', sectionType: 'EXERCISE', selectionMode: 'BY_EXERCISE', targetQuestionCount: 20, variantGroups: ['1_5'], numberOfExercises: 3, timeAllocated: 20, sectionOrder: 1 },
   ]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ export default function CreateTest({ onSuccess }: Props) {
   const addSection = () => {
     const order = sections.length + 1;
     setSections(prev => [...prev, {
-      subject: 'GRAMMAR', sectionType: 'EXERCISE',
+      subject: 'GRAMMAR', sectionType: 'EXERCISE', selectionMode: 'BY_EXERCISE', targetQuestionCount: 20,
       variantGroups: ['1_5'], numberOfExercises: 3, timeAllocated: 20, sectionOrder: order,
     }]);
   };
@@ -57,6 +59,8 @@ export default function CreateTest({ onSuccess }: Props) {
         title, maxAttempts,
         sections: sections.map(s => ({
           subject: s.subject, sectionType: s.sectionType,
+          selectionMode: s.selectionMode,
+          targetQuestionCount: s.sectionType === 'EXERCISE' && s.selectionMode === 'BY_QUESTION' ? s.targetQuestionCount : undefined,
           variantGroups: s.variantGroups, numberOfExercises: s.numberOfExercises,
           timeAllocated: s.timeAllocated, sectionOrder: s.sectionOrder,
         })),
@@ -169,23 +173,59 @@ export default function CreateTest({ onSuccess }: Props) {
                     key={t}
                     type="button"
                     onClick={() => update(idx, 'sectionType', t)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all ${
-                      sec.sectionType === t
-                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400'
-                    }`}
+                    className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all ${sec.sectionType === t
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400'
+                      }`}
                   >
                     {t === 'EXERCISE' ? 'Mashq' : 'Practice'}
                   </button>
                 ))}
               </div>
 
+              {/* Selection Mode toggle (Only for EXERCISE) */}
+              {sec.sectionType === 'EXERCISE' && (
+                <div className="flex rounded-lg bg-gray-200 dark:bg-gray-700 p-0.5 ml-1">
+                  {(['BY_EXERCISE', 'BY_QUESTION'] as const).map(m => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => update(idx, 'selectionMode', m)}
+                      className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all ${sec.selectionMode === m
+                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400'
+                        }`}
+                    >
+                      {m === 'BY_EXERCISE' ? "To'liq" : 'Kesish'}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="flex-1" />
+
+              {/* Question Count (Only if BY_QUESTION) */}
+              {sec.sectionType === 'EXERCISE' && sec.selectionMode === 'BY_QUESTION' && (
+                <div className="flex items-center gap-1.5 mr-2">
+                  <span className="text-xs text-blue-500 font-bold">SAVOL:</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={sec.targetQuestionCount === 0 ? '' : sec.targetQuestionCount}
+                    onChange={e => {
+                      const v = e.target.value.replace(/\D/g, '');
+                      update(idx, 'targetQuestionCount', v === '' ? 0 : Math.min(200, parseInt(v)));
+                    }}
+                    onBlur={e => { if (!e.target.value) update(idx, 'targetQuestionCount', 20); }}
+                    className="w-12 text-center text-sm font-bold text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-700 border border-blue-200 dark:border-blue-800 rounded-lg py-1 outline-none focus:border-blue-400 transition"
+                  />
+                </div>
+              )}
 
               {/* Count */}
               <div className="flex items-center gap-1.5">
                 <span className="text-xs text-gray-400 dark:text-gray-500">
-                  {sec.sectionType === 'PRACTICE_TEST' ? 'Savol:' : 'Mashq:'}
+                  {sec.sectionType === 'PRACTICE_TEST' ? 'Savol:' : sec.selectionMode === 'BY_QUESTION' ? 'Eskiz:' : 'Mashq:'}
                 </span>
                 <input
                   type="text"
@@ -241,11 +281,10 @@ export default function CreateTest({ onSuccess }: Props) {
                     key={group}
                     type="button"
                     onClick={() => toggleVariant(idx, group)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${
-                      on
-                        ? 'bg-blue-500 border-blue-500 text-white'
-                        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:border-gray-300'
-                    }`}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${on
+                      ? 'bg-blue-500 border-blue-500 text-white'
+                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:border-gray-300'
+                      }`}
                   >
                     {VARIANT_GROUP_LABELS[group as VariantGroup]}
                   </button>

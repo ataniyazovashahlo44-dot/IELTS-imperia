@@ -143,13 +143,13 @@ function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }
 
         const val = getAnswer(q.id);
         parts.push(
-          <span key={`q-${q.id}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+          <span key={`q-${q.id}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
             <QuestionBadge id={q.id} />
             <input
               type="text"
               value={val}
               onChange={e => recordAnswer(q, e.target.value)}
-              className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[15px] focus:outline-none transition-colors 
+              className={`border-b-2 bg-transparent font-serif px-1 w-48 text-[17px] focus:outline-none transition-colors 
                     ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                     focus:border-orange-500`}
             />
@@ -267,13 +267,13 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
           }
           const val = getAnswer(qId);
           parts.push(
-            <span key={`input-grp-${qId}`} className="inline-flex items-center gap-2 mx-1 align-baseline relative top-[2px]">
+            <span key={`input-grp-${qId}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
               <QuestionBadge id={qId} />
               <input
                 type="text"
                 value={val}
                 onChange={e => recordAnswer(q, e.target.value)}
-                className={`border-b-2 bg-transparent font-serif px-1 w-96 text-[16px] focus:outline-none transition-colors 
+                className={`border-b-2 bg-transparent font-serif px-1 w-48 text-[17px] focus:outline-none transition-colors 
                   ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                   focus:border-orange-500`}
                 placeholder=" "
@@ -506,7 +506,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                                     type="text"
                                     value={val}
                                     onChange={e => recordAnswer(q, e.target.value, isMulti, pIdx)}
-                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-64 focus:outline-none transition-colors
                                     ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                                     focus:border-orange-500`}
                                   />
@@ -663,7 +663,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                                     type="text"
                                     value={val}
                                     onChange={e => recordAnswer(q, e.target.value, isMulti, pIdx)}
-                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-64 focus:outline-none transition-colors
                                           ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                                           focus:border-orange-500`}
                                   />
