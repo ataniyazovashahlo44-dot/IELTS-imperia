@@ -25,10 +25,10 @@ export default function CreateTest({ onSuccess }: Props) {
     {
       subject: 'GRAMMAR',
       sectionType: 'EXERCISE',
-      selectionMode: 'BY_EXERCISE',
+      selectionMode: 'BY_QUESTION',
       targetQuestionCount: 20,
       variantGroups: ['1_5'],
-      numberOfExercises: 3,
+      numberOfExercises: 50,
       timeAllocated: 20,
       sectionOrder: 1,
     },
@@ -42,10 +42,10 @@ export default function CreateTest({ onSuccess }: Props) {
     setSections(prev => [...prev, {
       subject: 'GRAMMAR',
       sectionType: 'EXERCISE',
-      selectionMode: 'BY_EXERCISE',
+      selectionMode: 'BY_QUESTION',
       targetQuestionCount: 20,
       variantGroups: ['1_5'],
-      numberOfExercises: 3,
+      numberOfExercises: 50,
       timeAllocated: 20,
       sectionOrder: order,
     }]);
@@ -56,6 +56,18 @@ export default function CreateTest({ onSuccess }: Props) {
 
   const update = <K extends keyof SectionForm>(idx: number, field: K, value: SectionForm[K]) =>
     setSections(prev => prev.map((s, i) => i === idx ? { ...s, [field]: value } : s));
+
+  // When switching to BY_QUESTION, auto-set a large pool so user only needs to pick question count
+  const setSelectionMode = (idx: number, mode: 'BY_EXERCISE' | 'BY_QUESTION') => {
+    setSections(prev => prev.map((s, i) => {
+      if (i !== idx) return s;
+      return {
+        ...s,
+        selectionMode: mode,
+        numberOfExercises: mode === 'BY_QUESTION' ? 50 : s.numberOfExercises,
+      };
+    }));
+  };
 
   const toggleVariant = (idx: number, group: string) =>
     setSections(prev => prev.map((s, i) => {
@@ -273,7 +285,7 @@ export default function CreateTest({ onSuccess }: Props) {
                       {/* Option A: Mashqlar soni */}
                       <button
                         type="button"
-                        onClick={() => update(idx, 'selectionMode', 'BY_EXERCISE')}
+                        onClick={() => setSelectionMode(idx, 'BY_EXERCISE')}
                         className={`rounded-lg p-3 text-left border transition-all ${sec.selectionMode === 'BY_EXERCISE'
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10'
                           : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -295,7 +307,7 @@ export default function CreateTest({ onSuccess }: Props) {
                       {/* Option B: Savollar soni */}
                       <button
                         type="button"
-                        onClick={() => update(idx, 'selectionMode', 'BY_QUESTION')}
+                        onClick={() => setSelectionMode(idx, 'BY_QUESTION')}
                         className={`rounded-lg p-3 text-left border transition-all ${sec.selectionMode === 'BY_QUESTION'
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10'
                           : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -340,42 +352,24 @@ export default function CreateTest({ onSuccess }: Props) {
                         </div>
                       </div>
                     ) : (
-                      <>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">Savollar soni</label>
-                          <div className="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-800 w-32">
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              value={sec.targetQuestionCount === 0 ? '' : sec.targetQuestionCount}
-                              onChange={e => {
-                                const v = e.target.value.replace(/\D/g, '');
-                                update(idx, 'targetQuestionCount', v === '' ? 0 : Math.min(200, parseInt(v)));
-                              }}
-                              onBlur={() => { if (!sec.targetQuestionCount) update(idx, 'targetQuestionCount', 20); }}
-                              className="bg-transparent text-sm font-semibold text-gray-900 dark:text-white outline-none w-full text-center"
-                            />
-                            <span className="text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">ta</span>
-                          </div>
+                      /* BY_QUESTION: admin only enters question count; numberOfExercises auto = 50 */
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-gray-500 dark:text-gray-400">Savollar soni</label>
+                        <div className="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-800 w-32">
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            value={sec.targetQuestionCount === 0 ? '' : sec.targetQuestionCount}
+                            onChange={e => {
+                              const v = e.target.value.replace(/\D/g, '');
+                              update(idx, 'targetQuestionCount', v === '' ? 0 : Math.min(200, parseInt(v)));
+                            }}
+                            onBlur={() => { if (!sec.targetQuestionCount) update(idx, 'targetQuestionCount', 20); }}
+                            className="bg-transparent text-sm font-semibold text-gray-900 dark:text-white outline-none w-full text-center"
+                          />
+                          <span className="text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">ta</span>
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">Manba mashqlar</label>
-                          <div className="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-800 w-36">
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              value={sec.numberOfExercises === 0 ? '' : sec.numberOfExercises}
-                              onChange={e => {
-                                const v = e.target.value.replace(/\D/g, '');
-                                update(idx, 'numberOfExercises', v === '' ? 0 : Math.min(200, parseInt(v)));
-                              }}
-                              onBlur={() => { if (!sec.numberOfExercises) update(idx, 'numberOfExercises', 1); }}
-                              className="bg-transparent text-sm font-semibold text-gray-900 dark:text-white outline-none w-full text-center"
-                            />
-                            <span className="text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">ta</span>
-                          </div>
-                        </div>
-                      </>
+                      </div>
                     )
                   ) : (
                     <div className="space-y-1.5">
