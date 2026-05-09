@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { registerStudent, loginUser } from '../services/authService';
+import { registerStudent, loginUser, requestPasswordReset, resetPasswordWithCode } from '../services/authService';
 import { AuthRequest } from '../types';
 import prisma from '../config/database';
 
@@ -59,5 +59,45 @@ export async function getMe(req: AuthRequest, res: Response): Promise<void> {
     res.json({ success: true, data: user });
   } catch {
     res.status(500).json({ success: false, message: 'Failed to fetch user' });
+  }
+}
+
+const requestResetSchema = z.object({
+  username: z.string().min(1),
+});
+
+const resetPasswordSchema = z.object({
+  username: z.string().min(1),
+  resetCode: z.string().length(6),
+  newPassword: z.string().min(6).max(100),
+});
+
+export async function handleRequestReset(req: Request, res: Response): Promise<void> {
+  try {
+    const parsed = requestResetSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ success: false, message: 'Username required' });
+      return;
+    }
+    await requestPasswordReset(parsed.data.username);
+    res.json({ success: true, message: 'Reset request created' });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Request failed';
+    res.status(400).json({ success: false, message });
+  }
+}
+
+export async function handleResetPassword(req: Request, res: Response): Promise<void> {
+  try {
+    const parsed = resetPasswordSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ success: false, message: 'Invalid payload' });
+      return;
+    }
+    await resetPasswordWithCode(parsed.data.username, parsed.data.resetCode, parsed.data.newPassword);
+    res.json({ success: true, message: 'Password reset successfully' });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Reset failed';
+    res.status(400).json({ success: false, message });
   }
 }

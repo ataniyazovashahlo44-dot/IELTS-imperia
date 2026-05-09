@@ -189,3 +189,18 @@ export async function handleGetTestDetail(req: AuthRequest, res: Response): Prom
     res.status(500).json({ success: false, message: "Test ma'lumotlarini yuklab bo'lmadi" });
   }
 }
+
+export async function handleGetPasswordResetRequests(req: AuthRequest, res: Response): Promise<void> {
+  try {
+    const requests = await prisma.passwordResetRequest.findMany({
+      where: { isUsed: false, expiresAt: { gt: new Date() } },
+      include: {
+        student: { select: { fullName: true, username: true } }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json({ success: true, data: requests });
+  } catch {
+    res.status(500).json({ success: false, message: 'Failed to fetch password reset requests' });
+  }
+}

@@ -205,11 +205,15 @@ function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }
 export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagged = false, onToggleFlag }: Props) {
   if (!exercise) return null;
 
-  const getAnswer = (qId: number) => answers[`${exercise.id}_${qId}`]?.selectedAnswer || '';
-  const recordAnswer = (q: ClientQuestion, value: string) => {
+  const getAnswer = (qId: number, isMulti?: boolean, pIdx?: number) => {
+    const key = isMulti ? `${exercise.id}_${qId}_b${pIdx}` : `${exercise.id}_${qId}`;
+    return answers[key]?.selectedAnswer || '';
+  };
+  const recordAnswer = (q: ClientQuestion, value: string, isMulti?: boolean, pIdx?: number) => {
     if (!q) return;
+    const key = isMulti ? `${exercise.id}_${q.id}_b${pIdx}` : `${exercise.id}_${q.id}`;
     onAnswer({
-      questionId: `${exercise.id}_${q.id}`,
+      questionId: key,
       questionType: (exercise.subject?.toUpperCase() as any) || 'GRAMMAR',
       selectedAnswer: value,
       questionText: q.text,
@@ -483,7 +487,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
             {questions.map(q => {
               const cleanText = q.text?.replace(/^\d+\.\s*/, '') || '';
               const parts = cleanText.split('___');
-              const val = getAnswer(q.id);
+              const isMulti = parts.length > 2;
+
               return (
                 <div key={q.id} className="py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
                   <div className="flex items-start gap-4">
@@ -491,21 +496,24 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                     <div className="flex-1">
                       {parts.length > 1 ? (
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
-                          {parts.map((p, pIdx) => (
-                            <React.Fragment key={pIdx}>
-                              <RichText text={p} />
-                              {pIdx < parts.length - 1 && (
-                                <input
-                                  type="text"
-                                  value={val}
-                                  onChange={e => recordAnswer(q, e.target.value)}
-                                  className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                          {parts.map((p, pIdx) => {
+                            const val = getAnswer(q.id, isMulti, pIdx);
+                            return (
+                              <React.Fragment key={pIdx}>
+                                <RichText text={p} />
+                                {pIdx < parts.length - 1 && (
+                                  <input
+                                    type="text"
+                                    value={val}
+                                    onChange={e => recordAnswer(q, e.target.value, isMulti, pIdx)}
+                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
                                     ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                                     focus:border-orange-500`}
-                                />
-                              )}
-                            </React.Fragment>
-                          ))}
+                                  />
+                                )}
+                              </React.Fragment>
+                            )
+                          })}
                         </p>
                       ) : (
                         <div className="space-y-2">
@@ -514,11 +522,11 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                           </p>
                           <input
                             type="text"
-                            value={val}
+                            value={getAnswer(q.id)}
                             onChange={e => recordAnswer(q, e.target.value)}
                             className={`border-b-2 bg-transparent font-serif px-2 w-full max-w-xl focus:outline-none transition-colors
-                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                              focus:border-orange-500`}
+                               ${getAnswer(q.id) ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                               focus:border-orange-500`}
                             placeholder="Type your answer here..."
                           />
                         </div>
@@ -628,8 +636,8 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         return (
           <div className="space-y-6">
             {questions.map(q => {
-              const val = getAnswer(q.id);
               const parts = (q.prompt || q.text || '').split('___');
+              const isMulti = parts.length > 2;
               return (
                 <div key={q.id} className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
                   <div className="flex items-start gap-4">
@@ -645,16 +653,24 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
 
                       {parts.length > 1 ? (
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed pt-2">
-                          <RichText text={parts[0]} />
-                          <input
-                            type="text"
-                            value={val}
-                            onChange={e => recordAnswer(q, e.target.value)}
-                            className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
-                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
-                              focus:border-orange-500`}
-                          />
-                          <RichText text={parts[1]} />
+                          {parts.map((p, pIdx) => {
+                            const val = getAnswer(q.id, isMulti, pIdx);
+                            return (
+                              <React.Fragment key={pIdx}>
+                                <RichText text={p} />
+                                {pIdx < parts.length - 1 && (
+                                  <input
+                                    type="text"
+                                    value={val}
+                                    onChange={e => recordAnswer(q, e.target.value, isMulti, pIdx)}
+                                    className={`border-b-2 bg-transparent font-serif px-2 mx-1 w-96 focus:outline-none transition-colors
+                                          ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                                          focus:border-orange-500`}
+                                  />
+                                )}
+                              </React.Fragment>
+                            );
+                          })}
                         </p>
                       ) : (
                         <div className="space-y-2 pt-2">
@@ -663,10 +679,10 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
                           </p>
                           <input
                             type="text"
-                            value={val}
+                            value={getAnswer(q.id)}
                             onChange={e => recordAnswer(q, e.target.value)}
                             className={`border-b-2 bg-transparent font-serif px-2 w-full max-w-xl focus:outline-none transition-colors
-                              ${val ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
+                              ${getAnswer(q.id) ? 'border-orange-500 text-gray-900 dark:text-gray-100' : 'border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200'}
                               focus:border-orange-500`}
                           />
                         </div>

@@ -8,6 +8,7 @@ import AdminResults from '../components/Admin/Results';
 import AdminSettings from '../components/Admin/Settings';
 import Tests from '../components/Admin/Tests';
 import TestDetail from '../components/Admin/TestDetail';
+import PasswordResetRequests from '../components/Admin/PasswordResetRequests';
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,6 +26,7 @@ export default function AdminPage() {
             <Route path="students" element={<Students />} />
             <Route path="results" element={<AdminResults />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="reset-requests" element={<PasswordResetRequests />} />
             <Route path="*" element={<Navigate to="/admin" replace />} />
           </Routes>
           <div className="mt-8 pt-4 pb-2 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 dark:text-gray-500">

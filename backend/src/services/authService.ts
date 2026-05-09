@@ -61,3 +61,58 @@ function sanitizeUser(user: { id: string; fullName: string; username: string; ph
     createdAt: user.createdAt,
   };
 }
+
+export async function requestPasswordReset(username: string) {
+  const user = await prisma.user.findUnique({ where: { username, role: 'STUDENT' } });
+  if (!user) throw new Error('Student not found');
+
+  const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+  // Invalidate previous pending requests for this student
+  await prisma.passwordResetRequest.updateMany({
+    where: { studentId: user.id, isUsed: false },
+    data: { isUsed: true }
+  });
+
+  await prisma.passwordResetRequest.create({
+    data: {
+      studentId: user.id,
+      resetCode,
+      expiresAt,
+    }
+  });
+
+  return { success: true };
+}
+
+export async function resetPasswordWithCode(username: string, resetCode: string, newPassword: string) {
+  const user = await prisma.user.findUnique({ where: { username, role: 'STUDENT' } });
+  if (!user) throw new Error('Student not found');
+
+  const request = await prisma.passwordResetRequest.findFirst({
+    where: {
+      studentId: user.id,
+      resetCode,
+      isUsed: false,
+      expiresAt: { gt: new Date() }
+    }
+  });
+
+  if (!request) throw new Error('Invalid or expired reset code');
+
+  const hashed = await bcrypt.hash(newPassword, ENV.BCRYPT_ROUNDS);
+
+  await prisma.$transaction([
+    prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashed }
+    }),
+    prisma.passwordResetRequest.update({
+      where: { id: request.id },
+      data: { isUsed: true }
+    })
+  ]);
+
+  return { success: true };
+}

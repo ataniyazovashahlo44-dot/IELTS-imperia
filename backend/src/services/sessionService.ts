@@ -145,22 +145,24 @@ export async function joinTest(studentId: string, pin: string) {
         for (const ex of shuffled) {
           selected.push(ex);
           globalUsedIds.add(ex.id);
-          const qCount = ex.questions.length;
 
-          if (currentQCount + qCount <= targetQuestionCount) {
-            for (const q of ex.questions) {
+          for (const q of ex.questions) {
+            let pts = 1;
+            const blankCount = (q.text || '').split('___').length - 1;
+            const anyQ = q as Record<string, unknown>;
+            if (blankCount > 1 && Array.isArray(anyQ.answers) && anyQ.answers.length > 1) {
+              pts = blankCount;
+            }
+
+            if (currentQCount + pts <= targetQuestionCount) {
               allowedQuestions.push(`${ex.id}_${q.id}`);
+              currentQCount += pts;
             }
-            currentQCount += qCount;
+
             if (currentQCount === targetQuestionCount) break;
-          } else {
-            const needed = targetQuestionCount - currentQCount;
-            for (let i = 0; i < needed; i++) {
-              allowedQuestions.push(`${ex.id}_${ex.questions[i].id}`);
-            }
-            currentQCount += needed;
-            break;
           }
+
+          if (currentQCount === targetQuestionCount) break;
         }
         selectedQuestionsMap[String(sec.sectionOrder)] = allowedQuestions;
       } else {

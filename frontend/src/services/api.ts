@@ -54,6 +54,7 @@ export const adminApi = {
   getStudents: () => api.get('/admin/students'),
   getResults: () => api.get('/admin/results'),
   getLiveSessions: () => api.get('/admin/live'),
+  getResetRequests: () => api.get('/admin/reset-requests'),
 };
 
 export const studentApi = {
@@ -71,3 +72,5 @@ export const studentApi = {
   getResults: () => api.get('/student/results'),
   getResultDetail: (id: string) => api.get(`/student/results/${id}`),
 };
+
+export default api;

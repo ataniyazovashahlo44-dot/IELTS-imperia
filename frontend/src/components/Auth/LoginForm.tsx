@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ForgotPasswordFlow from './ForgotPasswordFlow';
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -8,6 +9,7 @@ export default function LoginForm() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,11 +64,24 @@ export default function LoginForm() {
         >
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
+
+        <div className="pt-2 text-center">
+          <button
+            type="button"
+            onClick={() => setShowForgot(true)}
+            className="text-sm font-semibold text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-colors"
+          >
+            Parolni unutdingizmi?
+          </button>
+        </div>
       </form>
-      <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800 pt-6">
         Don't have an account?{' '}
         <Link to="/register" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Register</Link>
       </p>
+
+      {/* Forgot Password Flow Overlay */}
+      {showForgot && <ForgotPasswordFlow onBack={() => setShowForgot(false)} />}
     </div>
   );
 }

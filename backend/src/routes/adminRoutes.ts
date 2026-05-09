@@ -10,6 +10,7 @@ import {
   handleGetLiveSessions,
   handleDeleteTest,
   handleGetTestDetail,
+  handleGetPasswordResetRequests,
 } from '../controllers/adminController';
 import { handleGetAllResults } from '../controllers/resultsController';
 
@@ -25,5 +26,6 @@ router.delete('/tests/:id', handleDeleteTest);
 router.get('/students', handleGetStudents);
 router.get('/results', handleGetAllResults);
 router.get('/live', handleGetLiveSessions);
+router.get('/reset-requests', handleGetPasswordResetRequests);
 
 export default router;
