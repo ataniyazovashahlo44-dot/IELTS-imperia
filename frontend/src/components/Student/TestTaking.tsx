@@ -328,6 +328,7 @@ export default function TestTaking() {
               onAnswer={handleAnswer}
               isFlagged={flaggedExercises.has(currentExerciseIdx)}
               onToggleFlag={() => toggleFlag(currentExerciseIdx)}
+              questionStartIndex={exercises.slice(0, currentExerciseIdx).reduce((acc, ex) => acc + (ex.questions?.length || 0), 0) + 1}
             />
           ) : null}
         </div>

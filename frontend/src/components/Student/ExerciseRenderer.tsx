@@ -8,12 +8,13 @@ interface Props {
   onAnswer: (answer: SubmitAnswer) => void;
   isFlagged?: boolean;
   onToggleFlag?: () => void;
+  questionStartIndex?: number;
 }
 
 // ── Shared Components ────────────────────────────────────────────────────────
-const QuestionBadge = ({ id }: { id: number | string }) => (
+const QuestionBadge = ({ number }: { number: number | string }) => (
   <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white text-[11px] font-black select-none shrink-0 align-middle shadow-sm shadow-orange-500/20">
-    {id}
+    {number}
   </span>
 );
 
@@ -138,13 +139,15 @@ function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }
       if (q) {
         const precedingNum = match[1];
         if (precedingNum && parseInt(precedingNum) !== q.id) {
-          parts.push(<span key={`pfx-${partKey++}`} className="font-serif">{precedingNum} </span>);
+          parts.push(<RichText key={`pfx-${partKey++}`} text={precedingNum + ' '} className="font-serif" />);
         }
 
         const val = getAnswer(q.id);
+        const qNumber = (questions.indexOf(q) + 1) + (questions[0] && (questions[0] as any).displayOffset || 0);
+
         parts.push(
           <span key={`q-${q.id}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
-            <QuestionBadge id={q.id} />
+            <QuestionBadge number={qNumber} />
             <input
               type="text"
               value={val}
@@ -202,8 +205,15 @@ function DialoguePassageWithInputs({ lines, questions, getAnswer, recordAnswer }
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
-export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagged = false, onToggleFlag }: Props) {
+export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagged = false, onToggleFlag, questionStartIndex = 1 }: Props) {
   if (!exercise) return null;
+
+  // Add displayOffset to questions for sequential numbering
+  const questionsWithOffset = (exercise.questions || []).map((q, idx) => ({
+    ...q,
+    displayOffset: questionStartIndex - 1 + idx,
+    displayNumber: questionStartIndex + idx
+  }));
 
   const getAnswer = (qId: number, isMulti?: boolean, pIdx?: number) => {
     const key = isMulti ? `${exercise.id}_${qId}_b${pIdx}` : `${exercise.id}_${qId}`;
@@ -257,18 +267,18 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         const matchIndex = match.index;
 
         if (matchIndex > lastIndex) {
-          parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, matchIndex)}</span>);
+          parts.push(<RichText key={`t-${partKey++}`} text={text.slice(lastIndex, matchIndex)} className="font-serif" />);
         }
 
-        const q = (exercise.questions || []).find(qu => qu.id === qId);
+        const q = (questionsWithOffset || []).find(qu => qu.id === qId);
         if (q) {
           if (precedingNum && parseInt(precedingNum) !== qId) {
-            parts.push(<span key={`pfx-${partKey++}`} className="font-serif">{precedingNum} </span>);
+            parts.push(<RichText key={`pfx-${partKey++}`} text={precedingNum + ' '} className="font-serif" />);
           }
           const val = getAnswer(qId);
           parts.push(
             <span key={`input-grp-${qId}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
-              <QuestionBadge id={qId} />
+              <QuestionBadge number={q.displayNumber} />
               <input
                 type="text"
                 value={val}
@@ -285,7 +295,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         }
         lastIndex = matchIndex + fullMatch.length;
       }
-      parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+      parts.push(<RichText key="end" text={text.slice(lastIndex)} className="font-serif" />);
 
       return (
         <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
@@ -309,24 +319,24 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
         const matchIndex = match.index;
 
         if (matchIndex > lastIndex) {
-          parts.push(<span key={`t-${partKey++}`} className="font-serif">{text.slice(lastIndex, matchIndex)}</span>);
+          parts.push(<RichText key={`t-${partKey++}`} text={text.slice(lastIndex, matchIndex)} className="font-serif" />);
         }
 
-        const q = (exercise.questions || []).find(qu => qu.id === qId);
+        const q = (questionsWithOffset || []).find(qu => qu.id === qId);
         if (q) {
           const cleanText = q.text?.replace(/^\d+\.\s*/, '') || '';
           parts.push(
             <span key={`err-grp-${qId}`} className="inline-flex items-center gap-1.5 mx-1 align-baseline">
-              <QuestionBadge id={qId} />
+              <QuestionBadge number={q.displayNumber} />
               <u className="font-serif font-bold text-gray-900 dark:text-gray-100 decoration-orange-400 decoration-2 underline-offset-4 cursor-default">
-                {cleanText}
+                <RichText text={cleanText} />
               </u>
             </span>
           );
         }
         lastIndex = matchIndex + fullMatch.length;
       }
-      parts.push(<span key="end" className="font-serif">{text.slice(lastIndex)}</span>);
+      parts.push(<RichText key="end" text={text.slice(lastIndex)} className="font-serif" />);
 
       return (
         <div className="font-serif text-gray-800 dark:text-gray-200 leading-[2.8] text-[17px] whitespace-pre-wrap">
@@ -414,7 +424,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
             const displayVal = val && sec.q.options ? (sec.q.options as any)[val] : '';
             return (
               <span key={`inp-${sec.q.id}`} className="inline-flex items-baseline gap-2 mx-1 relative top-[2px] cursor-default group">
-                <QuestionBadge id={sec.q.id} />
+                <QuestionBadge number={(sec.q as any).displayNumber || sec.q.id} />
                 <span className={`border-b-2 font-serif px-2 min-w-[140px] inline-block text-[16px] text-center transition-all
                   ${val ? 'border-orange-500 text-orange-700 dark:text-orange-300 font-bold bg-orange-50/50 dark:bg-orange-950/20 rounded-t-lg' : 'border-gray-300 dark:border-gray-600 text-transparent select-none'}`}>
                   {displayVal || '　　　　　　'}
@@ -440,10 +450,10 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'mcq':
         return (
           <div className="space-y-8">
-            {questions.map((q) => (
+            {questionsWithOffset.map((q) => (
               <div key={q.id} className="bg-white dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div className="flex gap-4 mb-4">
-                  <QuestionBadge id={q.id} />
+                  <QuestionBadge number={q.displayNumber} />
                   <p className="text-gray-800 dark:text-gray-200 font-serif text-lg leading-relaxed pt-0.5">
                     <RichText text={q.text || ''} />
                   </p>
@@ -492,7 +502,7 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
               return (
                 <div key={q.id} className="py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
                   <div className="flex items-start gap-4">
-                    <QuestionBadge id={q.id} />
+                    <QuestionBadge number={(q as any).displayNumber || q.id} />
                     <div className="flex-1">
                       {parts.length > 1 ? (
                         <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
@@ -542,12 +552,12 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'error_correction':
         return (
           <div className="space-y-6">
-            {questions.map(q => {
+            {questionsWithOffset.map(q => {
               const val = getAnswer(q.id);
               return (
                 <div key={q.id} className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
                   <div className="flex items-start gap-4">
-                    <QuestionBadge id={q.id} />
+                    <QuestionBadge number={q.displayNumber} />
                     <div className="flex-1 space-y-4">
                       <p className="font-serif text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
                         <RichText text={q.text || ''} />
@@ -590,10 +600,10 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'matching':
         return (
           <div className="space-y-6">
-            {questions.map(q => (
+            {questionsWithOffset.map(q => (
               <div key={q.id} className="p-5 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800/50">
                 <div className="flex gap-4 mb-4">
-                  <QuestionBadge id={q.id} />
+                  <QuestionBadge number={q.displayNumber} />
                   <p className="text-gray-800 dark:text-gray-200 font-serif text-lg">
                     <RichText text={q.text || ''} />
                   </p>
@@ -635,13 +645,13 @@ export default function ExerciseRenderer({ exercise, answers, onAnswer, isFlagge
       case 'sentence_transformation':
         return (
           <div className="space-y-6">
-            {questions.map(q => {
+            {questionsWithOffset.map(q => {
               const parts = (q.prompt || q.text || '').split('___');
               const isMulti = parts.length > 2;
               return (
                 <div key={q.id} className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
                   <div className="flex items-start gap-4">
-                    <QuestionBadge id={q.id} />
+                    <QuestionBadge number={q.displayNumber} />
                     <div className="flex-1 space-y-3">
                       {q.stem && (
                         <div className="bg-gray-50/50 dark:bg-gray-900/30 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
