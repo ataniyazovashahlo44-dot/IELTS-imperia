@@ -99,6 +99,7 @@ export async function joinTest(studentId: string, pin: string) {
 
   // Select random exercises/questions for ALL sections upfront
   const selectedExercisesMap: Record<string, string[]> = {};
+  const selectedQuestionsMap: Record<string, string[]> = {};
   const allAnswerMaps: Record<string, string> = {};
   const globalUsedIds = new Set<string>();
 
@@ -129,12 +130,47 @@ export async function joinTest(studentId: string, pin: string) {
 
       const availablePool = pool.filter(ex => !globalUsedIds.has(ex.id));
       const selectionPool = availablePool.length >= sec.numberOfExercises ? availablePool : pool;
-      const selected = selectRandomExercises(selectionPool, sec.numberOfExercises);
+
+      const selectionMode = (sec as unknown as { selectionMode?: string }).selectionMode || 'BY_EXERCISE';
+      const targetQuestionCount = (sec as unknown as { targetQuestionCount?: number }).targetQuestionCount;
+
+      let selected: import('../types').Exercise[] = [];
+      let allowedQuestions: string[] | undefined = undefined;
+
+      if (selectionMode === 'BY_QUESTION' && targetQuestionCount) {
+        const shuffled = selectRandomExercises(selectionPool, selectionPool.length);
+        let currentQCount = 0;
+        allowedQuestions = [];
+
+        for (const ex of shuffled) {
+          selected.push(ex);
+          globalUsedIds.add(ex.id);
+          const qCount = ex.questions.length;
+
+          if (currentQCount + qCount <= targetQuestionCount) {
+            for (const q of ex.questions) {
+              allowedQuestions.push(`${ex.id}_${q.id}`);
+            }
+            currentQCount += qCount;
+            if (currentQCount === targetQuestionCount) break;
+          } else {
+            const needed = targetQuestionCount - currentQCount;
+            for (let i = 0; i < needed; i++) {
+              allowedQuestions.push(`${ex.id}_${ex.questions[i].id}`);
+            }
+            currentQCount += needed;
+            break;
+          }
+        }
+        selectedQuestionsMap[String(sec.sectionOrder)] = allowedQuestions;
+      } else {
+        selected = selectRandomExercises(selectionPool, sec.numberOfExercises);
+        selected.forEach(e => globalUsedIds.add(e.id));
+      }
 
       selectedExercisesMap[String(sec.sectionOrder)] = selected.map(e => e.id);
-      selected.forEach(e => globalUsedIds.add(e.id));
 
-      const { answerMap } = buildClientExercises(selected);
+      const { answerMap } = buildClientExercises(selected, allowedQuestions);
       Object.assign(allAnswerMaps, answerMap);
     }
   }
@@ -155,13 +191,15 @@ export async function joinTest(studentId: string, pin: string) {
       sectionOrder: firstSection.sectionOrder,
       sectionDeadline,
       selectedExercises: JSON.stringify(selectedExercisesMap),
+      selectedQuestions: JSON.stringify(selectedQuestionsMap),
     },
   });
 
   // Build client payload for first section
   const firstExerciseIds = selectedExercisesMap[String(firstSection.sectionOrder)];
+  const firstAllowedQuestions = selectedQuestionsMap[String(firstSection.sectionOrder)];
   const firstSectionType = (firstSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
-  const firstClientContent = getClientContentForSection(firstSection, firstExerciseIds);
+  const firstClientContent = getClientContentForSection(firstSection, firstExerciseIds, firstAllowedQuestions);
 
   return {
     testSessionId: session.id,
@@ -230,9 +268,11 @@ export async function advanceSection(studentId: string, testSessionId: string, c
 
   // Get pre-selected exercise/question IDs for this section
   const selectedExercisesMap: Record<string, string[]> = JSON.parse(activeSession.selectedExercises);
+  const selectedQuestionsMap: Record<string, string[]> = JSON.parse((activeSession as any).selectedQuestions || '{}');
   const exerciseIds = selectedExercisesMap[String(nextSection.sectionOrder)] || [];
+  const allowedQuestions = selectedQuestionsMap[String(nextSection.sectionOrder)];
   const nextSectionType = (nextSection as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
-  const clientContent = getClientContentForSection(nextSection, exerciseIds);
+  const clientContent = getClientContentForSection(nextSection, exerciseIds, allowedQuestions);
 
   return {
     subject: nextSection.subject,
@@ -249,7 +289,8 @@ export async function advanceSection(studentId: string, testSessionId: string, c
 
 function getClientContentForSection(
   section: { subject: string; variantGroups: string; sectionType?: string },
-  ids: string[]
+  ids: string[],
+  allowedQuestions?: string[]
 ): unknown[] {
   const variantGroups: string[] = JSON.parse(section.variantGroups);
   const sectionType = (section as unknown as { sectionType?: string }).sectionType || 'EXERCISE';
@@ -275,7 +316,7 @@ function getClientContentForSection(
     .map(id => pool.find(e => e.id === id))
     .filter(Boolean) as import('../types').Exercise[];
 
-  const { clientExercises } = buildClientExercises(selectedExercises);
+  const { clientExercises } = buildClientExercises(selectedExercises, allowedQuestions);
   return clientExercises;
 }
 

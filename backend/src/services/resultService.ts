@@ -41,8 +41,10 @@ export async function submitTest(studentId: string, testSessionId: string, answe
   if (!activeSession) throw new Error('Aktiv sessiya topilmadi. Test allaqachon yakunlangan bo\'lishi mumkin');
 
   let selectedExercisesMap: Record<string, string[]> = {};
+  let selectedQuestionsMap: Record<string, string[]> = {};
   try {
     selectedExercisesMap = JSON.parse(activeSession.selectedExercises);
+    selectedQuestionsMap = JSON.parse((activeSession as any).selectedQuestions || '{}');
   } catch {
     throw new Error('Sessiya ma\'lumotlari buzilgan');
   }
@@ -85,12 +87,19 @@ export async function submitTest(studentId: string, testSessionId: string, answe
             const anyQ = q as Record<string, unknown>;
             const blankCount = (q.text || '').split('___').length - 1;
 
+            const baseQuestionId = `${ex.id}_${q.id}`;
+            const allowedQuestions = selectedQuestionsMap[String(sec.sectionOrder)];
+
+            if (allowedQuestions && !allowedQuestions.includes(baseQuestionId)) {
+              continue; // Skip grading trimmed questions
+            }
+
             if (blankCount > 1 && Array.isArray(anyQ.answers) && (anyQ.answers as string[]).length > 1) {
               // Multi-blank: each blank is a separate graded question
               for (let b = 0; b < blankCount; b++) {
                 const blankAnswer = (anyQ.answers as string[])[b] || '';
                 requiredQuestions.push({
-                  questionId: `${ex.id}_${q.id}_b${b}`,
+                  questionId: `${baseQuestionId}_b${b}`,
                   questionType: sec.subject as 'VOCABULARY' | 'GRAMMAR',
                   questionText: q.text || '',
                   exactAnswer: blankAnswer,
@@ -105,7 +114,7 @@ export async function submitTest(studentId: string, testSessionId: string, answe
                 exactAnswer = q.answer || '';
               }
               requiredQuestions.push({
-                questionId: `${ex.id}_${q.id}`,
+                questionId: baseQuestionId,
                 questionType: sec.subject as 'VOCABULARY' | 'GRAMMAR',
                 questionText: q.text || '',
                 exactAnswer,

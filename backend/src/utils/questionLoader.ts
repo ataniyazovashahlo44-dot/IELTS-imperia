@@ -167,7 +167,7 @@ export function buildClientPracticeQuestions(questions: PracticeQuestion[]): {
  * Build client-safe exercise payload (strip answers).
  * Returns: { clientExercises, answerMap }
  */
-export function buildClientExercises(exercises: Exercise[]): {
+export function buildClientExercises(exercises: Exercise[], allowedQuestions?: string[]): {
   clientExercises: Array<{
     id: string;
     subject: SectionSubject;
@@ -201,6 +201,11 @@ export function buildClientExercises(exercises: Exercise[]): {
 
     for (const q of ex.questions) {
       const answerKey = `${ex.id}_${q.id}`;
+
+      // Trim skipped questions
+      if (allowedQuestions && !allowedQuestions.includes(answerKey)) {
+        continue;
+      }
 
       // Store correct answer (handle multiple accepted answers for sentence_transformation)
       const anyQ = q as Record<string, unknown>;

@@ -125,6 +125,8 @@ export interface ClientPracticeQuestion {
 export interface SectionConfig {
   subject: SectionSubject;
   sectionType: SectionType;
+  selectionMode?: 'BY_EXERCISE' | 'BY_QUESTION';
+  targetQuestionCount?: number;
   variantGroups: string[];     // ["1_5", "10_15"]
   numberOfExercises: number;   // for PRACTICE_TEST: number of questions
   timeAllocated: number;       // minutes

@@ -9,6 +9,8 @@ import prisma from '../config/database';
 const sectionSchema = z.object({
   subject: z.enum(['VOCABULARY', 'GRAMMAR']),
   sectionType: z.enum(['EXERCISE', 'PRACTICE_TEST']).default('EXERCISE'),
+  selectionMode: z.enum(['BY_EXERCISE', 'BY_QUESTION']).default('BY_EXERCISE'),
+  targetQuestionCount: z.number().int().min(1).max(1000).optional(),
   variantGroups: z.array(z.enum(VARIANT_GROUPS)).min(1, 'At least one variant group required'),
   numberOfExercises: z.number().int().min(1).max(200),
   timeAllocated: z.number().int().min(1).max(180),

@@ -55,11 +55,14 @@ model TestSection {
   testSession       TestSession   @relation(fields: [testSessionId], references: [id], onDelete: Cascade)
   subject           SectionSubject
   sectionType       SectionType   @default(EXERCISE)
+  selectionMode     SectionSelectionMode @default(BY_EXERCISE)
+  targetQuestionCount Int?
   variantGroups     String        // JSON array: '["1_5","10_15"]'
   numberOfExercises Int
   timeAllocated     Int           // minutes for entire section
   sectionOrder      Int
   createdAt         DateTime      @default(now())
+
 
   @@unique([testSessionId, sectionOrder])
   @@index([testSessionId])
@@ -73,6 +76,11 @@ enum SectionSubject {
 enum SectionType {
   EXERCISE
   PRACTICE_TEST
+}
+
+enum SectionSelectionMode {
+  BY_EXERCISE
+  BY_QUESTION
 }
 
 model Result {
@@ -131,6 +139,8 @@ model ActiveSession {
 
   // JSON: selected exercise IDs per section order: {"1": ["grammar_1_5_001", ...], "2": [...]}
   selectedExercises String       @default("{}")
+  // JSON: specific sliced question IDs allowed for grading: {"1": ["grammar_1_5_001_q1", ...]}
+  selectedQuestions String       @default("{}")
   answers           String       @default("[]") // JSON: array of SubmitAnswer
 
   tabSwitchCount  Int      @default(0)

@@ -22,6 +22,8 @@ export async function createTest(
         create: sections.map(s => ({
           subject: s.subject,
           sectionType: s.sectionType || 'EXERCISE',
+          selectionMode: s.selectionMode || 'BY_EXERCISE',
+          targetQuestionCount: s.targetQuestionCount,
           variantGroups: JSON.stringify(s.variantGroups),
           numberOfExercises: s.numberOfExercises,
           timeAllocated: s.timeAllocated,
